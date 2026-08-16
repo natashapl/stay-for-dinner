@@ -673,30 +673,30 @@
 
 .stove__burner--bl {
   left: 11%;
-  top: 20%;
+  top:8%;
   width: 20%;
   height: 24%;
 }
 
 .stove__burner--br {
   left: 55%;
-  top: 20%;
+  top: 8%;
   width: 20%;
   height: 24%;
 }
 
 .stove__burner--fl {
   left: 6%;
-  top: 50%;
+  top: 38%;
   width: 24%;
-  height: 30%;
+  height: 22%;
 }
 
 .stove__burner--fr {
   left: 52%;
-  top: 50%;
+  top: 38%;
   width: 24%;
-  height: 30%;
+  height: 22%;
 }
 
 /* --------------------------------------------------------------------------
@@ -729,7 +729,7 @@
 }
 
 .stove__knob {
-  width: 11%;
+  width: 9%;
   aspect-ratio: 1;
   border-radius: 50%;
   border: 1px solid color-mix(in srgb, var(--metal-dark) 40%, black);
@@ -855,7 +855,7 @@
 .towel {
   position: absolute;
   left: 14%;
-  top: 18%;
+  top: 23%;
   width: 34%;
   height: 30%;
   border-radius: 0 0 calc(var(--u) * 0.3) calc(var(--u) * 0.3);

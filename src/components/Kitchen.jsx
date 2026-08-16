@@ -32,13 +32,31 @@ import ShelfDecor from './ShelfDecor.jsx'
  * custom properties in variables.css can cascade to the whole illustration
  * from a single place.
  */
-export default function Kitchen({ isNight = false, children }) {
-  const classes = ['kitchen', isNight ? 'is-night' : ''].filter(Boolean).join(' ')
+export default function Kitchen({
+  isNight = false,
+  plateReady = false,
+  pastaServed = false,
+  meatballsServed = false,
+  pastaTriggerRef,
+  onSelectFood,
+  onTogglePlate,
+  onToggleNight,
+  children,
+}) {
+  const classes = [
+    'kitchen',
+    isNight ? 'is-night' : '',
+    plateReady ? 'is-plating' : '',
+    pastaServed ? 'has-plated-pasta' : '',
+    meatballsServed ? 'has-plated-meatballs' : '',
+  ]
+    .filter(Boolean)
+    .join(' ')
 
   return (
     <div className={classes}>
       <Room />
-      <Window />
+      <Window isNight={isNight} onToggleNight={onToggleNight} />
       <Shelves />
       <Cabinetry />
       <SinkArea />
@@ -64,9 +82,24 @@ export default function Kitchen({ isNight = false, children }) {
       <KitchenIsland />
 
       <div className="food">
-        <PastaBowl />
-        <MeatballBowl />
-        <PlateStack />
+        <PastaBowl
+          triggerRef={pastaTriggerRef}
+          platingMode={plateReady}
+          served={pastaServed}
+          onActivate={(event) => onSelectFood('pasta', event)}
+        />
+        <MeatballBowl
+          platingMode={plateReady}
+          pastaServed={pastaServed}
+          served={meatballsServed}
+          onActivate={(event) => onSelectFood('meatballs', event)}
+        />
+        <PlateStack
+          plateReady={plateReady}
+          pastaServed={pastaServed}
+          meatballsServed={meatballsServed}
+          onTogglePlate={onTogglePlate}
+        />
       </div>
 
       {children}

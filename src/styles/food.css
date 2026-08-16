@@ -248,12 +248,9 @@
    Meatballs
    -------------------------------------------------------------------------- */
 
-.meatball {
-  position: absolute;
-  width: calc(var(--u) * 3.4);
-  height: calc(var(--u) * 3.1);
+.meatball,
+.plated-meatball {
   border-radius: 50%;
-  transform: translate(-50%, -50%) scale(var(--scale));
 
   /* Off-centre highlight. Putting the light at 34%/26% rather than dead centre
      is the difference between a sphere and a flat dot — a centred highlight
@@ -281,6 +278,13 @@
     0 calc(var(--u) * 0.3) calc(var(--u) * 0.45) rgb(var(--shadow-color) / 0.5),
     /* a thin warm rim-light where sauce catches the window */
     inset 0 calc(var(--u) * -0.2) calc(var(--u) * 0.3) rgb(255 190 120 / 0.18);
+}
+
+.meatball {
+  position: absolute;
+  width: calc(var(--u) * 3.4);
+  height: calc(var(--u) * 3.1);
+  transform: translate(-50%, -50%) scale(var(--scale));
 }
 
 .meatball--tone1 {
@@ -436,10 +440,15 @@
 }
 
 /* The top plate shows its well; the ones below only show their rims. */
+.plate--top {
+  isolation: isolate;
+}
+
 .plate--top::after {
   content: "";
   position: absolute;
   inset: 18% 14%;
+  z-index: 0;
   border-radius: 50%;
   background: radial-gradient(
     ellipse 80% 80% at 50% 34%,
@@ -447,4 +456,114 @@
     var(--ceramic-shade) 100%
   );
   box-shadow: inset 0 calc(var(--u) * 0.2) calc(var(--u) * 0.3) rgb(var(--shadow-color) / 0.22);
+}
+
+/* --------------------------------------------------------------------------
+   Food served onto the active plate.
+
+   The pasta is a compact suggestion of the bowl's noodle nest. The meatballs
+   reuse the bowl meatballs' browned surface recipe on three smaller elements,
+   so their crust and upper-left window highlight survive on the plate.
+   -------------------------------------------------------------------------- */
+
+.plated-serving {
+  position: absolute;
+  z-index: 1;
+  border-radius: 50%;
+  opacity: 0;
+  pointer-events: none;
+}
+
+.plated-serving--pasta {
+  left: 18%;
+  right: 38%;
+  top: 20%;
+  bottom: 20%;
+
+  --pn: color-mix(in srgb, var(--pasta) 88%, white);
+  --pne: color-mix(in srgb, var(--pasta) 62%, var(--sauce-dark));
+
+  /* Each ring has a darker outer hairline. Without that edge the noodles
+     merge into one yellow oval as soon as the whole plate scales down. */
+  background:
+    radial-gradient(ellipse at 48% 50%, transparent 8%, var(--pne) 10%, var(--pn) 12% 17%, var(--pne) 19%, transparent 21%),
+    radial-gradient(ellipse at 55% 46%, transparent 18%, var(--pne) 20%, var(--pn) 22% 27%, var(--pne) 29%, transparent 31%),
+    radial-gradient(ellipse at 43% 55%, transparent 27%, var(--pne) 29%, var(--pn) 31% 36%, var(--pne) 38%, transparent 40%),
+    radial-gradient(ellipse at 52% 54%, transparent 37%, var(--pne) 39%, var(--pn) 41% 46%, var(--pne) 48%, transparent 50%),
+    radial-gradient(ellipse at 46% 47%, transparent 47%, var(--pne) 49%, var(--pn) 51% 56%, var(--pne) 58%, transparent 60%),
+    radial-gradient(
+      ellipse at 50% 50%,
+      color-mix(in srgb, var(--sauce) 84%, white) 0%,
+      var(--sauce) 66%,
+      var(--sauce-dark) 100%
+    );
+
+  box-shadow: 0 calc(var(--u) * 0.08) calc(var(--u) * 0.16)
+    rgb(var(--shadow-color) / 0.32);
+}
+
+/* Parmesan and one basil fleck. A handful of tiny radial gradients reads more
+   cleanly here than real elements, which would be smaller than a pixel on a
+   phone-sized scene. */
+.plated-serving--pasta::after {
+  content: "";
+  position: absolute;
+  inset: 0;
+  border-radius: inherit;
+  background:
+    radial-gradient(circle at 35% 32%, #fff1ca 0 2%, transparent 3%),
+    radial-gradient(circle at 62% 42%, #fff1ca 0 2.2%, transparent 3.2%),
+    radial-gradient(circle at 45% 68%, #fff1ca 0 1.8%, transparent 2.8%),
+    radial-gradient(ellipse at 54% 48%, var(--herb) 0 5%, transparent 6%);
+}
+
+.plated-serving--meatballs {
+  left: 48%;
+  right: 12%;
+  top: 18%;
+  bottom: 30%;
+  filter: drop-shadow(
+    0 calc(var(--u) * 0.12) calc(var(--u) * 0.12)
+      rgb(var(--shadow-color) / 0.4)
+  );
+}
+
+.plated-meatball {
+  position: absolute;
+  width: 42%;
+  aspect-ratio: 1.08;
+}
+
+/* A shallow triangle keeps each meatball's silhouette visible. The brightness
+   shifts echo the tone variants in the serving bowl without changing the
+   shared browned-crust texture above. */
+.plated-meatball--back {
+  left: 29%;
+  top: -8px;
+  z-index: 1;
+  filter: brightness(0.8) saturate(0.96);
+}
+
+.plated-meatball--left {
+  left: 5%;
+  bottom: -3px;
+  z-index: 2;
+  filter: brightness(0.9);
+}
+
+.plated-meatball--right {
+  right: 3%;
+  bottom: -2px;
+  z-index: 3;
+}
+
+.plated-serving--meatballs::after {
+  content: "";
+  position: absolute;
+  inset: 0;
+  z-index: 4;
+  background:
+    radial-gradient(circle at 26% 48%, var(--herb) 0 1.7%, transparent 2.7%),
+    radial-gradient(circle at 54% 30%, var(--herb) 0 1.7%, transparent 2.7%),
+    radial-gradient(circle at 72% 52%, var(--herb) 0 1.7%, transparent 2.7%);
 }

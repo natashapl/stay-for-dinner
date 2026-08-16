@@ -100,6 +100,30 @@
   mix-blend-mode: multiply;
 
   background:
+    /* A warm exposure pass gives the room the lower midtone the reference
+       has, without putting a flat grey veil over the artwork. The centre is
+       deliberately left clearer: that negative space belongs to the shaft
+       from the window, so the beam gains contrast before I make it brighter.
+
+       This is a radial gradient instead of a vignette because the protected
+       area needs to be tall and narrow, following the light from the glass to
+       the dinner rather than simply brightening the middle of the frame. */
+    radial-gradient(
+      ellipse 30% 66% at 50% 46%,
+      transparent 0%,
+      transparent 52%,
+      rgb(104 62 34 / 0.08) 74%,
+      rgb(76 42 24 / 0.18) 100%
+    ),
+    /* A low-opacity amber wash lowers the room by less than a value step. It
+       is just enough to reserve the lightest colours for the window and the
+       surfaces catching sunset, while keeping the kitchen warm and readable. */
+    linear-gradient(
+      180deg,
+      rgb(112 66 34 / 0.12) 0%,
+      rgb(126 78 42 / 0.07) 58%,
+      rgb(82 44 24 / 0.13) 100%
+    ),
     /* Cavity under the island slab — an ELLIPSE, not a band.
 
        This layer is the one exception in the file: every other gradient here
@@ -181,10 +205,24 @@
      flat. Light should be a small bright accent against dark, not a wash.
      Almost all of the depth is being done by the multiply layer above. */
   background:
+    /* Once the sun is gone, a broad amber interior glow replaces its sharp
+       direction. It is brightest on the backsplash and the two horizontal
+       work surfaces, as though warm ceiling light is bouncing around the
+       room rather than entering through one opening. */
+    radial-gradient(
+      70% 48% at 50% 38%,
+      rgb(255 184 88 / calc(0.15 * var(--interior-light-strength))) 0%,
+      transparent 76%
+    ),
+    radial-gradient(
+      48% 6% at 50% 70%,
+      rgb(255 196 104 / calc(0.24 * var(--interior-light-strength))) 0%,
+      transparent 82%
+    ),
     /* the source */
     radial-gradient(
       26% 20% at 50% 25%,
-      rgb(255 198 118 / calc(0.3 * var(--light-strength))) 0%,
+      rgb(255 198 118 / calc(0.34 * var(--light-strength))) 0%,
       rgb(255 172 92 / calc(0.09 * var(--light-strength))) 50%,
       transparent 76%
     ),
@@ -192,12 +230,12 @@
        horizontal surface catches a stretched pool of light, not a circle */
     radial-gradient(
       42% 4.5% at 50% 57.5%,
-      rgb(255 182 100 / calc(0.22 * var(--light-strength))) 0%,
+      rgb(255 182 100 / calc(0.24 * var(--light-strength))) 0%,
       transparent 80%
     ),
     radial-gradient(
       38% 5% at 50% 70%,
-      rgb(255 190 112 / calc(0.2 * var(--light-strength))) 0%,
+      rgb(255 190 112 / calc(0.24 * var(--light-strength))) 0%,
       transparent 82%
     );
 }
@@ -230,8 +268,8 @@
 
 .sunbeam {
   position: absolute;
-  left: 24%;
-  right: 24%;
+  left: 13%;
+  right: 13%;
 
   /* Starts BELOW the valance, not at the top of the window.
 
@@ -239,23 +277,23 @@
      across the curtain — light in front of the thing it is supposed to be
      coming through. A beam has to start at the opening it passes, and here
      the opening begins where the cloth ends. */
-  top: 22%;
+  top: 14%;
   bottom: 14%;
   z-index: 17;
   pointer-events: none;
 
   /* Narrow at the window, wide at the counter. */
-  clip-path: polygon(31% 0%, 69% 0%, 104% 100%, -4% 100%);
+  clip-path: polygon(30% 0%, 70% 0%, 104% 100%, -4% 100%);
 
   background: linear-gradient(
     178deg,
-    rgb(255 226 168 / calc(0.34 * var(--light-strength))) 0%,
-    rgb(255 208 140 / calc(0.22 * var(--light-strength))) 34%,
-    rgb(255 194 122 / calc(0.09 * var(--light-strength))) 66%,
+    rgb(255 226 168 / calc(0.4 * var(--light-strength))) 0%,
+    rgb(255 208 140 / calc(0.26 * var(--light-strength))) 34%,
+    rgb(255 194 122 / calc(0.11 * var(--light-strength))) 66%,
     transparent 100%
   );
 
-  filter: blur(calc(var(--u) * 3.2));
+  filter: blur(calc(var(--u) * 2.7));
   mix-blend-mode: screen;
 }
 
@@ -264,14 +302,14 @@
 .sunbeam::after {
   content: "";
   position: absolute;
-  left: 34%;
-  right: 34%;
+  left: 31%;
+  right: 31%;
   top: 0;
   bottom: 26%;
   clip-path: polygon(34% 0%, 66% 0%, 100% 100%, 0% 100%);
   background: linear-gradient(
     180deg,
-    rgb(255 240 200 / calc(0.34 * var(--light-strength))) 0%,
+    rgb(255 240 200 / calc(0.46 * var(--light-strength))) 0%,
     transparent 100%
   );
 }

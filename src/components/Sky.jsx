@@ -16,6 +16,7 @@ export default function Sky() {
   return (
     <div className="window__sky">
       <div className="sky__glow" />
+      <div className="sky__stars" />
       <div className="sky__sun" />
 
       <div className="sky__cloud sky__cloud--high" />

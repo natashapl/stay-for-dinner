@@ -41,6 +41,34 @@
     rgb(var(--shadow-color) / 0.35);
 }
 
+/* A reflection belongs above the view but below the wooden mullions. Two
+   narrow diagonal washes suggest warm shapes elsewhere in the room; keeping
+   them abstract prevents the glass from turning into a second illustration. */
+.window__reflection {
+  position: absolute;
+  inset: 0;
+  z-index: 0;
+  pointer-events: none;
+
+  background:
+    linear-gradient(
+      112deg,
+      transparent 0 22%,
+      rgb(255 220 158 / 0.2) 28%,
+      transparent 35% 62%,
+      rgb(255 196 108 / 0.12) 69%,
+      transparent 76%
+    ),
+    radial-gradient(
+      ellipse 54% 20% at 50% 88%,
+      rgb(255 187 90 / 0.2) 0%,
+      transparent 72%
+    );
+
+  opacity: calc(0.72 * var(--star-opacity));
+  mix-blend-mode: screen;
+}
+
 /* Placeholder dusk sky. Phase 6 replaces this with sun, cloud and landscape —
    the gradient stops are already reading from the sky variables so the night
    swap works before any of that exists. */
@@ -53,7 +81,6 @@
     var(--sky-mid) 58%,
     var(--sky-bottom) 100%
   );
-  transition: background 1200ms var(--ease-soft);
 }
 
 /* --------------------------------------------------------------------------

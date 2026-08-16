@@ -776,14 +776,14 @@
 
 .books {
   position: absolute;
-  left: 76.4%;
+  left: 76.9%;
   width: 9.6%;
   bottom: 89.83%;
   height: 7.4%;
 
   display: flex;
   align-items: flex-end;
-  gap: 1.5%;
+  gap: 0%;
 }
 
 .book {
@@ -803,6 +803,7 @@
 
 .book--a {
   background: linear-gradient(90deg, #8d3b2a, #b8543a 45%, #7a3122);
+  margin-right: 2px;
 }
 
 .book--b {
@@ -902,6 +903,142 @@
   border: calc(var(--u) * 0.24) solid var(--mug);
   border-left-width: calc(var(--u) * 0.08);
   border-radius: 0 60% 60% 0 / 0 50% 50% 0;
+}
+
+/* --------------------------------------------------------------------------
+   Kitchen timer.
+
+   The face is two backgrounds stacked together. A repeating conic gradient
+   makes all twenty-four minute ticks at once, while the radial gradient above
+   it hides their inner ends so the marks stay around the rim. This is the
+   clock-face version of masking repeated geometry instead of drawing a span
+   for every mark.
+
+   The red housing echoes the dutch oven across the room and keeps another
+   cream object from disappearing into the backsplash.
+   -------------------------------------------------------------------------- */
+
+.kitchen-timer {
+  position: absolute;
+  left: 77.4%;
+  width: 4.8%;
+  bottom: 69.49%;
+  height: 5.5%;
+  pointer-events: none;
+}
+
+/* The contact shadow is wider than the timer but much flatter. That mismatch
+   is what makes it read as a cast shadow on the shelf instead of a dark foot. */
+.kitchen-timer::after {
+  content: "";
+  position: absolute;
+  left: -8%;
+  right: -8%;
+  bottom: calc(var(--u) * -0.42);
+  height: calc(var(--u) * 0.9);
+  border-radius: 50%;
+  background: radial-gradient(
+    ellipse 50% 50% at 50% 50%,
+    rgb(var(--shadow-color) / 0.46) 0%,
+    transparent 74%
+  );
+}
+
+.kitchen-timer__body {
+  position: absolute;
+  left: 6%;
+  right: 6%;
+  bottom: 0;
+  height: 88%;
+  border-radius: 46% 46% 19% 19% / 42% 42% 18% 18%;
+
+  /* A bright upper-left shoulder and a dark lower-right edge give this tiny
+     housing enough turn to feel like enamel rather than a red cutout. */
+  background: linear-gradient(
+    135deg,
+    #d16b4e 0%,
+    #b95039 48%,
+    #7f3027 100%
+  );
+
+  box-shadow:
+    inset calc(var(--u) * 0.16) calc(var(--u) * 0.08) calc(var(--u) * 0.18)
+      rgb(255 230 205 / 0.34),
+    inset calc(var(--u) * -0.2) calc(var(--u) * -0.14) calc(var(--u) * 0.24)
+      rgb(var(--shadow-color) / 0.34),
+    0 calc(var(--u) * 0.18) calc(var(--u) * 0.32)
+      rgb(var(--shadow-color) / 0.32);
+}
+
+/* A low winding knob makes the silhouette say "timer" rather than "clock". */
+.kitchen-timer__body::before {
+  content: "";
+  position: absolute;
+  left: 38%;
+  right: 38%;
+  top: -7%;
+  height: 12%;
+  border-radius: 45% 45% 20% 20%;
+  background: linear-gradient(90deg, #743027, #ba513b 48%, #6c2922);
+}
+
+/* A short plinth squares off the base so the rounded body stands securely on
+   the shelf instead of looking like an egg balanced on its point. */
+.kitchen-timer__body::after {
+  content: "";
+  position: absolute;
+  left: 9%;
+  right: 9%;
+  bottom: -4%;
+  height: 10%;
+  border-radius: calc(var(--u) * 0.12);
+  background: linear-gradient(180deg, #a94534, #722a23);
+}
+
+.kitchen-timer__dial {
+  position: absolute;
+  left: 14%;
+  right: 14%;
+  top: 13%;
+  aspect-ratio: 1;
+  border: calc(var(--u) * 0.16) solid color-mix(in srgb, var(--ceramic-shade) 70%, #7d5c45);
+  border-radius: 50%;
+
+  background:
+    radial-gradient(circle, var(--ceramic) 0 57%, transparent 59%),
+    repeating-conic-gradient(
+      from -90deg,
+      color-mix(in srgb, var(--fixture) 80%, #6f4932) 0deg 1.6deg,
+      transparent 1.6deg 15deg
+    ),
+    radial-gradient(circle at 38% 32%, #fffaf0 0%, var(--ceramic) 66%, var(--ceramic-shade) 100%);
+
+  box-shadow:
+    inset 0 0 calc(var(--u) * 0.22) rgb(var(--shadow-color) / 0.28),
+    0 calc(var(--u) * 0.12) calc(var(--u) * 0.2) rgb(var(--shadow-color) / 0.26);
+}
+
+.kitchen-timer__hand {
+  position: absolute;
+  left: calc(50% - var(--u) * 0.1);
+  bottom: 50%;
+  width: calc(var(--u) * 0.2);
+  height: 31%;
+  border-radius: calc(var(--u) * 0.1);
+  transform: rotate(38deg);
+  transform-origin: bottom center;
+  background: color-mix(in srgb, var(--sauce-dark) 72%, var(--fixture));
+}
+
+.kitchen-timer__hub {
+  position: absolute;
+  left: 50%;
+  top: 50%;
+  width: calc(var(--u) * 0.48);
+  aspect-ratio: 1;
+  transform: translate(-50%, -50%);
+  border-radius: 50%;
+  background: radial-gradient(circle at 35% 30%, #d6b186 0%, #7d5034 58%, #3f2a20 100%);
 }
 
 /* --------------------------------------------------------------------------

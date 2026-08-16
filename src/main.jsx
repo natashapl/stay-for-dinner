@@ -24,6 +24,9 @@ import './styles/animations.css'
 /* Lighting passes last — they re-light everything above. */
 import './styles/depth.css'
 
+/* Real controls sit above the finished illustration. */
+import './styles/interactions.css'
+
 import './styles/responsive.css'
 
 createRoot(document.getElementById('root')).render(

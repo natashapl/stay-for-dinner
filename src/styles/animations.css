@@ -141,6 +141,20 @@
   }
 }
 
+/* All stars brighten together only a little. At this scale independent
+   twinkles would look noisy; one slow breath is enough to keep the new night
+   sky from feeling pasted behind the window. */
+@keyframes star-twinkle {
+  0%,
+  100% {
+    opacity: calc(0.72 * var(--star-opacity));
+  }
+
+  50% {
+    opacity: var(--star-opacity);
+  }
+}
+
 @keyframes steam-rise {
   0% {
     opacity: 0;

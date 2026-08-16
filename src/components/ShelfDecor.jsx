@@ -1,7 +1,7 @@
 /**
  * ShelfDecor
  *
- * Cookbooks, mugs, and two framed pieces.
+ * Cookbooks, mugs, a kitchen timer, and two framed pieces.
  *
  * The books lean because a rank of perfectly upright spines reads as a
  * barcode. One book tipped against its neighbours, and a gap where a book has
@@ -39,6 +39,17 @@ export default function ShelfDecor() {
       <div className="mug mug--squat">
         <div className="mug__handle" />
         <div className="mug__body" />
+      </div>
+
+      {/* A small wind-up timer fills the open end of the lower-right shelf.
+          The face is a conic gradient, so it needs only a hand and hub here. */}
+      <div className="kitchen-timer">
+        <div className="kitchen-timer__body">
+          <div className="kitchen-timer__dial">
+            <span className="kitchen-timer__hand" />
+            <span className="kitchen-timer__hub" />
+          </div>
+        </div>
       </div>
 
       {/* Framed lettering — the kitchen motto from the reference. The "text"

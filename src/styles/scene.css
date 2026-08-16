@@ -111,9 +111,38 @@
 
   /* Every colour swap in the scene is a var() read, so one transition
      declaration here carries the entire dusk→night change in Phase 9. */
-  transition:
-    background-color 1200ms var(--ease-soft),
-    filter 1200ms var(--ease-soft);
+  transition-property:
+    --sky-top,
+    --sky-mid,
+    --sky-bottom,
+    --sun,
+    --sun-glow,
+    --hills,
+    --hills-far,
+    --trees,
+    --wall,
+    --wall-shadow,
+    --tile,
+    --tile-grout,
+    --cabinet,
+    --cabinet-dark,
+    --cabinet-light,
+    --cabinet-edge,
+    --wood,
+    --wood-dark,
+    --wood-light,
+    --floor,
+    --floor-dark,
+    --room-light,
+    --light-strength,
+    --interior-light-strength,
+    --shadow-strength,
+    --sky-glow,
+    --star-opacity,
+    background-color,
+    filter;
+  transition-duration: 1800ms;
+  transition-timing-function: var(--ease-soft);
 }
 
 /* --------------------------------------------------------------------------
@@ -137,6 +166,27 @@
 .food          { z-index: 7; }  /* on the island, in front of everything */
 .scene-shade   { z-index: 15; } /* occlusion pass — multiply */
 .scene-light   { z-index: 16; } /* window light — screen */
+
+/* These are full-canvas drawing wrappers. Their empty regions are visually
+   transparent, but `pointer-events: auto` would still make those regions win
+   hit-testing over artwork deeper in the stack (the window exposed the bug).
+   The wrappers opt out; actual controls opt back in below. Future appliance
+   buttons should follow the same pattern. */
+.room,
+.back-counter,
+.sink-area,
+.objects,
+.island,
+.stools,
+.food {
+  pointer-events: none;
+}
+
+.window__trigger,
+.bowl__trigger,
+.plate-stack__trigger {
+  pointer-events: auto;
+}
 
 /* Vignette. Illustrations almost always want the corners pulled down a
    little — it keeps the eye in the middle of the frame where the food is

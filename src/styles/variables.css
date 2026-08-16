@@ -51,6 +51,173 @@
   --ease-settle: cubic-bezier(0.22, 0.61, 0.36, 1);
 }
 
+/* Registering the palette turns the custom properties into real, typed
+   colours. Untyped variables swap instantly even when the property using
+   them has a transition; typed variables can blend through all the in-between
+   colours, which is what lets night settle over the whole illustration
+   instead of arriving as a single palette flash. */
+@property --sky-top {
+  syntax: "<color>";
+  inherits: true;
+  initial-value: #9fb0d4;
+}
+
+@property --sky-mid {
+  syntax: "<color>";
+  inherits: true;
+  initial-value: #eda06d;
+}
+
+@property --sky-bottom {
+  syntax: "<color>";
+  inherits: true;
+  initial-value: #f8cd85;
+}
+
+@property --sun {
+  syntax: "<color>";
+  inherits: true;
+  initial-value: #fff6d4;
+}
+
+@property --sun-glow {
+  syntax: "<color>";
+  inherits: true;
+  initial-value: #ffc978;
+}
+
+@property --hills {
+  syntax: "<color>";
+  inherits: true;
+  initial-value: #b3703f;
+}
+
+@property --hills-far {
+  syntax: "<color>";
+  inherits: true;
+  initial-value: #c98a5a;
+}
+
+@property --trees {
+  syntax: "<color>";
+  inherits: true;
+  initial-value: #7c5a34;
+}
+
+@property --wall {
+  syntax: "<color>";
+  inherits: true;
+  initial-value: #ece0cc;
+}
+
+@property --wall-shadow {
+  syntax: "<color>";
+  inherits: true;
+  initial-value: #d8c6ac;
+}
+
+@property --tile {
+  syntax: "<color>";
+  inherits: true;
+  initial-value: #f6f1e7;
+}
+
+@property --tile-grout {
+  syntax: "<color>";
+  inherits: true;
+  initial-value: #ddd2c1;
+}
+
+@property --cabinet {
+  syntax: "<color>";
+  inherits: true;
+  initial-value: #7d8c63;
+}
+
+@property --cabinet-dark {
+  syntax: "<color>";
+  inherits: true;
+  initial-value: #5f6d49;
+}
+
+@property --cabinet-light {
+  syntax: "<color>";
+  inherits: true;
+  initial-value: #94a179;
+}
+
+@property --cabinet-edge {
+  syntax: "<color>";
+  inherits: true;
+  initial-value: #4c5839;
+}
+
+@property --wood {
+  syntax: "<color>";
+  inherits: true;
+  initial-value: #d8a05c;
+}
+
+@property --wood-dark {
+  syntax: "<color>";
+  inherits: true;
+  initial-value: #b47c3c;
+}
+
+@property --wood-light {
+  syntax: "<color>";
+  inherits: true;
+  initial-value: #ecc084;
+}
+
+@property --floor {
+  syntax: "<color>";
+  inherits: true;
+  initial-value: #c47a52;
+}
+
+@property --floor-dark {
+  syntax: "<color>";
+  inherits: true;
+  initial-value: #a35f3d;
+}
+
+@property --room-light {
+  syntax: "<color>";
+  inherits: true;
+  initial-value: #f7c77c;
+}
+
+@property --light-strength {
+  syntax: "<number>";
+  inherits: true;
+  initial-value: 0.7;
+}
+
+@property --interior-light-strength {
+  syntax: "<number>";
+  inherits: true;
+  initial-value: 0;
+}
+
+@property --shadow-strength {
+  syntax: "<number>";
+  inherits: true;
+  initial-value: 0.28;
+}
+
+@property --sky-glow {
+  syntax: "<number>";
+  inherits: true;
+  initial-value: 1;
+}
+
+@property --star-opacity {
+  syntax: "<number>";
+  inherits: true;
+  initial-value: 0;
+}
+
 /* ==========================================================================
    Scene tokens — dusk (default state)
    Sampled off the reference painting so the palette stays coherent once the
@@ -194,7 +361,8 @@
      Warm sunlight from the window, its direction, and how heavy the shadows
      sit. Phase 6 leans on these hard. */
   --room-light: #f7c77c;
-  --light-strength: 0.85;
+  --light-strength: 0.7;
+  --interior-light-strength: 0;
   /* Two forms of the same shadow, and both are needed.
 
      --shadow-color is a bare TRIPLET so it can be written rgb(var(...) / a)
@@ -211,14 +379,14 @@
   --shadow-ink: #1a100a;
   --shadow-strength: 0.28;
 
-  --sky-glow: 0.5;
+  --sky-glow: 1;
   --star-opacity: 0;
 }
 
 /* --------------------------------------------------------------------------
-   Scene tokens — night (reserved for Phase 9)
-   Not wired to any control yet. It's here now purely to prove the variable
-   architecture works: only colour names get re-declared, no geometry.
+   Scene tokens — night
+   Geometry stays put; this state only changes the palette and the strengths
+   of the daylight, indoor glow, vignette, halo and stars.
    -------------------------------------------------------------------------- */
 
 .kitchen.is-night {
@@ -249,9 +417,10 @@
   --floor-dark: #6d3f28;
 
   --room-light: #e9a54c;
-  --light-strength: 1;
+  --light-strength: 0.06;
+  --interior-light-strength: 1;
   --shadow-strength: 0.42;
 
-  --sky-glow: 0.15;
+  --sky-glow: 0.08;
   --star-opacity: 1;
 }

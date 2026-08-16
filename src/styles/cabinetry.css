@@ -207,6 +207,47 @@
   height: 40%;
 }
 
+/* Only the upper doors get hardware. The base run shares the .door recipe,
+   so scoping the knobs through .wall-unit keeps those lower panels untouched.
+
+   Each knob sits beside the pair's centre seam: the first door reaches inward
+   from its right edge and the second mirrors it from the left. A highlight in
+   the upper-left of the radial gradient gives a tiny sphere enough volume to
+   read as dark bronze rather than as a flat dot. */
+.wall-unit--upper-left .door::before,
+.wall-unit--upper-right .door::before {
+  content: "";
+  position: absolute;
+  bottom: 5%;
+  width: calc(var(--u) * 0.82);
+  aspect-ratio: 1;
+  z-index: 2;
+  border: calc(var(--u) * 0.07) solid color-mix(in srgb, var(--fixture) 74%, black);
+  border-radius: 50%;
+  background: radial-gradient(
+    circle at 32% 28%,
+    #b18a58 0%,
+    #765036 28%,
+    var(--fixture) 66%,
+    color-mix(in srgb, var(--fixture) 72%, black) 100%
+  );
+  box-shadow:
+    inset calc(var(--u) * 0.08) calc(var(--u) * 0.08) calc(var(--u) * 0.12)
+      rgb(255 224 178 / 0.22),
+    0 calc(var(--u) * 0.16) calc(var(--u) * 0.24)
+      rgb(var(--shadow-color) / 0.5);
+}
+
+.wall-unit--upper-left .door:first-child::before,
+.wall-unit--upper-right .door:first-child::before {
+  right: 8%;
+}
+
+.wall-unit--upper-left .door:last-child::before,
+.wall-unit--upper-right .door:last-child::before {
+  left: 8%;
+}
+
 /* The shadow each unit throws down the wall beneath it. Absolutely positioned
    so it isn't treated as a flex item alongside the doors — ::after in a flex
    container becomes a child box otherwise, and would sit inside the cabinet

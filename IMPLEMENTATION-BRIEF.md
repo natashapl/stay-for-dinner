@@ -547,7 +547,7 @@ Hovering over the pasta or meatballs should subtly lift or highlight the bowl.
 
 A small contextual label may appear:
 
-"What's cooking?"
+"What's for dinner?"
 
 Clicking either food item opens a recipe drawer.
 
@@ -594,7 +594,7 @@ Escape should close the drawer.
 
 Focus behavior should be handled responsibly.
 
-# Interaction 2: Plate Dinner
+# Interaction 2: Make a plate
 
 The plates should be interactive.
 
@@ -632,7 +632,7 @@ For example:
 * Normal food click opens recipe
 * When plating mode is active, clicking food serves it instead
 
-Or create a clear "Plate dinner" interaction state.
+Or create a clear "Make a plate" interaction state.
 
 Choose whichever feels more intuitive during implementation.
 

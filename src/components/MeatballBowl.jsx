@@ -35,9 +35,21 @@ const HERBS = [
   { x: 66, y: 62 }, { x: 34, y: 64 },
 ]
 
-export default function MeatballBowl() {
+export default function MeatballBowl({ platingMode, pastaServed, served, onActivate }) {
+  let prompt = "View recipe"
+  let label = 'Meatball bowl — open the dinner recipe'
+
+  if (platingMode) {
+    prompt = served ? 'Meatballs added' : pastaServed ? 'Add meatballs' : 'Pasta first'
+    label = served
+      ? 'Meatballs are already on the dinner plate'
+      : pastaServed
+        ? 'Add meatballs to the dinner plate'
+        : 'Add pasta before adding meatballs to the dinner plate'
+  }
+
   return (
-    <div className="bowl bowl--meatball">
+    <div className={`bowl bowl--meatball${served ? ' is-served' : ''}`}>
       <div className="bowl__vessel" />
 
       <div className="bowl__inner">
@@ -63,6 +75,19 @@ export default function MeatballBowl() {
       <div className="bowl__lip" />
 
       <Steam count={2} />
+
+      <button
+        className="bowl__trigger"
+        type="button"
+        aria-label={label}
+        aria-haspopup={platingMode ? undefined : 'dialog'}
+        aria-controls={platingMode ? undefined : 'recipe-drawer'}
+        onClick={onActivate}
+      >
+        <span className="bowl__prompt" aria-hidden="true">
+          {prompt}
+        </span>
+      </button>
     </div>
   )
 }

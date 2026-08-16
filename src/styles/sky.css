@@ -31,7 +31,6 @@
     color-mix(in srgb, var(--sky-bottom) 70%, #fff0c0) 100%
   );
 
-  transition: background 1200ms var(--ease-soft);
 }
 
 /* --------------------------------------------------------------------------
@@ -55,13 +54,42 @@
 
   background: radial-gradient(
     circle,
-    rgb(255 214 150 / 0.6) 0%,
-    rgb(255 186 108 / 0.3) 32%,
-    rgb(255 168 96 / 0.12) 54%,
+    rgb(255 214 150 / calc(0.6 * var(--sky-glow))) 0%,
+    rgb(255 186 108 / calc(0.3 * var(--sky-glow))) 32%,
+    rgb(255 168 96 / calc(0.12 * var(--sky-glow))) 54%,
     transparent 72%
   );
 
   animation: sun-glow 9s var(--ease-soft) infinite;
+}
+
+/* The stars are one painted layer rather than a constellation of elements.
+   Each tiny radial gradient is a point of light; varying the hard-stop size
+   makes some feel farther away even though they all share one flat surface. */
+.sky__stars {
+  position: absolute;
+  inset: 4% 3% 29%;
+  pointer-events: none;
+
+  background:
+    radial-gradient(circle at 7% 18%, #fff7d6 0 0.5%, transparent 0.9%),
+    radial-gradient(circle at 17% 42%, #f1e9ff 0 0.35%, transparent 0.72%),
+    radial-gradient(circle at 26% 12%, #fff7d6 0 0.3%, transparent 0.65%),
+    radial-gradient(circle at 36% 31%, #fff 0 0.48%, transparent 0.88%),
+    radial-gradient(circle at 45% 8%, #f1e9ff 0 0.32%, transparent 0.68%),
+    radial-gradient(circle at 55% 27%, #fff7d6 0 0.42%, transparent 0.8%),
+    radial-gradient(circle at 64% 13%, #fff 0 0.28%, transparent 0.62%),
+    radial-gradient(circle at 72% 38%, #f1e9ff 0 0.46%, transparent 0.84%),
+    radial-gradient(circle at 82% 19%, #fff7d6 0 0.34%, transparent 0.7%),
+    radial-gradient(circle at 93% 34%, #fff 0 0.5%, transparent 0.9%),
+    radial-gradient(circle at 12% 63%, #fff 0 0.3%, transparent 0.66%),
+    radial-gradient(circle at 31% 56%, #fff7d6 0 0.4%, transparent 0.76%),
+    radial-gradient(circle at 59% 60%, #fff 0 0.34%, transparent 0.7%),
+    radial-gradient(circle at 88% 58%, #f1e9ff 0 0.3%, transparent 0.65%);
+
+  opacity: var(--star-opacity);
+  filter: drop-shadow(0 0 calc(var(--u) * 0.18) rgb(255 244 210 / 0.7));
+  animation: star-twinkle 6.5s var(--ease-soft) infinite;
 }
 
 /* The sun's height is pinned by two things it must not collide with: the far
@@ -95,6 +123,18 @@
   box-shadow:
     0 0 calc(var(--u) * 1.6) calc(var(--u) * 0.4) rgb(255 226 164 / 0.85),
     0 0 calc(var(--u) * 4) calc(var(--u) * 1.4) rgb(255 192 116 / 0.45);
+
+  transition:
+    transform 1800ms var(--ease-soft),
+    opacity 1200ms var(--ease-soft);
+}
+
+/* The disc travels below the hills rather than changing into a moon. Reusing
+   it as a moon would reverse the story of the interaction; lowering it keeps
+   the action legible as time passing. */
+.kitchen.is-night .sky__sun {
+  opacity: 0;
+  transform: translate(-50%, 280%) scale(0.72);
 }
 
 /* --------------------------------------------------------------------------
@@ -114,6 +154,14 @@
   position: absolute;
   border-radius: 50%;
   filter: blur(calc(var(--u) * 0.42));
+  transition:
+    opacity 1800ms var(--ease-soft),
+    filter 1800ms var(--ease-soft);
+}
+
+.kitchen.is-night .sky__cloud {
+  opacity: 0.2;
+  filter: blur(calc(var(--u) * 0.5)) brightness(0.55) saturate(0.72);
 }
 
 .sky__cloud::after {
@@ -241,9 +289,9 @@
 .sky__house {
   position: absolute;
   left: 63%;
-  bottom: 13%;
-  width: 8%;
-  height: 8%;
+  bottom: 14%;
+  width: 14%;
+  height: 14%;
   clip-path: polygon(50% 0%, 100% 42%, 100% 100%, 0% 100%, 0% 42%);
   background: color-mix(in srgb, var(--trees) 54%, #2c1f13);
 }
@@ -254,11 +302,21 @@
   content: "";
   position: absolute;
   left: 34%;
-  bottom: 18%;
+  bottom:3%;
   width: 30%;
-  height: 26%;
-  background: var(--sun);
+  height: 35%;
+  background: var(--wood);
   opacity: 0.85;
+  transition:
+    background-color 1800ms var(--ease-soft),
+    box-shadow 1800ms var(--ease-soft),
+    opacity 1800ms var(--ease-soft);
+}
+
+.kitchen.is-night .sky__house::after {
+  background: #ffd58b;
+  opacity: 1;
+  box-shadow: 0 0 calc(var(--u) * 0.7) rgb(255 199 104 / 0.75);
 }
 
 /* --------------------------------------------------------------------------
@@ -327,4 +385,10 @@
     rgb(255 190 130 / 0.09) 46%,
     rgb(255 176 116 / 0.03) 100%
   );
+  opacity: 1;
+  transition: opacity 1800ms var(--ease-soft);
+}
+
+.kitchen.is-night .sky__trees::after {
+  opacity: 0.12;
 }

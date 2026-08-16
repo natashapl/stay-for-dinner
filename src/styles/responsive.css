@@ -21,6 +21,22 @@
     --frame-width: 7px;
     --frame-radius: 7px;
   }
+
+  /* The recipe is page UI rather than scene art, so it follows the viewport.
+     Leaving only a sliver of backdrop keeps its drawer direction legible while
+     giving the copy essentially the full phone width. */
+  .recipe-drawer {
+    width: 97vw;
+    border-left-width: 4px;
+  }
+
+  .recipe-drawer__scroll {
+    padding: 1.35rem 1.15rem 2rem;
+  }
+
+  .recipe-drawer__header h2 {
+    font-size: clamp(1.9rem, 10vw, 2.5rem);
+  }
 }
 
 /* Short landscape — a phone turned sideways, or a very shallow window.

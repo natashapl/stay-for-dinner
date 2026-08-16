@@ -20,9 +20,16 @@ const BASIL = [
   { x: 45, y: 12, r: 8, s: 0.7 },
 ]
 
-export default function PastaBowl() {
+export default function PastaBowl({ triggerRef, platingMode, served, onActivate }) {
+  const prompt = platingMode ? (served ? 'Pasta added' : 'Add pasta') : "View recipe"
+  const label = platingMode
+    ? served
+      ? 'Pasta is already on the dinner plate'
+      : 'Add pasta to the dinner plate'
+    : 'Pasta bowl — open the dinner recipe'
+
   return (
-    <div className="bowl bowl--pasta">
+    <div className={`bowl bowl--pasta${served ? ' is-served' : ''}`}>
       <div className="bowl__vessel" />
 
       <div className="bowl__inner">
@@ -52,6 +59,20 @@ export default function PastaBowl() {
       <div className="bowl__lip" />
 
       <Steam count={3} />
+
+      <button
+        className="bowl__trigger"
+        ref={triggerRef}
+        type="button"
+        aria-label={label}
+        aria-haspopup={platingMode ? undefined : 'dialog'}
+        aria-controls={platingMode ? undefined : 'recipe-drawer'}
+        onClick={onActivate}
+      >
+        <span className="bowl__prompt" aria-hidden="true">
+          {prompt}
+        </span>
+      </button>
     </div>
   )
 }
