@@ -1,0 +1,155 @@
+/* ==========================================================================
+   The frame — a dark wooden opening cut through the page.
+   ========================================================================== */
+
+/* Frame and canvas are deliberately two elements.
+
+   My first attempt drew the frame as an inset box-shadow on the canvas
+   itself — it was invisible, because .kitchen is a 100%x100% child and
+   children paint over their parent's inset shadows. A padded wrapper is the
+   honest fix: the padding IS the frame, so nothing can cover it. */
+
+.scene-frame {
+  position: relative;
+
+  /* Frame width, in one declaration and with zero height involvement — the
+     window's height can change however it likes and this number won't move.
+
+     It reads as three rules at once, and the browser picks whichever is
+     smallest, which produces a smooth ramp instead of breakpoint jumps:
+
+       max(60%, 460px)  the target: 60% of the page on roomy screens, but
+                        never allowed to shrink past 460px, so the scene
+                        doesn't become a stamp on tablets
+       1200px           design cap, so it stops growing on huge monitors
+       90%              phone rule: almost full width, with a margin either
+                        side, and it overrides the 460px floor once 90% of
+                        the screen is narrower than that
+
+     Where each one wins:
+       above ~767px wide -> 60%
+       511-767px         -> pinned at 460px (so the percentage grows 60->90)
+       below ~511px      -> 90%
+
+     Because the crossovers are where the values are already equal, there is
+     no snap at any width. Media queries would have jumped. */
+  width: min(90%, 1200px, max(60%, 460px));
+  margin-inline: auto;
+
+  /* The frame band. Because this box is border-box, the padding sits inside
+     the width above, and .scene below inherits a definite content width to
+     compute its 4:3 height from. */
+  padding: var(--frame-width);
+  border-radius: var(--frame-radius);
+
+  background:
+    /* Grain first so it sits above the base wood colour. A shallow-angle
+       repeating-linear-gradient reads as wood far more cheaply than any
+       texture image, and it costs zero extra elements. */
+    repeating-linear-gradient(
+      93deg,
+      rgb(0 0 0 / 0.16) 0 1px,
+      transparent 1px 4px,
+      rgb(255 255 255 / 0.045) 4px 5px,
+      transparent 5px 11px
+    ),
+    linear-gradient(
+      160deg,
+      var(--frame-wood-light) 0%,
+      var(--frame-wood) 45%,
+      var(--frame-wood-dark) 100%
+    );
+
+  /* Two outer shadows: one tight contact shadow so the frame sits ON the
+     page, one wide ambient drop that sells "opening in a wall". */
+  box-shadow:
+    0 2px 4px rgb(0 0 0 / 0.45),
+    0 28px 70px -14px rgb(0 0 0 / 0.7);
+}
+
+/* A warm hairline where light catches the frame's inner lip, plus a soft
+   shadow falling from the frame onto the artwork. Both live on one
+   pseudo-element straddling the frame/canvas seam. */
+.scene-frame::after {
+  content: "";
+  position: absolute;
+  inset: calc(var(--frame-width) - 1px);
+  border-radius: calc(var(--frame-radius) - 3px);
+  pointer-events: none;
+  z-index: 2;
+  box-shadow:
+    inset 0 0 0 1px color-mix(in srgb, var(--frame-wood-light) 70%, transparent),
+    inset 0 3px 12px -2px rgb(0 0 0 / 0.45);
+}
+
+.scene {
+  position: relative;
+  width: 100%;
+  aspect-ratio: 4 / 3;
+  border-radius: calc(var(--frame-radius) - 3px);
+  overflow: hidden;
+
+  /* Establishes the coordinate system for everything inside.
+     `container-type: size` (not inline-size) is required because the artwork
+     will want cqh as well as cqw — and it's safe here since the height is
+     already pinned by aspect-ratio rather than by content. */
+  container: scene / size;
+}
+
+/* ==========================================================================
+   The kitchen canvas — the illustration's own coordinate space.
+   ========================================================================== */
+
+.kitchen {
+  position: relative;
+  width: 100%;
+  height: 100%;
+
+  /* The wall itself is painted by .room in kitchen.css. This element is only
+     the stage: a positioning context and a depth stack. */
+  background: var(--wall);
+
+  /* Every colour swap in the scene is a var() read, so one transition
+     declaration here carries the entire dusk→night change in Phase 9. */
+  transition:
+    background-color 1200ms var(--ease-soft),
+    filter 1200ms var(--ease-soft);
+}
+
+/* --------------------------------------------------------------------------
+   Depth stack for the whole illustration.
+
+   Every scene layer names its z-index here rather than scattering magic
+   numbers across four stylesheets. Reading top to bottom is reading the room
+   back to front, which is the only way I can keep the layering straight once
+   the food and appliances land on top of it.
+   -------------------------------------------------------------------------- */
+
+.room          { z-index: 1; }  /* wall, backsplash, floor */
+.wall-unit     { z-index: 2; }  /* upper cabinets, open shelves */
+.window        { z-index: 2; }
+.back-counter  { z-index: 3; }  /* counter run + base cabinets */
+.sink-area     { z-index: 4; }
+.scene-shade--room { z-index: 4; } /* room occlusion — behind the foreground */
+.island        { z-index: 5; }  /* foreground — food will sit on this */
+.stools        { z-index: 6; }
+.food          { z-index: 7; }  /* on the island, in front of everything */
+.scene-shade   { z-index: 15; } /* occlusion pass — multiply */
+.scene-light   { z-index: 16; } /* window light — screen */
+
+/* Vignette. Illustrations almost always want the corners pulled down a
+   little — it keeps the eye in the middle of the frame where the food is
+   going to be. It has to outrank every scene layer, so it sits well above
+   the stack above. */
+.kitchen::after {
+  content: "";
+  position: absolute;
+  inset: 0;
+  pointer-events: none;
+  z-index: 20;
+  background: radial-gradient(
+    100% 85% at 50% 42%,
+    transparent 45%,
+    rgb(var(--shadow-color) / calc(var(--shadow-strength) * 0.8)) 100%
+  );
+}

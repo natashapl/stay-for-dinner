@@ -1,0 +1,45 @@
+/* ==========================================================================
+   Responsive behaviour
+   --------------------------------------------------------------------------
+   Note how little is in this file, and that this is on purpose.
+
+   Because the artwork is positioned in % and sized in --u (= 1cqw of the
+   frame), the kitchen re-scales itself for free. There is no breakpoint that
+   moves a cabinet. This file only adjusts the page chrome around the frame —
+   if I ever find myself repositioning scene objects in here, that's a sign
+   the object should have been sized in --u in the first place.
+   ========================================================================== */
+
+@media (max-width: 560px) {
+  .page {
+    gap: 1.25rem;
+  }
+
+  /* On a narrow screen the frame band costs real illustration area, so it
+     thins out. The scene itself is untouched. */
+  :root {
+    --frame-width: 7px;
+    --frame-radius: 7px;
+  }
+}
+
+/* Short landscape — a phone turned sideways, or a very shallow window.
+   Only the page padding tightens here. Nothing in this file touches the
+   frame's width: viewport height must never influence how wide the frame is,
+   because watching it resize horizontally while dragging the bottom edge of
+   the window looks broken. A short window simply scrolls. */
+@media (max-height: 560px) and (orientation: landscape) {
+  .page {
+    padding-block: 1rem;
+    gap: 0.75rem;
+  }
+}
+
+/* Fallback for browsers without container query units. Keeping the kitchen
+   usable rather than pixel-identical is enough here — --u falls back to a
+   viewport-derived approximation of 1% of a 4:3 frame. */
+@supports not (width: 1cqw) {
+  .kitchen {
+    --u: min(1.2vh, 0.9vw);
+  }
+}

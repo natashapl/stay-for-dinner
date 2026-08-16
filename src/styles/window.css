@@ -1,0 +1,126 @@
+/* ==========================================================================
+   Window — the back wall's anchor.
+   Phase 2 is joinery only. The sky is a placeholder gradient until Phase 6.
+   ========================================================================== */
+
+.window {
+  position: absolute;
+  left: 34%;
+  width: 32%;
+  top: 6%;
+  height: 38%;
+
+  /* The casing is this element's padding. Padding as a frame means the glass
+     can be a single child at 100%/100% and the mullions inside it stay
+     measured against the glass, not against the casing. Same reasoning as the
+     scene frame — a border would have complicated every child's maths. */
+  padding: calc(var(--u) * 1.1);
+  border-radius: calc(var(--u) * 0.3);
+
+  background: linear-gradient(
+    180deg,
+    color-mix(in srgb, var(--tile) 92%, white) 0%,
+    var(--tile) 55%,
+    var(--tile-grout) 100%
+  );
+
+  box-shadow:
+    /* casing highlight, then the shadow it casts onto the wall */
+    inset 0 0 0 1px rgb(255 255 255 / 0.55),
+    0 calc(var(--u) * 0.5) calc(var(--u) * 1.4) rgb(var(--shadow-color) / 0.22);
+}
+
+.window__glass {
+  position: relative;
+  width: 100%;
+  height: 100%;
+  overflow: hidden;
+
+  /* Glass sits deeper than the casing, so the casing shadow falls onto it. */
+  box-shadow: inset 0 calc(var(--u) * 0.35) calc(var(--u) * 0.9)
+    rgb(var(--shadow-color) / 0.35);
+}
+
+/* Placeholder dusk sky. Phase 6 replaces this with sun, cloud and landscape —
+   the gradient stops are already reading from the sky variables so the night
+   swap works before any of that exists. */
+.window__sky {
+  position: absolute;
+  inset: 0;
+  background: linear-gradient(
+    180deg,
+    var(--sky-top) 0%,
+    var(--sky-mid) 58%,
+    var(--sky-bottom) 100%
+  );
+  transition: background 1200ms var(--ease-soft);
+}
+
+/* --------------------------------------------------------------------------
+   Mullions. Four panes from zero pane elements: one vertical bar and one
+   horizontal bar crossing the glass. The glass clips them, so they never need
+   to know how big the window is.
+   -------------------------------------------------------------------------- */
+
+.window__glass::before,
+.window__glass::after {
+  content: "";
+  position: absolute;
+
+  /* Both bars must outrank .window__sky. ::before is treated as the glass's
+     FIRST child, so without this the sky element — which comes later in the
+     DOM — paints straight over the vertical mullion while leaving the
+     horizontal one (::after, a later child) visible. That asymmetry is the
+     giveaway whenever half a pseudo-element pair goes missing. */
+  z-index: 1;
+
+  background: linear-gradient(
+    180deg,
+    color-mix(in srgb, var(--tile) 95%, white),
+    var(--tile-grout)
+  );
+  /* A hairline of shadow on each bar lifts it off the sky. Without this the
+     mullions read as flat tape stuck on the glass. */
+  box-shadow: 0 0 calc(var(--u) * 0.4) rgb(var(--shadow-color) / 0.4);
+}
+
+/* vertical */
+.window__glass::before {
+  top: 0;
+  bottom: 0;
+  left: 50%;
+  width: calc(var(--u) * 0.85);
+  transform: translateX(-50%);
+}
+
+/* horizontal — sat above centre, which reads as a taller lower sash and
+   matches the reference's proportions */
+.window__glass::after {
+  left: 0;
+  right: 0;
+  top: 53%;
+  height: calc(var(--u) * 0.85);
+}
+
+/* --------------------------------------------------------------------------
+   Sill — a small ledge that sticks out past the casing on both sides.
+   -------------------------------------------------------------------------- */
+
+.window__sill {
+  position: absolute;
+  left: calc(var(--u) * -1.4);
+  right: calc(var(--u) * -1.4);
+  top: 100%;
+  height: calc(var(--u) * 1.3);
+  border-radius: 0 0 calc(var(--u) * 0.3) calc(var(--u) * 0.3);
+
+  background: linear-gradient(
+    180deg,
+    color-mix(in srgb, var(--tile) 96%, white) 0%,
+    var(--tile) 45%,
+    var(--tile-grout) 100%
+  );
+
+  box-shadow: 0 calc(var(--u) * 0.35) calc(var(--u) * 0.9)
+    rgb(var(--shadow-color) / 0.28);
+}

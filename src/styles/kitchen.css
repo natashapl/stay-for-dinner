@@ -1,0 +1,178 @@
+/* ==========================================================================
+   Room shell — wall, backsplash, floor.
+   --------------------------------------------------------------------------
+   Convention used by every scene stylesheet:
+
+     - each major group is `position: absolute; inset: 0`
+     - its parts are then placed with percentages of the WHOLE canvas
+
+   Nesting percentages inside percentages means a 3% nudge to a parent
+   silently rescales every child, and I lose the ability to reason about where
+   anything actually is. Flattening it costs one wrapper and buys me a single
+   coordinate space that matches the elevation variables.
+   ========================================================================== */
+
+.room {
+  position: absolute;
+  inset: 0;
+}
+
+/* --------------------------------------------------------------------------
+   Wall
+   -------------------------------------------------------------------------- */
+
+.room__wall {
+  position: absolute;
+  inset: 0;
+
+  /* Two layers: a warm bloom roughly where the window is, over a vertical
+     wash. The bloom is doing the work a light source would — it's why the
+     wall reads as lit from the middle rather than flatly painted. Phase 6
+     replaces it with a real directional beam. */
+  background:
+    radial-gradient(
+      75% 55% at 50% 26%,
+      color-mix(in srgb, var(--room-light) 40%, transparent) 0%,
+      transparent 70%
+    ),
+    linear-gradient(
+      180deg,
+      var(--wall) 0%,
+      var(--wall) 46%,
+      var(--wall-shadow) 100%
+    );
+}
+
+/* --------------------------------------------------------------------------
+   Backsplash — running-bond subway tile, no per-tile elements.
+
+   The horizontal grout lines live on this element's own background, because
+   they run the full width and never need offsetting.
+
+   The vertical seams are the interesting part. Real subway tile is laid in
+   running bond: every other row is shifted half a tile. A single gradient
+   can't do that — it has one phase for the whole surface. So there are two
+   pseudo-elements, each drawing the full grid of vertical seams, and each
+   MASKED to alternating rows with a repeating-linear-gradient. ::before keeps
+   the even rows, ::after keeps the odd rows and shifts its seams half a tile
+   sideways.
+
+   Masking to stripes to make two layers interleave is a trick worth
+   remembering — it works anywhere a pattern needs to alternate per row.
+   -------------------------------------------------------------------------- */
+
+.room__backsplash {
+  position: absolute;
+  left: 0;
+  right: 0;
+  top: 46%;
+  bottom: calc(100% - var(--counter-y));
+
+  /* Tile size in --u, so tiles keep their proportions as the scene scales.
+     If these were px, the tiles would get relatively larger on a phone. */
+  --tile-w: calc(var(--u) * 4.4);
+  --tile-h: calc(var(--u) * 2.1);
+
+  background-color: var(--tile);
+  background-image:
+    /* a faint warm sheen, strongest near the window */
+    radial-gradient(
+      60% 120% at 50% 0%,
+      color-mix(in srgb, var(--room-light) 22%, transparent),
+      transparent 70%
+    ),
+    /* Falloff toward the counter. The tile was the brightest thing in the
+       whole scene, and it sits at the BACK — which dragged the eye away from
+       the island. Whatever is furthest from the viewer should rarely hold the
+       highest value; the food needs to win that. */
+    linear-gradient(
+      180deg,
+      transparent 0%,
+      rgb(var(--shadow-color) / 0.06) 45%,
+      rgb(var(--shadow-color) / 0.2) 100%
+    ),
+    /* horizontal grout */
+    repeating-linear-gradient(
+      180deg,
+      transparent 0 calc(var(--tile-h) - 1px),
+      var(--tile-grout) calc(var(--tile-h) - 1px) var(--tile-h)
+    );
+
+  box-shadow: inset 0 calc(var(--u) * -0.6) calc(var(--u) * 1.2) -0.4cqw
+    rgb(var(--shadow-color) / 0.12);
+}
+
+.room__backsplash::before,
+.room__backsplash::after {
+  content: "";
+  position: absolute;
+  inset: 0;
+  background-image: repeating-linear-gradient(
+    90deg,
+    transparent 0 calc(var(--tile-w) - 1px),
+    var(--tile-grout) calc(var(--tile-w) - 1px) var(--tile-w)
+  );
+}
+
+/* Even rows only. */
+.room__backsplash::before {
+  mask-image: repeating-linear-gradient(
+    180deg,
+    #000 0 var(--tile-h),
+    transparent var(--tile-h) calc(var(--tile-h) * 2)
+  );
+}
+
+/* Odd rows only, seams pushed half a tile across — this is the offset that
+   turns a plain grid into running bond. */
+.room__backsplash::after {
+  background-position-x: calc(var(--tile-w) / 2);
+  mask-image: repeating-linear-gradient(
+    180deg,
+    transparent 0 var(--tile-h),
+    #000 var(--tile-h) calc(var(--tile-h) * 2)
+  );
+}
+
+/* --------------------------------------------------------------------------
+   Floor
+   -------------------------------------------------------------------------- */
+
+.room__floor {
+  position: absolute;
+  left: 0;
+  right: 0;
+  top: var(--floor-y);
+  bottom: 0;
+
+  /* Terracotta, darkest right where it meets the cabinets. That top shadow is
+     what stops the floor from looking like it's floating away from the wall —
+     a contact shadow is usually cheaper and more convincing than any amount
+     of extra geometry. */
+  background:
+    linear-gradient(
+      180deg,
+      rgb(var(--shadow-color) / 0.35) 0%,
+      transparent 12%
+    ),
+    linear-gradient(180deg, var(--floor-dark) 0%, var(--floor) 55%, var(--floor-dark) 100%);
+}
+
+/* Floorboards running left to right. Widely spaced lines only — the island
+   covers nearly all of this, so anything more detailed would be work nobody
+   ever sees.
+
+   Same shadow-then-highlight ordering as the island's shiplap, and the same
+   reason: the gradient points down, so the dark line reads as the gap between
+   two boards and the pale line under it as the near board's lit edge. */
+.room__floor::after {
+  content: "";
+  position: absolute;
+  inset: 0;
+  background-image: repeating-linear-gradient(
+    180deg,
+    transparent 0 calc(var(--u) * 2.4),
+    rgb(var(--shadow-color) / 0.16) calc(var(--u) * 2.4) calc(var(--u) * 2.65),
+    rgb(255 255 255 / 0.05) calc(var(--u) * 2.65) calc(var(--u) * 2.85)
+  );
+}

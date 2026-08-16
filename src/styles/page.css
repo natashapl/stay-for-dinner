@@ -1,0 +1,130 @@
+/* ==========================================================================
+   Page chrome — everything outside the frame.
+   Deliberately quiet. It exists to hand the viewer over to the illustration.
+   ========================================================================== */
+
+body {
+  color: var(--page-text);
+  background-color: var(--page-bg);
+
+  /* Hard floor for the whole layout. Below this the page stops shrinking and
+     the browser scrolls horizontally instead, which keeps the frame and the
+     interactive targets inside it usable rather than letting them collapse.
+     Everything else sizes off percentages, so this one value governs how
+     narrow the entire page can get. */
+  min-width: 320px;
+
+  /* Two soft radial washes instead of a flat colour. The upper one sits
+     roughly where the frame will be, so the page looks like it's already
+     catching a little spill light from the kitchen before the artwork even
+     exists. Fixed attachment keeps the glow anchored while the page scrolls. */
+  background-image:
+    radial-gradient(
+      120% 80% at 50% 0%,
+      var(--page-bg-glow) 0%,
+      transparent 60%
+    ),
+    radial-gradient(
+      90% 60% at 50% 45%,
+      color-mix(in srgb, var(--accent) 8%, transparent) 0%,
+      transparent 70%
+    );
+  background-attachment: fixed;
+}
+
+.page {
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  gap: clamp(1.5rem, 1rem + 2vw, 2.75rem);
+
+  /* Vertical padding only. The side gutters live on the text blocks below
+     instead, so that .page stays exactly as wide as the page itself — which
+     is what makes the frame's percentages honest. When this padding was here,
+     a "60%" frame measured 56.7% of the window, because it was really 60% of
+     an already-inset column. */
+  padding-block: var(--space-page);
+}
+
+/* The stage spans the full page width and carries no gutter of its own, so
+   .scene-frame's percentages resolve against the width the eye actually sees.
+   It also has to be explicitly 100%: .page centres its children with
+   align-items, which makes every child shrink-to-fit, and a shrink-to-fit
+   parent would give those percentages nothing to resolve against — the frame
+   would collapse to zero width. */
+.page__stage {
+  width: 100%;
+}
+
+/* The gutter the page used to own. Only the text needs it now. */
+.page__intro,
+.page__hint,
+.page__outro {
+  padding-inline: clamp(1rem, 0.5rem + 2vw, 2rem);
+}
+
+/* Shared measure for all the text blocks so title, intro and footer share
+   one optical column even though they're different sizes. */
+.page__intro,
+.page__outro {
+  width: min(60ch, 100%);
+  text-align: center;
+}
+
+.page__title {
+  font-family: var(--font-display);
+  font-size: var(--step-title);
+  font-weight: 600;
+  letter-spacing: -0.015em;
+  color: var(--page-text);
+  margin-bottom: 0.4em;
+}
+
+/* Warm underline that echoes the sunset without shouting about it. */
+.page__title::after {
+  content: "";
+  display: block;
+  width: 3.5rem;
+  height: 2px;
+  margin: 0.5em auto 0;
+  border-radius: 2px;
+  background: linear-gradient(
+    90deg,
+    transparent,
+    var(--accent),
+    transparent
+  );
+}
+
+.page__lede {
+  font-size: var(--step-intro);
+  color: var(--page-text-muted);
+}
+
+.page__hint {
+  font-size: var(--step-small);
+  color: var(--page-text-faint);
+  letter-spacing: 0.04em;
+  text-transform: uppercase;
+}
+
+.page__outro {
+  display: flex;
+  flex-direction: column;
+  gap: 0.4rem;
+  padding-top: clamp(0.5rem, 2vw, 1.25rem);
+  border-top: 1px solid var(--page-rule);
+  font-size: var(--step-small);
+  color: var(--page-text-faint);
+}
+
+.page__outro a {
+  color: var(--page-text-muted);
+  text-underline-offset: 0.2em;
+  text-decoration-color: var(--page-rule);
+  transition: color 200ms var(--ease-soft);
+}
+
+.page__outro a:hover {
+  color: var(--accent);
+}

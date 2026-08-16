@@ -1,0 +1,72 @@
+/* Small, opinionated reset. Only what this project actually needs. */
+
+*,
+*::before,
+*::after {
+  box-sizing: border-box;
+}
+
+* {
+  margin: 0;
+}
+
+html {
+  -webkit-text-size-adjust: 100%;
+
+  /* Always reserve the scrollbar's space, even when there's nothing to
+     scroll. Without this, shortening the window makes the content overflow,
+     the scrollbar appears, and the viewport loses ~15px of width — which any
+     percentage-sized element answers by visibly twitching narrower. The frame
+     is sized in %, so it would jump for a reason that has nothing to do with
+     the layout. Reserving the gutter keeps the usable width constant. */
+  scrollbar-gutter: stable;
+}
+
+body {
+  min-height: 100svh;
+  font-family: var(--font-body);
+  line-height: 1.55;
+  -webkit-font-smoothing: antialiased;
+  text-rendering: optimizeLegibility;
+}
+
+h1,
+h2,
+h3 {
+  line-height: 1.1;
+  text-wrap: balance;
+  font-weight: 600;
+}
+
+p {
+  text-wrap: pretty;
+}
+
+button {
+  font: inherit;
+  color: inherit;
+  background: none;
+  border: none;
+  padding: 0;
+}
+
+:focus-visible {
+  outline: 3px solid var(--focus-ring);
+  outline-offset: 3px;
+  border-radius: 2px;
+}
+
+/* Global motion guard. Every phase after this one adds animation, so the
+   opt-out lives here once rather than being re-remembered in each file.
+   I don't set animation:none — a few things (steam) look broken mid-frame if
+   they simply stop, so I collapse them to a single instant frame instead. */
+@media (prefers-reduced-motion: reduce) {
+  *,
+  *::before,
+  *::after {
+    animation-duration: 0.01ms !important;
+    animation-iteration-count: 1 !important;
+    transition-duration: 0.01ms !important;
+    scroll-behavior: auto !important;
+  }
+}

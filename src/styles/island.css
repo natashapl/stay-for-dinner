@@ -1,0 +1,312 @@
+/* ==========================================================================
+   Kitchen island and stools — the foreground.
+   ========================================================================== */
+
+.island {
+  position: absolute;
+  inset: 0;
+}
+
+/* --------------------------------------------------------------------------
+   Butcher-block top.
+
+   Three horizontal bands sell a solid slab seen from just above counter
+   height:
+
+     .island__top   the lit upper surface, receding away from me
+     .island__edge  the front edge, i.e. the thickness of the wood
+     .island__base  the painted cabinet below
+
+   The top plane is deliberately WIDER than the base. That overhang is the
+   single most useful cue here — a slab whose edges line up with its cabinet
+   reads as a flat coloured rectangle, but let it hang over by a few percent
+   and it immediately becomes a countertop with something underneath.
+   -------------------------------------------------------------------------- */
+
+.island__top {
+  position: absolute;
+  left: var(--island-inset);
+  right: var(--island-inset);
+  top: var(--island-top-y);
+  bottom: calc(100% - var(--island-edge-y));
+
+  /* Lighter at the back, warmer at the front. A surface tilting away from the
+     viewer catches more light at its far edge, and faking that with a
+     gradient is far cheaper than any 3D transform — and it stays crisp at
+     every scale. */
+  background: linear-gradient(
+    180deg,
+    color-mix(in srgb, var(--wood-light) 82%, white) 0%,
+    var(--wood-light) 28%,
+    var(--wood) 100%
+  );
+
+  background-image:
+    /* Light falling ACROSS the slab, not just down it. The window is a point
+       source roughly above centre, so the middle of the counter is bright and
+       both ends fall away — a long surface lit evenly end to end looks like a
+       painted plank, and this is where the pasta will sit, so it should be
+       the brightest place in the room. */
+    radial-gradient(
+      44% 190% at 50% 25%,
+      rgb(255 240 206 / 0.55) 0%,
+      rgb(255 226 178 / 0.18) 45%,
+      transparent 78%
+    ),
+    /* Plank seams running left to right across the slab.
+
+       Not a repeating gradient, and that's the point. The seams are hand
+       placed at 11% / 27% / 48% / 74%, so the gaps between them GROW toward
+       the front: 11, 16, 21, 26. Evenly spaced lines would flatten the
+       trapezoid back out, because a receding surface compresses toward its
+       far edge — the planks nearest the wall should look tighter together
+       than the ones nearest me.
+
+       A repeating-linear-gradient can only ever space evenly, so perspective
+       spacing has to be written out by hand. Worth the extra stops: this is
+       what makes the clip-path read as depth rather than as a cut corner.
+
+       (My earlier repeat was 9 × --u — a width-derived unit on a band only
+       ~8% of the canvas TALL, so no seam ever landed inside it and the grain
+       was invisible.) */
+    linear-gradient(
+      180deg,
+      transparent 0 11%,
+      rgb(var(--shadow-color) / 0.075) 11% 11.9%,
+      transparent 11.9% 27%,
+      rgb(var(--shadow-color) / 0.065) 27% 28%,
+      transparent 28% 48%,
+      rgb(var(--shadow-color) / 0.055) 48% 49.1%,
+      transparent 49.1% 74%,
+      rgb(var(--shadow-color) / 0.05) 74% 75.2%,
+      transparent 75.2% 100%
+    ),
+    linear-gradient(
+      180deg,
+      color-mix(in srgb, var(--wood-light) 82%, white) 0%,
+      var(--wood-light) 28%,
+      var(--wood) 100%
+    );
+
+  /* Perspective, without a single transform.
+
+     Every plane in this scene faced the viewer square-on, which is the main
+     reason it read as flat. A rectangular slab seen from slightly above
+     doesn't stay rectangular: its far edge converges toward the vanishing
+     point and appears NARROWER than its near edge. Clipping the top plane to
+     a trapezoid says that in one declaration.
+
+     The triangles this cuts from the back corners expose the base cabinets
+     behind, which is exactly right — that's the counter receding away from
+     me, and it's what turns the island from a painted band into an object
+     standing in a room. */
+  clip-path: polygon(0% 100%, 100% 100%, 96% 0%, 4% 0%);
+
+  /* Occlusion shadow along the far edge. There's a real gap between the
+     island and the back counter, and that gap is in shadow — without this
+     line the slab and the cabinets behind it fuse into one field of colour. */
+  box-shadow: inset 0 calc(var(--u) * 0.55) calc(var(--u) * 0.7)
+    calc(var(--u) * -0.35) rgb(var(--shadow-color) / 0.5);
+}
+
+.island__edge {
+  position: absolute;
+  left: var(--island-inset);
+  right: var(--island-inset);
+  top: var(--island-edge-y);
+  bottom: calc(100% - var(--island-base-y));
+
+  /* Starts a clear step darker than where the top plane ends. When the two
+     shared a value the slab read as one tall plank — the eye needs a jump in
+     tone at the fold to separate a horizontal surface from a vertical one. */
+  background: linear-gradient(
+    180deg,
+    color-mix(in srgb, var(--wood) 80%, var(--wood-dark)) 0%,
+    var(--wood-dark) 45%,
+    color-mix(in srgb, var(--wood-dark) 72%, black) 100%
+  );
+
+  /* A bright hairline along the very top of the edge is the fold between the
+     two planes. Remove it and the top and the edge merge into one shape. */
+  box-shadow:
+    inset 0 1px 0 color-mix(in srgb, var(--wood-light) 90%, white),
+    0 calc(var(--u) * 0.6) calc(var(--u) * 1.2) rgb(var(--shadow-color) / 0.35);
+  border-radius: 0 0 calc(var(--u) * 0.25) calc(var(--u) * 0.25);
+}
+
+/* --------------------------------------------------------------------------
+   Panelled base.
+
+   Vertical beadboard, drawn as a repeating-linear-gradient rather than a row
+   of elements. Each groove is a dark line with a light line beside it — the
+   pair is what makes a flat gradient look like a milled channel, because
+   that's what an edge does: one side falls into shadow, the other catches
+   light.
+
+   Vertical grooves are lit from the side rather than from above, so the
+   dark/light order here reads left-to-right (90deg) instead of top-to-bottom.
+   Compare the floor in kitchen.css, where the boards run horizontally and the
+   same pair has to be ordered down the surface instead.
+   -------------------------------------------------------------------------- */
+
+.island__base {
+  position: absolute;
+  left: var(--island-base-inset);
+  right: var(--island-base-inset);
+  top: var(--island-base-y);
+  bottom: var(--island-base-end);
+
+  /* Deliberately darker than the identical cabinets on the back wall. The
+     window is behind the island, so this face points AWAY from the only light
+     in the room. Two surfaces that share a paint colour but not an
+     orientation should never share a value — matching them was flattening the
+     foreground into the background. */
+  background-color: color-mix(in srgb, var(--cabinet) 84%, #3a2416);
+  background-image:
+    /* the slab above blocks light from the top of the base */
+    linear-gradient(
+      180deg,
+      rgb(var(--shadow-color) / 0.4) 0%,
+      transparent 14%,
+      transparent 74%,
+      rgb(var(--shadow-color) / 0.32) 100%
+    ),
+    repeating-linear-gradient(
+      90deg,
+      transparent 0 calc(var(--u) * 2.6),
+      rgb(var(--shadow-color) / 0.3) calc(var(--u) * 2.6) calc(var(--u) * 2.9),
+      rgb(255 255 255 / 0.1) calc(var(--u) * 2.9) calc(var(--u) * 3.2)
+    );
+
+  box-shadow: 0 calc(var(--u) * 0.8) calc(var(--u) * 1.6) rgb(var(--shadow-color) / 0.4);
+}
+
+/* Contact shadow where the island meets the floor. Anchors the whole
+   foreground — without it the island appears to hover. */
+.island__base::after {
+  content: "";
+  position: absolute;
+  left: -2%;
+  right: -2%;
+  top: 100%;
+  height: calc(var(--u) * 2.2);
+  background: radial-gradient(
+    60% 100% at 50% 0%,
+    rgb(var(--shadow-color) / 0.5),
+    transparent 75%
+  );
+}
+
+/* --------------------------------------------------------------------------
+   Stools.
+
+   In front of the island in the depth stack, so their seats overlap the base.
+   -------------------------------------------------------------------------- */
+
+.stools {
+  position: absolute;
+  inset: 0;
+}
+
+.stool {
+  position: absolute;
+  bottom: 0;
+  width: 15%;
+  height: 15%;
+}
+
+/* Seen from roughly seat height, a round stool top is a shallow ellipse, not
+   a circle — border-radius: 50% on a wide, short box does that in one
+   declaration. The dark lower half is the seat's own edge thickness. */
+.stool__seat {
+  position: absolute;
+  left: 0;
+  right: 0;
+  top: 0;
+  height: 34%;
+  border-radius: 50%;
+  z-index: 2;
+
+  background:
+    radial-gradient(
+      70% 120% at 50% 12%,
+      color-mix(in srgb, var(--wood-light) 88%, white) 0%,
+      var(--wood) 55%,
+      var(--wood-dark) 100%
+    );
+
+  /* A solid, un-blurred offset shadow in the seat's own wood colour becomes
+     the seat's EDGE — the copy sits a few pixels lower and is read as the
+     thickness of the disc rather than as a shadow. Cheap way to give a flat
+     ellipse a side, and it keeps the elliptical outline automatically. */
+  box-shadow:
+    inset 0 calc(var(--u) * -0.35) calc(var(--u) * 0.4) rgb(var(--shadow-color) / 0.4),
+    0 calc(var(--u) * 0.6) 0 var(--wood-dark),
+    0 calc(var(--u) * 1) calc(var(--u) * 1) rgb(var(--shadow-color) / 0.4);
+}
+
+/* Legs splay outward. Rotating from the TOP is what makes them hinge at the
+   seat and open out at the floor — with the default centre origin they'd
+   scissor around their middles and detach from the seat. */
+.stool__leg {
+  position: absolute;
+  top: 26%;
+  height: 74%;
+  width: calc(var(--u) * 0.85);
+  background: linear-gradient(90deg, var(--wood-dark), var(--wood) 45%, var(--wood-dark));
+  transform-origin: top center;
+  z-index: 1;  /* behind the seat, but in front of the island */
+}
+
+.stool__leg--left {
+  left: 30%;
+  transform: rotate(7deg);
+}
+
+.stool__leg--right {
+  right: 15%;
+  transform: rotate(-7deg);
+}
+
+/* --------------------------------------------------------------------------
+   The back pair.
+
+   Four cues, all small, all pulling the same way — depth on an object this
+   size comes from stacking several weak signals rather than one strong one:
+
+     inset further      they're nearer the vanishing point, so a head-on view
+                        shows them BETWEEN the front legs, not outside them
+     shorter            their feet meet the floor further back, which on a
+                        receding floor plane is higher up the picture
+     thinner            same leg, more distance
+     darker             away from the window, and further into the shade
+                        under the island
+
+   Getting the horizontal one backwards is the classic mistake: splay the back
+   legs WIDER and the stool instantly reads as a wobbly X instead of a box.
+   -------------------------------------------------------------------------- */
+
+.stool__leg--back-left,
+.stool__leg--back-right {
+  top: 20%;
+  height: 81%;
+  width: calc(var(--u) * 0.8);
+  z-index: 0;
+
+  background: linear-gradient(
+    90deg,
+    color-mix(in srgb, var(--wood-dark) 62%, black),
+    color-mix(in srgb, var(--wood-dark) 88%, black) 45%,
+    color-mix(in srgb, var(--wood-dark) 62%, black)
+  );
+}
+
+.stool__leg--back-left {
+  left: 15%;
+  transform: rotate(7deg);
+}
+
+.stool__leg--back-right {
+  right: 30%;
+  transform: rotate(-7deg);
+}

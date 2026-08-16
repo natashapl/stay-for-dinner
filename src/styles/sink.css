@@ -1,0 +1,171 @@
+/* ==========================================================================
+   Sink and faucet
+   ========================================================================== */
+
+.sink-area {
+  position: absolute;
+  inset: 0;
+}
+
+/* The basin is cut into the counter, so it starts just under the counter's
+   top surface and overlaps the slab. Sitting it slightly high like this is
+   what makes it read as inset rather than as a box parked in front. */
+/* The rim: a thin band of steel sitting flush in the counter slab. Keeping it
+   inside the counter's own thickness is what makes it read as dropped in
+   rather than parked on top — earlier I had the whole sink hanging below the
+   counter line and it looked like a tray someone had left out. */
+/* Now that the counter has a real top plane, the sink can be cut INTO that
+   plane instead of hanging off a line. It's inset from the back edge so a
+   strip of worktop shows behind it, which is what actually reads as "dropped
+   into a surface" — a basin flush against the backsplash just looks stuck on.
+   It stops short of the front edge for the same reason. */
+.sink {
+  position: absolute;
+  left: 40%;
+  width: 20%;
+  top: calc(var(--counter-y) + 0.9%);
+  height: calc(var(--counter-surface-h) - 1.4%);
+
+  background: linear-gradient(180deg, var(--metal) 0%, var(--metal-dark) 100%);
+  border-radius: calc(var(--u) * 0.2) calc(var(--u) * 0.2) calc(var(--u) * 0.5)
+    calc(var(--u) * 0.5);
+
+  box-shadow:
+    /* the counter casting onto the rim, and a lit front lip below it */
+    inset 0 calc(var(--u) * 0.3) calc(var(--u) * 0.5) rgb(var(--shadow-color) / 0.5),
+    inset 0 calc(var(--u) * -0.22) 0 rgb(255 255 255 / 0.3);
+
+  clip-path: polygon(0% 100%, 100% 100%, 96% 0%, 4% 0%);
+}
+
+/* The hollow. Dark at the top because that's the far wall of the basin
+   falling into shadow, lightening toward the bottom where the base catches
+   the window. That vertical flip is the entire read of "this is a hole". */
+.sink__basin {
+  position: absolute;
+  inset: 22% 4% 12%;
+  border-radius: calc(var(--u) * 0.15) calc(var(--u) * 0.15) calc(var(--u) * 0.4)
+    calc(var(--u) * 0.4);
+  background: linear-gradient(
+    180deg,
+    color-mix(in srgb, var(--metal-dark) 45%, black) 0%,
+    color-mix(in srgb, var(--metal-dark) 78%, black) 55%,
+    var(--metal-dark) 100%
+  );
+  clip-path: polygon(0% 100%, 100% 100%, 97% 0%, 3% 0%);
+}
+
+/* --------------------------------------------------------------------------
+   Faucet.
+
+   The whole gooseneck is ONE element. It's a rectangle with a thick border,
+   the bottom border removed, and the top corners rounded by half its width —
+   which leaves an arch.
+
+   That worked, but it could only ever be a symmetrical ∩: the two legs of one
+   bordered box always hang down the same distance, so it read as a croquet
+   hoop rather than a tap. A real pull-down faucet is asymmetric — a tall
+   straight riser, a hook over the top, and a SHORT spout on the way back
+   down.
+
+   So the bordered box is now only the hook at the top, and the two sides are
+   separate elements that continue past it by different amounts. The moment a
+   shape needs to be asymmetric, that's the signal to stop trying to get it
+   out of one border.
+   -------------------------------------------------------------------------- */
+
+.faucet {
+  position: absolute;
+  left: 50%;
+  bottom: calc(100% - var(--counter-y) - 0.9%);
+  width: 4.6%;
+  height: 13%;
+
+  /* One stroke width for every part of the faucet, so the tube reads as a
+     continuous pipe. The arc spends it on border-width, the riser and spout
+     on their own widths. */
+  --stroke: calc(var(--u) * 0.6);
+
+  /* Cylindrical shading. A pale stripe just left of centre, with both edges
+     falling to near-black, is what turns a flat bar into a round metal tube —
+     the highlight sits where a cylinder would actually catch the window. */
+  --tube: linear-gradient(
+    90deg,
+    color-mix(in srgb, var(--fixture) 55%, black) 0%,
+    var(--fixture) 22%,
+    color-mix(in srgb, var(--fixture) 45%, white) 42%,
+    var(--fixture) 68%,
+    color-mix(in srgb, var(--fixture) 60%, black) 100%
+  );
+}
+
+/* The hook only. Its legs stop at 42% and the riser/spout take over. */
+.faucet__arc {
+  position: absolute;
+  top: 0;
+  left: 0;
+  right: 0;
+  height: 42%;
+
+  border: var(--stroke) solid var(--fixture);
+  border-bottom: 0;
+
+  /* Elliptical corners: rx is half the width so the two curves meet at the
+     top with no flat span between them, ry is under 100% so each leg keeps a
+     little straight length before the curve begins. */
+  border-radius: 50% 50% 0 0 / 78% 78% 0 0;
+
+  box-shadow: inset calc(var(--u) * 0.12) 0 0 rgb(255 255 255 / 0.2);
+}
+
+/* Long side: continues the arc's left leg down to the counter. Overlaps the
+   arc slightly so no hairline seam shows where they meet. */
+.faucet__riser {
+  position: absolute;
+  left: 0;
+  top: 38%;
+  bottom: 0;
+  width: var(--stroke);
+  background: var(--tube);
+}
+
+/* Where the riser meets the counter — a small escutcheon, wider than the
+   tube, so the faucet looks bolted through the worktop instead of resting
+   on it. */
+.faucet__riser::after {
+  content: "";
+  position: absolute;
+  left: 50%;
+  bottom: 0;
+  width: calc(var(--stroke) * 2.6);
+  height: calc(var(--stroke) * 0.9);
+  transform: translateX(-50%);
+  border-radius: 40% 40% 20% 20%;
+  background: var(--tube);
+}
+
+/* Short side: the spout head, slightly fatter than the tube and centred on
+   the arc's right leg. */
+.faucet__spout {
+  position: absolute;
+  right: calc(var(--stroke) * -0.28);
+  top: 38%;
+  width: calc(var(--stroke) * 1.55);
+  height: 22%;
+  border-radius: calc(var(--stroke) * 0.3) calc(var(--stroke) * 0.3)
+    calc(var(--stroke) * 0.55) calc(var(--stroke) * 0.55);
+  background: var(--tube);
+}
+
+/* Small lever, angled off the riser. */
+.faucet__handle {
+  position: absolute;
+  left: calc(var(--stroke) * -2.4);
+  bottom: 22%;
+  width: calc(var(--stroke) * 3);
+  height: calc(var(--stroke) * 0.75);
+  border-radius: calc(var(--stroke) * 0.4);
+  background: var(--tube);
+  transform: rotate(-8deg);
+  transform-origin: right center;
+}

@@ -1,0 +1,231 @@
+/* ==========================================================================
+   Design tokens
+   --------------------------------------------------------------------------
+   Two deliberate tiers here:
+
+   1. :root  — page chrome. Title, intro copy, the muted surround. These never
+      change, because the page frame shouldn't react when the kitchen does.
+
+   2. .kitchen — everything inside the frame. All scene colour lives here
+      instead of :root so that Phase 9 can flip the entire illustration to
+      night by re-declaring the same names on .kitchen.is-night. Nothing
+      downstream has to know night mode exists; it just reads var(--wall).
+   ========================================================================== */
+
+:root {
+  /* --- Page surround -----------------------------------------------------
+     Kept darker and greyer than anything inside the frame. The kitchen has to
+     be the warmest thing on screen or the "looking into a lit room" effect
+     collapses. */
+  --page-bg: #241c17;
+  --page-bg-glow: #3a2b21;
+  --page-text: #f0e3d2;
+  --page-text-muted: #b3a08d;
+  --page-text-faint: #8a7767;
+  --page-rule: #43332a;
+
+  --accent: #e8a95e;
+  --focus-ring: #ffd28a;
+
+  /* Frame: reads as a dark wood opening cut through the page. */
+  --frame-wood: #4a3324;
+  --frame-wood-dark: #2e1f16;
+  --frame-wood-light: #6b4a34;
+  --frame-radius: 10px;
+  --frame-width: clamp(8px, 1.2vw, 16px);
+
+  /* Type scale. clamp() everywhere so the supporting copy shrinks with the
+     scene rather than at hard breakpoints. */
+  --font-body: ui-sans-serif, system-ui, -apple-system, "Segoe UI", Roboto,
+    "Helvetica Neue", Arial, sans-serif;
+  --font-display: "Iowan Old Style", "Palatino Linotype", Palatino, Georgia,
+    "Times New Roman", serif;
+
+  --step-title: clamp(2rem, 1.2rem + 3.4vw, 3.6rem);
+  --step-intro: clamp(0.95rem, 0.86rem + 0.45vw, 1.15rem);
+  --step-small: clamp(0.78rem, 0.74rem + 0.2vw, 0.88rem);
+
+  --space-page: clamp(1.5rem, 1rem + 3vw, 4rem);
+
+  --ease-soft: cubic-bezier(0.4, 0, 0.2, 1);
+  --ease-settle: cubic-bezier(0.22, 0.61, 0.36, 1);
+}
+
+/* ==========================================================================
+   Scene tokens — dusk (default state)
+   Sampled off the reference painting so the palette stays coherent once the
+   real artwork lands.
+   ========================================================================== */
+
+.kitchen {
+  /* --- Proportional unit -------------------------------------------------
+     THE most important line in this file for the artwork.
+
+     .scene is a size container, so 1cqw = 1% of the frame's width no matter
+     how big the frame is. Sizing every object in multiples of --u means the
+     whole kitchen scales as one illustration — a 4u-tall bowl rim stays 4u
+     on a phone. If I sized anything in px, that object would drift out of
+     proportion the moment the frame resized.
+
+     Rule I'm setting for myself: positions in %, sizes in --u. */
+  --u: 1cqw;
+
+  /* --- Scene elevations --------------------------------------------------
+     The horizontal lines the whole room is built on, as percentages of the
+     canvas height. Four stylesheets need to agree on where the counter and
+     the floor are; when they disagree by half a percent you get a hairline
+     gap that looks like a rendering bug. Naming them once fixes that, and it
+     means I can raise the counter and have the backsplash, sink and cabinets
+     all follow.
+
+     Reading down the room: wall -> counter -> base cabinets -> floor, with
+     the island sitting in front of the lot. */
+  --counter-y: 56.5%;        /* back edge of the counter, against the tile */
+  --counter-surface-h: 4%;   /* the visible top PLANE — where objects stand */
+  --counter-edge-h: 1.5%;    /* front lip, i.e. the slab's thickness */
+  --counter-h: 5.5%;         /* surface + edge */
+  --base-cab-y: 62%;         /* counter-y + counter-h */
+  --floor-y: 84%;            /* where the back cabinets meet the floor */
+
+  /* --- Object shading -----------------------------------------------------
+     The three-face rule, for every solid object added from Phase 4 on
+     (toaster, blender, dish rack, cookware).
+
+     A box reads as 2D whenever only one of its faces is visible. Showing two
+     — a front and a top — is the minimum for volume; three, with a side, is
+     better. The faces must differ in VALUE, not just in outline:
+
+       top    lightest — it faces up toward the window
+       front  the base colour
+       side   darkest  — it turns away from the light
+
+     Two rules keep the room coherent:
+
+     1. The top face is a trapezoid, narrower at the back, exactly like
+        .island__top. This is right for a free-standing object because you can
+        see its ends. It is NOT right for a run that meets the side walls —
+        the back counter uses a hard value break at its front edge instead,
+        because a trapezoid there would pull the counter away from the wall.
+
+     2. The side face goes on the side AWAY from the window. The window is
+        centred, so objects left of centre show their left side, objects right
+        of centre show their right. Getting this backwards on one object is
+        instantly readable as wrong even when nobody can say why. */
+  --face-top-lift: 16%;    /* how far the top face mixes toward white */
+  --face-side-drop: 26%;   /* how far the side face mixes toward shadow */
+
+  /* How far the island is inset from the frame, left and right. Shared,
+     because the shadow pass in depth.css has to know exactly how wide the
+     island is — a gradient there fills the whole canvas unless it's told
+     otherwise, and a hardcoded copy of this number is how the shade ends up
+     extending past the object it belongs to. */
+  --island-inset: 5%;       /* the slab */
+  --island-base-inset: 8%;  /* the base — narrower, which IS the overhang */
+
+  --island-top-y: 68.5%;   /* front edge of the island's top plane */
+  --island-edge-y: 76.5%;  /* butcher-block thickness starts */
+  --island-base-y: 80%;    /* painted base below the slab */
+  --island-base-end: 7%;   /* gap left below the base, so floor reads */
+
+  /* Sky, seen through the window */
+  --sky-top: #9fb0d4;
+  --sky-mid: #eda06d;
+  --sky-bottom: #f8cd85;
+  --sun: #fff6d4;
+  --sun-glow: #ffc978;
+  --hills: #b3703f;
+  --hills-far: #c98a5a;
+  --trees: #7c5a34;
+
+  /* Room surfaces */
+  --wall: #ece0cc;
+  --wall-shadow: #d8c6ac;
+  --tile: #f6f1e7;
+  --tile-grout: #ddd2c1;
+
+  --cabinet: #7d8c63;
+  --cabinet-dark: #5f6d49;
+  --cabinet-light: #94a179;
+  --cabinet-edge: #4c5839;
+
+  --wood: #d8a05c;
+  --wood-dark: #b47c3c;
+  --wood-light: #ecc084;
+
+  --floor: #c47a52;
+  --floor-dark: #a35f3d;
+
+  --metal: #cfc9bf;
+  --metal-dark: #8d867c;
+  --fixture: #33302c;
+
+  --ceramic: #f7f2e8;
+  --ceramic-shade: #ddd4c4;
+
+  /* Food — parked here now so Phase 3 inherits the same palette */
+  --sauce: #bf4a2c;
+  --sauce-dark: #94341d;
+  --pasta: #e9b96b;
+  --herb: #4f7a3a;
+
+  /* Meatballs are their own colour, not a shade of the sauce. Browned meat is
+     desaturated and yellow-shifted next to tomato — reusing --sauce made them
+     read as tomatoes sitting in tomato sauce, with nothing but a highlight to
+     tell the two apart. They also need to sit DARKER than the sauce so the
+     pile separates from what it's sitting in. */
+  --meat: #7e4526;
+  --meat-dark: #532a13;
+
+  /* --- Light ------------------------------------------------------------
+     The scene's lighting is driven by these three, not by per-object colour.
+     Warm sunlight from the window, its direction, and how heavy the shadows
+     sit. Phase 6 leans on these hard. */
+  --room-light: #f7c77c;
+  --light-strength: 0.85;
+  --shadow-color: 26 16 10;
+  --shadow-strength: 0.28;
+
+  --sky-glow: 0.5;
+  --star-opacity: 0;
+}
+
+/* --------------------------------------------------------------------------
+   Scene tokens — night (reserved for Phase 9)
+   Not wired to any control yet. It's here now purely to prove the variable
+   architecture works: only colour names get re-declared, no geometry.
+   -------------------------------------------------------------------------- */
+
+.kitchen.is-night {
+  --sky-top: #22243f;
+  --sky-mid: #3d3358;
+  --sky-bottom: #5c4062;
+  --sun: #f4e6c0;
+  --sun-glow: #8a6a7a;
+  --hills: #2c2740;
+  --hills-far: #3a3350;
+  --trees: #1e1b2e;
+
+  --wall: #b59d84;
+  --wall-shadow: #8f7a63;
+  --tile: #c3b6a3;
+  --tile-grout: #a2947f;
+
+  --cabinet: #55603f;
+  --cabinet-dark: #3d4630;
+  --cabinet-light: #6b7551;
+  --cabinet-edge: #2f3625;
+
+  --wood: #a97b45;
+  --wood-dark: #855c31;
+  --wood-light: #c69a63;
+
+  --floor: #8f5738;
+  --floor-dark: #6d3f28;
+
+  --room-light: #e9a54c;
+  --light-strength: 1;
+  --shadow-strength: 0.42;
+
+  --sky-glow: 0.15;
+  --star-opacity: 1;
+}

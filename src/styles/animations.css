@@ -1,0 +1,101 @@
+/* ==========================================================================
+   Ambient animation.
+
+   House rules for this file:
+     - animate transform and opacity only, never width/top/filter-per-frame
+     - slow, small, and looping with no obvious restart
+     - nothing bounces; kitchens don't have easing curves that overshoot
+
+   The reduced-motion guard lives once in reset.css and collapses everything
+   here to a single instant frame, so each animation's RESTING state (the
+   styles on the element itself, outside the keyframes) has to be the state
+   I'd want a viewer with motion sensitivity to see.
+   ========================================================================== */
+
+/* --------------------------------------------------------------------------
+   Steam.
+
+   Three wisps share one keyframe. The variation comes from --i on each wisp
+   feeding its delay and duration, which is far easier to tune than three
+   near-identical @keyframes blocks.
+   -------------------------------------------------------------------------- */
+
+.steam {
+  position: absolute;
+  left: 12%;
+  right: 12%;
+
+  /* Anchored to the bowl's TOP edge, not partway down its body.
+
+     My first attempt put the wisps at 62% of the bowl's height, which is
+     BEHIND the ceramic — and since steam sits at z-index -1 so it appears to
+     come out of the bowl rather than off the front of it, the vessel simply
+     covered the whole animation. Anything painted behind an object has to
+     start where that object ends. */
+  bottom: 96%;
+  height: 80%;
+  pointer-events: none;
+
+  /* Steam belongs behind the rim it rises from, so it appears to come out of
+     the bowl rather than off the front of it. */
+  z-index: -1;
+}
+
+.steam__wisp {
+  position: absolute;
+  bottom: 0;
+  width: calc(var(--u) * 3.6);
+  height: calc(var(--u) * 3.6);
+  border-radius: 50%;
+
+  /* Very slightly COOL white, against a warm cream backsplash.
+
+     Pure white steam on a cream wall is nearly invisible — the two differ in
+     brightness by almost nothing, and brightness is all a neutral white can
+     offer. Cooling the vapour a few points makes it separate by HUE instead,
+     which reads at much lower contrast and keeps the animation subtle rather
+     than making it a bright smear across the tile. */
+  background: radial-gradient(
+    circle at 50% 55%,
+    rgb(248 251 255 / 0.92) 0%,
+    rgb(232 240 250 / 0.5) 45%,
+    transparent 72%
+  );
+
+  /* One blur on a small element is cheap; it also means the wisp needs no
+     internal detail to look like vapour. */
+  filter: blur(calc(var(--u) * 0.62));
+
+  /* Resting state is invisible — see the note at the top of this file. */
+  opacity: 0;
+
+  animation: steam-rise calc(5.5s + var(--i) * 1.15s) ease-out infinite;
+  animation-delay: calc(var(--i) * -1.9s);
+
+  /* Promote once rather than per-frame. Without this the blurred element is
+     re-rasterised on every tick of the animation. */
+  will-change: transform, opacity;
+}
+
+@keyframes steam-rise {
+  0% {
+    opacity: 0;
+    transform: translate3d(0, 0, 0) scale(0.55);
+  }
+
+  18% {
+    opacity: 0.8;
+  }
+
+  /* The sideways drift is what stops three wisps reading as three balloons on
+     strings. Each one leans a different way on its way up. */
+  55% {
+    opacity: 0.5;
+    transform: translate3d(calc(var(--u) * 0.7), calc(var(--u) * -4), 0) scale(1.05);
+  }
+
+  100% {
+    opacity: 0;
+    transform: translate3d(calc(var(--u) * -0.5), calc(var(--u) * -8.5), 0) scale(1.6);
+  }
+}
