@@ -1,3 +1,6 @@
+import Curtain from './Curtain.jsx'
+import Sky from './Sky.jsx'
+
 /**
  * Window
  *
@@ -12,9 +15,10 @@ export default function Window() {
   return (
     <div className="window">
       <div className="window__glass">
-        <div className="window__sky" />
+        <Sky />
       </div>
       <div className="window__sill" />
+      <Curtain />
     </div>
   )
 }

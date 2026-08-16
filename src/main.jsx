@@ -12,9 +12,12 @@ import './styles/scene.css'
 /* Scene artwork, ordered back to front like the room itself. */
 import './styles/kitchen.css'
 import './styles/window.css'
+import './styles/sky.css'
 import './styles/cabinetry.css'
 import './styles/sink.css'
 import './styles/island.css'
+import './styles/appliances.css'
+import './styles/decor.css'
 import './styles/food.css'
 import './styles/animations.css'
 

@@ -191,7 +191,6 @@
   display: flex;
   top: 0;
   width: 15%;
-  height: 40%;
   background: var(--cabinet-dark);
   box-shadow:
     0 calc(var(--u) * 0.6) calc(var(--u) * 1.4) rgb(var(--shadow-color) / 0.32),
@@ -200,10 +199,12 @@
 
 .wall-unit--upper-left {
   left: 0;
+  height: 25%;
 }
 
 .wall-unit--upper-right {
   right: 0;
+  height: 40%;
 }
 
 /* The shadow each unit throws down the wall beneath it. Absolutely positioned
@@ -217,15 +218,35 @@
 .wall-unit--upper-right::after {
   content: "";
   position: absolute;
+  top: 100%;
+
+  /* Exactly the cabinet's width — no overhang.
+
+     I widened this box first, so the sideways falloff could finish in empty
+     wall. That fixed the vertical cuts and immediately created a worse
+     artifact: the shadow's TOP edge then ran 5u past the cabinet as a hard
+     horizontal line, sitting on wall with nothing above it to cast it.
+
+     A cast shadow can never be wider than its caster at the point of contact.
+     Keeping the box at the cabinet's width makes that impossible to get
+     wrong, and the radial below does the softening from the inside. */
   left: 0;
   right: 0;
-  top: 100%;
-  height: calc(var(--u) * 4);
-  background: linear-gradient(
-    180deg,
-    rgb(var(--shadow-color) / 0.35) 0%,
-    rgb(var(--shadow-color) / 0.12) 40%,
-    transparent 100%
+  height: calc(var(--u) * 5);
+
+  /* Radial, so it decays in every direction at once — down the wall AND out
+     toward the ends — rather than only downward. Same lesson as the island's
+     cast shadow: a shadow that has to stop somewhere wants to be radial,
+     because a linear one stops at its box and leaves an edge.
+
+     The ellipse is wide (66%) so the dark core still spans most of the
+     cabinet and is nearly gone by the corners. A rounder gradient would pool
+     in the middle and read as a spotlight rather than an overhang. */
+  background: radial-gradient(
+    ellipse 66% 100% at 50% 0%,
+    rgb(var(--shadow-color) / 0.42) 0%,
+    rgb(var(--shadow-color) / 0.17) 50%,
+    transparent 84%
   );
 }
 
@@ -243,12 +264,12 @@
 }
 
 .shelves--left {
-  left: 16%;
+  left: 15%;
   width: 18%;
 }
 
 .shelves--right {
-  right: 16%;
+  right: 15%;
   width: 18%;
 }
 

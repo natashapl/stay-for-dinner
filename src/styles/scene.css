@@ -130,6 +130,7 @@
 .window        { z-index: 2; }
 .back-counter  { z-index: 3; }  /* counter run + base cabinets */
 .sink-area     { z-index: 4; }
+.objects       { z-index: 4; }  /* appliances + props on the back counter */
 .scene-shade--room { z-index: 4; } /* room occlusion — behind the foreground */
 .island        { z-index: 5; }  /* foreground — food will sit on this */
 .stools        { z-index: 6; }

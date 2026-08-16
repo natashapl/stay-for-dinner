@@ -24,9 +24,8 @@ export default function App() {
             target="_blank"
             rel="noreferrer noopener"
           >
-            DEV Frontend Challenge
+            DEV Frontend Challenge: Comfort Food Edition.
           </a>
-          : Comfort Food Edition.
         </p>
         <p>No images, canvas or icon fonts - just elements and stylesheets.</p>
       </footer>

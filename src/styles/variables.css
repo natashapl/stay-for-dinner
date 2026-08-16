@@ -107,10 +107,23 @@
         the back counter uses a hard value break at its front edge instead,
         because a trapezoid there would pull the counter away from the wall.
 
-     2. The side face goes on the side AWAY from the window. The window is
-        centred, so objects left of centre show their left side, objects right
-        of centre show their right. Getting this backwards on one object is
-        instantly readable as wrong even when nobody can say why. */
+     2. The visible side face is the one turned TOWARD the centre of the
+        scene, because that's the side turned toward the viewer:
+
+          left of centre  -> its RIGHT side shows
+          right of centre -> its LEFT side shows
+
+        (I had this backwards when I first wrote the rule. Checking it against
+        the reference photo settles it: the toaster sits right of centre and
+        you can see down its left flank, the fridge sits far left and you see
+        its right flank. Objects either side of the frame mirror each other,
+        and an object showing the wrong flank looks wrong instantly even when
+        nobody can say why.)
+
+        Shade that flank a step darker than the front. Strictly the window
+        lights it, since the window is central too — but a face that turns
+        away from the viewer reading darker is what the eye expects, and the
+        turn is what sells the volume. */
   --face-top-lift: 16%;    /* how far the top face mixes toward white */
   --face-side-drop: 26%;   /* how far the side face mixes toward shadow */
 
@@ -182,7 +195,20 @@
      sit. Phase 6 leans on these hard. */
   --room-light: #f7c77c;
   --light-strength: 0.85;
+  /* Two forms of the same shadow, and both are needed.
+
+     --shadow-color is a bare TRIPLET so it can be written rgb(var(...) / a)
+     with an arbitrary alpha — that is the whole reason it has no rgb() around
+     it. But that also means it is not a <color>, so it CANNOT be fed to
+     color-mix(). Doing so is invalid, and the browser's response is to drop
+     the entire declaration silently: a background-image goes to none, a
+     border goes to 0px, and nothing anywhere reports an error.
+
+     --shadow-ink is the same colour in a form color-mix() accepts. Rule of
+     thumb: rgb(var(--shadow-color) / a) when you need alpha, var(--shadow-ink)
+     when you need to mix. */
   --shadow-color: 26 16 10;
+  --shadow-ink: #1a100a;
   --shadow-strength: 0.28;
 
   --sky-glow: 0.5;

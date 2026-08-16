@@ -712,23 +712,8 @@ Keep the animation playful but restrained.
 
 Allow it to repeat after resetting.
 
-# Interaction 6: Blender
 
-Click blender.
-
-Briefly animate:
-
-* Blade suggestion
-* Contents swirl
-* Blender vibration
-
-The whole blender should move only a tiny amount.
-
-Automatically stop after a short animation.
-
-Do not loop continuously.
-
-# Interaction 7: Refrigerator
+# Interaction 6: Refrigerator
 
 Allow the refrigerator door to open.
 
@@ -747,7 +732,7 @@ Opening should create a small interior-light effect.
 
 Closing reverses it.
 
-# Interaction 8: Refrigerator Note
+# Interaction 7: Refrigerator Note
 
 Make one fridge note interactive.
 
@@ -763,7 +748,7 @@ The message can appear directly on the note, through a flip animation, or throug
 
 Do not use a large modal.
 
-# Interaction 9: Cabinet
+# Interaction 8: Cabinet
 
 One cabinet may open on click.
 
@@ -776,7 +761,7 @@ Inside:
 
 Keep this lightweight.
 
-# Interaction 10: Hidden Surprise
+# Interaction 9: Hidden Surprise
 
 Add one small Easter egg if there is enough time.
 
@@ -929,6 +914,7 @@ Add:
 * Dish rack
 * Toaster
 * Blender
+* Refrigerator
 * Stove
 * Cutting board
 * Utensils
@@ -988,10 +974,9 @@ Implement in roughly this priority:
 1. Faucet
 2. Toaster
 3. Refrigerator
-4. Blender
-5. Fridge note
-6. Cabinet
-7. Easter egg
+4. Fridge note
+5. Cabinet
+6. Easter egg
 
 Complete as many as time allows.
 

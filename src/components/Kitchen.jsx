@@ -7,6 +7,15 @@ import KitchenIsland from './KitchenIsland.jsx'
 import PastaBowl from './PastaBowl.jsx'
 import MeatballBowl from './MeatballBowl.jsx'
 import PlateStack from './PlateStack.jsx'
+import Refrigerator from './Refrigerator.jsx'
+import DishRack from './DishRack.jsx'
+import Toaster from './Toaster.jsx'
+import Blender from './Blender.jsx'
+import Stove from './Stove.jsx'
+import CounterProps from './CounterProps.jsx'
+import ShelfItems from './ShelfItems.jsx'
+import Plants from './Plants.jsx'
+import ShelfDecor from './ShelfDecor.jsx'
 
 /**
  * Kitchen
@@ -38,6 +47,20 @@ export default function Kitchen({ isNight = false, children }) {
           the depth-split note in depth.css. */}
       <div className="scene-shade--room" />
 
+      {/* Everything standing on the counter or against the back wall. In
+          front of the counter run, behind the island. */}
+      <div className="objects">
+        <ShelfItems />
+        <ShelfDecor />
+        <Plants />
+        <Refrigerator />
+        <CounterProps />
+        <DishRack />
+        <Toaster />
+        <Blender />
+        <Stove />
+      </div>
+
       <KitchenIsland />
 
       <div className="food">
@@ -53,6 +76,7 @@ export default function Kitchen({ isNight = false, children }) {
           component. Shade first, then light — same order a painter works in. */}
       <div className="scene-shade" />
       <div className="scene-light" />
+      <div className="sunbeam" />
     </div>
   )
 }

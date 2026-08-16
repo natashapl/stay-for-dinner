@@ -1,0 +1,1015 @@
+/* ==========================================================================
+   Decor — cutting board, soap, utensil crock, shelf cookware, fridge notes.
+   ========================================================================== */
+
+/* --------------------------------------------------------------------------
+   Cutting board, leaning against the backsplash.
+
+   The lean is a small rotation with transform-origin at the BOTTOM. Rotating
+   about the centre would swing the foot out from the counter and leave the
+   board floating; pinning the origin to where it touches the surface is what
+   makes it look propped rather than tilted.
+   -------------------------------------------------------------------------- */
+
+.cutting-board {
+  position: absolute;
+  left: 16.5%;
+  width: 6.5%;
+  top: 43.8%;
+  height: 14.5%;
+  transform: rotate(-2.5deg);
+  transform-origin: bottom center;
+
+  border-radius: calc(var(--u) * 0.5) calc(var(--u) * 0.5) calc(var(--u) * 0.25)
+    calc(var(--u) * 0.25);
+
+  background:
+    /* grain, running the length of the board */
+    repeating-linear-gradient(
+      180deg,
+      transparent 0 calc(var(--u) * 0.8),
+      rgb(var(--shadow-color) / 0.09) calc(var(--u) * 0.8) calc(var(--u) * 0.95)
+    ),
+    linear-gradient(
+      95deg,
+      color-mix(in srgb, var(--wood) 78%, var(--wood-dark)) 0%,
+      var(--wood-light) 45%,
+      var(--wood) 100%
+    );
+
+  box-shadow:
+    calc(var(--u) * 0.25) calc(var(--u) * 0.3) calc(var(--u) * 0.7)
+      rgb(var(--shadow-color) / 0.4),
+    inset 0 0 0 1px rgb(var(--shadow-color) / 0.12);
+}
+
+/* Hanging hole near the top. */
+.cutting-board::after {
+  content: "";
+  position: absolute;
+  left: 50%;
+  top: 7%;
+  width: 22%;
+  aspect-ratio: 1;
+  transform: translateX(-50%);
+  border-radius: 50%;
+  background: color-mix(in srgb, var(--wood-dark) 70%, black);
+  box-shadow: inset 0 calc(var(--u) * 0.1) calc(var(--u) * 0.14) rgb(0 0 0 / 0.5);
+}
+
+/* --------------------------------------------------------------------------
+   Soap dispenser
+   -------------------------------------------------------------------------- */
+
+.soap {
+  position: absolute;
+  left: 61.5%;
+  width: 2.6%;
+  top: 51.3%;
+  height: 7.2%;
+}
+
+.soap__bottle {
+  position: absolute;
+  left: 0;
+  right: 0;
+  bottom: 0;
+  height: 74%;
+  border-radius: calc(var(--u) * 0.35) calc(var(--u) * 0.35) calc(var(--u) * 0.25)
+    calc(var(--u) * 0.25);
+
+  /* Olive glass: a bright vertical stripe just off-centre reads as a round
+     translucent bottle, same cylinder trick as the faucet tube. */
+  background: linear-gradient(
+    90deg,
+    color-mix(in srgb, var(--herb) 55%, black) 0%,
+    var(--herb) 26%,
+    color-mix(in srgb, var(--herb) 50%, #d8e8b0) 44%,
+    var(--herb) 68%,
+    color-mix(in srgb, var(--herb) 60%, black) 100%
+  );
+
+  box-shadow: 0 calc(var(--u) * 0.25) calc(var(--u) * 0.45) rgb(var(--shadow-color) / 0.4);
+}
+
+.soap__pump {
+  position: absolute;
+  left: 26%;
+  top: 0;
+  width: 48%;
+  height: 30%;
+  border-radius: calc(var(--u) * 0.16);
+  background: linear-gradient(90deg, var(--metal-dark), var(--metal) 45%, var(--metal-dark));
+}
+
+/* The spout: one short bar cantilevered off the pump. */
+.soap__pump::after {
+  content: "";
+  position: absolute;
+  left: -60%;
+  top: 26%;
+  width: 70%;
+  height: calc(var(--u) * 0.3);
+  border-radius: calc(var(--u) * 0.15);
+  background: linear-gradient(180deg, var(--metal), var(--metal-dark));
+}
+
+/* --------------------------------------------------------------------------
+   Utensil crock.
+
+   The utensils fan from a shared pivot at the crock's mouth. transform-origin
+   at the bottom again — a rank of parallel sticks reads as a fence, a fan
+   reads as a handful.
+   -------------------------------------------------------------------------- */
+
+.crock {
+  position: absolute;
+  left: 84%;
+  width: 5.5%;
+  top: 46.8%;
+  height: 11.5%;
+}
+
+/* The crock's mouth.
+
+   It lives on .crock, not on .crock__pot, and that placement is the whole
+   fix. .crock__pot carries a clip-path — and a clip-path clips an element's
+   PSEUDO-ELEMENTS along with its content, so a mouth drawn as .crock__pot
+   ::before and positioned above the pot's top edge was silently cut away.
+   Nothing errors; the shape just never appears.
+
+   z-index lifts it over .crock__utensils so the near rim crosses in FRONT of
+   the utensil ends and swallows them. An object is inside a container when
+   the container's near edge occludes it — same rule as the bowl rims. */
+.crock::before {
+  content: "";
+  position: absolute;
+  left: -2%;
+  right: -2%;
+  bottom: 39%;
+  height: 11%;
+  border-radius: 50%;
+  z-index: 1;
+
+  background: linear-gradient(
+    180deg,
+    color-mix(in srgb, var(--ceramic-shade) 54%, var(--shadow-ink)) 0%,
+    color-mix(in srgb, var(--ceramic-shade) 84%, var(--shadow-ink)) 58%,
+    var(--ceramic-shade) 100%
+  );
+
+  box-shadow: inset 0 calc(var(--u) * -0.12) 0 color-mix(in srgb, var(--ceramic) 55%, white);
+}
+
+.crock__utensils {
+  position: absolute;
+  left: 0;
+  right: 0;
+  bottom: 38%;
+  height: 74%;
+}
+
+/* The handles. Four stops, not three: dark edge, bright stripe off-centre,
+   mid, dark edge. That off-centre highlight is the cylinder trick used on the
+   faucet tube and the soap bottle — it's what makes a 3px bar read as a round
+   dowel instead of a line. */
+.utensil {
+  position: absolute;
+  left: 50%;
+  bottom: 0;
+  width: calc(var(--u) * 0.48);
+  height: var(--len);
+  border-radius: calc(var(--u) * 0.24) calc(var(--u) * 0.24) 0 0;
+  transform: translateX(-50%) rotate(var(--rot));
+  transform-origin: bottom center;
+  background: linear-gradient(
+    90deg,
+    color-mix(in srgb, var(--wood-dark) 78%, black) 0%,
+    var(--wood-light) 38%,
+    var(--wood) 62%,
+    color-mix(in srgb, var(--wood-dark) 82%, black) 100%
+  );
+}
+
+/* --------------------------------------------------------------------------
+   Utensil heads.
+
+   Every utensil gets a DIFFERENT one. Five identical sticks with the same
+   blob on top is a bundle of matches — a utensil crock is interesting because
+   it holds a jumble of unlike tools, and the silhouettes are the only thing
+   saying so at this size. Nobody can identify a 20px spatula from its colour;
+   they identify it from its outline.
+
+   All heads share the base rule and differ only in width/height/radius, so a
+   new tool is one short block.
+   -------------------------------------------------------------------------- */
+
+.utensil::after {
+  content: "";
+  position: absolute;
+  left: 50%;
+  bottom: 100%;
+  transform: translateX(-50%);
+  background: linear-gradient(
+    95deg,
+    color-mix(in srgb, var(--wood-dark) 88%, black) 0%,
+    var(--wood-light) 42%,
+    var(--wood) 78%,
+    var(--wood-dark) 100%
+  );
+  box-shadow: 0 calc(var(--u) * 0.1) calc(var(--u) * 0.16) rgb(var(--shadow-color) / 0.35);
+}
+
+/* Deep oval bowl. */
+.utensil--spoon::after {
+  width: calc(var(--u) * 1.5);
+  height: calc(var(--u) * 1.85);
+  border-radius: 52% 52% 44% 44% / 58% 58% 42% 42%;
+}
+
+/* Same bowl, pierced. The slots are a repeating gradient on the head rather
+   than three more elements. */
+.utensil--slotted::after {
+  width: calc(var(--u) * 1.55);
+  height: calc(var(--u) * 1.8);
+  border-radius: 52% 52% 44% 44% / 58% 58% 42% 42%;
+  background-image: repeating-linear-gradient(
+      90deg,
+      transparent 0 26%,
+      rgb(var(--shadow-color) / 0.55) 26% 34%,
+      transparent 34% 66%,
+      rgb(var(--shadow-color) / 0.55) 66% 74%,
+      transparent 74% 100%
+    ),
+    linear-gradient(
+      95deg,
+      color-mix(in srgb, var(--wood-dark) 88%, black) 0%,
+      var(--wood-light) 42%,
+      var(--wood) 78%,
+      var(--wood-dark) 100%
+    );
+}
+
+/* Rounder and deeper than a spoon, on the longest handle. */
+.utensil--ladle::after {
+  width: calc(var(--u) * 1.45);
+  height: calc(var(--u) * 1.45);
+  border-radius: 46% 46% 50% 50% / 40% 40% 60% 60%;
+}
+
+/* Flared blade — narrow at the handle, wide at the tip. The clip-path is the
+   whole identity of a spatula. */
+.utensil--spatula::after {
+  width: calc(var(--u) * 1.6);
+  height: calc(var(--u) * 1.75);
+  border-radius: calc(var(--u) * 0.14);
+  clip-path: polygon(20% 0%, 80% 0%, 100% 100%, 0% 100%);
+}
+
+/* Square-ended turner, wider than it is tall. */
+.utensil--turner::after {
+  width: calc(var(--u) * 1.7);
+  height: calc(var(--u) * 1.3);
+  border-radius: calc(var(--u) * 0.18) calc(var(--u) * 0.18) calc(var(--u) * 0.1)
+    calc(var(--u) * 0.1);
+}
+
+.crock__pot {
+  position: absolute;
+  left: 0;
+  right: 0;
+  bottom: 0;
+  height: 44%;
+
+  /* Slightly narrower at the base than the mouth. */
+  clip-path: polygon(0% 0%, 100% 0%, 92% 100%, 8% 100%);
+
+  background: linear-gradient(
+    100deg,
+    var(--ceramic-shade) 0%,
+    var(--ceramic) 34%,
+    color-mix(in srgb, var(--ceramic) 96%, white) 62%,
+    var(--ceramic-shade) 100%
+  );
+
+  box-shadow:
+    inset 0 calc(var(--u) * 0.3) calc(var(--u) * 0.4) rgb(var(--shadow-color) / 0.35),
+    0 calc(var(--u) * 0.3) calc(var(--u) * 0.6) rgb(var(--shadow-color) / 0.4);
+}
+
+/* --------------------------------------------------------------------------
+   Shelf cookware.
+
+   All three sit on the middle shelves, which land at 20.3% of the canvas —
+   the shelf tops are 36% of .shelves, and .shelves is 56.5% tall. Positions
+   below are canvas-relative, per the flattening convention.
+   -------------------------------------------------------------------------- */
+
+.bowl-stack {
+  position: absolute;
+  left: 16%;
+  width: 6.8%;
+  top: 14.6%;
+  height: 5.7%;
+}
+
+/* Stacked bowls.
+
+   My first version drew each bowl as a bottom-rounded crescent, narrowing as
+   it went up. Three crescents in a column is a striped block — there was
+   nothing in it that said "bowl", because the one feature that identifies a
+   bowl is its OPENING.
+
+   Every bowl here is a full profile with an elliptical mouth on top
+   (::before). Stacked, each bowl covers the mouth of the one beneath, so what
+   you actually see is a column of outer walls topped by one visible hollow —
+   which is exactly what a stack of bowls looks like. The hidden mouths still
+   have to be drawn, because the sliver of each that survives at the sides is
+   what separates one bowl from the next. */
+.bowl-stack__bowl {
+  position: absolute;
+  left: 0;
+  right: 0;
+  bottom: calc(var(--i) * 27%);
+  height: 46%;
+
+  /* Wide shallow dome on top, tapering below — the same slash-syntax profile
+     as the big serving bowls, at a tenth of the size. */
+  border-radius: 50% 50% 44% 44% / 42% 42% 58% 58%;
+
+  background: linear-gradient(
+    180deg,
+    color-mix(in srgb, var(--ceramic) 96%, white) 0%,
+    var(--ceramic) 44%,
+    var(--ceramic-shade) 100%
+  );
+
+  box-shadow:
+    0 calc(var(--u) * 0.12) calc(var(--u) * 0.2) rgb(var(--shadow-color) / 0.45),
+    inset 0 calc(var(--u) * -0.1) calc(var(--u) * 0.14) rgb(var(--shadow-color) / 0.18);
+}
+
+/* The mouth. Darker than the wall, because you are looking into a hollow. */
+.bowl-stack__bowl::before {
+  content: "";
+  position: absolute;
+  left: 2%;
+  right: 2%;
+  top: 0;
+  height: 42%;
+  border-radius: 50%;
+
+  background: linear-gradient(
+    180deg,
+    color-mix(in srgb, var(--ceramic-shade) 74%, var(--shadow-ink)) 0%,
+    var(--ceramic-shade) 62%,
+    color-mix(in srgb, var(--ceramic) 94%, white) 100%
+  );
+
+  /* Bright hairline on the near rim — the lit lip of the ceramic. Without it
+     the mouth reads as a painted dark oval instead of an edge. */
+  box-shadow: inset 0 calc(var(--u) * -0.11) 0 color-mix(in srgb, var(--ceramic) 60%, white);
+}
+
+.dutch-oven {
+  position: absolute;
+  left: 25%;
+  width: 7%;
+  top: 14.6%;
+  height: 5.7%;
+}
+
+.dutch-oven__body {
+  position: absolute;
+  left: 0;
+  right: 0;
+  bottom: 0;
+  height: 62%;
+  border-radius: calc(var(--u) * 0.2) calc(var(--u) * 0.2) calc(var(--u) * 0.4)
+    calc(var(--u) * 0.4);
+
+  background: linear-gradient(
+    100deg,
+    color-mix(in srgb, var(--sauce-dark) 88%, black) 0%,
+    var(--sauce) 38%,
+    color-mix(in srgb, var(--sauce) 70%, #f0a070) 60%,
+    var(--sauce-dark) 100%
+  );
+
+  box-shadow: 0 calc(var(--u) * 0.2) calc(var(--u) * 0.35) rgb(var(--shadow-color) / 0.4);
+}
+
+/* The lid overhangs the body on both sides — the same overhang cue the island
+   slab uses, at a twentieth of the size. */
+.dutch-oven__lid {
+  position: absolute;
+  left: -6%;
+  right: -6%;
+  bottom: 58%;
+  height: 26%;
+  border-radius: 50% 50% 22% 22% / 80% 80% 30% 30%;
+  background: linear-gradient(
+    180deg,
+    color-mix(in srgb, var(--sauce) 76%, #f0a070) 0%,
+    var(--sauce) 60%,
+    var(--sauce-dark) 100%
+  );
+}
+
+.dutch-oven__knob {
+  position: absolute;
+  left: 50%;
+  bottom: 80%;
+  width: 20%;
+  height: 14%;
+  transform: translateX(-50%);
+  border-radius: 50%;
+  background: linear-gradient(180deg, var(--metal), var(--metal-dark));
+}
+
+.stockpot {
+  position: absolute;
+  left: 68%;
+  width: 6.5%;
+  top: 14.8%;
+  height: 5.5%;
+}
+
+.stockpot__body {
+  position: absolute;
+  left: 0;
+  right: 0;
+  bottom: 0;
+  height: 66%;
+  border-radius: calc(var(--u) * 0.2) calc(var(--u) * 0.2) calc(var(--u) * 0.4)
+    calc(var(--u) * 0.4);
+  background: linear-gradient(
+    100deg,
+    color-mix(in srgb, var(--metal-dark) 80%, black) 0%,
+    var(--metal-dark) 32%,
+    color-mix(in srgb, var(--metal) 92%, white) 60%,
+    var(--metal-dark) 100%
+  );
+  box-shadow: 0 calc(var(--u) * 0.2) calc(var(--u) * 0.35) rgb(var(--shadow-color) / 0.4);
+}
+
+.stockpot__lid {
+  position: absolute;
+  left: -5%;
+  right: -5%;
+  bottom: 62%;
+  height: 20%;
+  border-radius: 46% 46% 18% 18% / 80% 80% 30% 30%;
+  background: linear-gradient(180deg, var(--metal), var(--metal-dark));
+}
+
+.stockpot__knob {
+  position: absolute;
+  left: 50%;
+  bottom: 78%;
+  width: 18%;
+  height: 12%;
+  transform: translateX(-50%);
+  border-radius: 50%;
+  background: var(--metal-dark);
+}
+
+/* --------------------------------------------------------------------------
+   Fridge notes.
+
+   Positioned against .fridge__body, so these percentages are relative to the
+   fridge — the one place the flattening convention is deliberately broken,
+   because a note stuck to a door should move WITH the door if the fridge ever
+   shifts. Phase 8 makes .fridge-note--memo interactive.
+   -------------------------------------------------------------------------- */
+
+.fridge-note {
+  position: absolute;
+  background: #fdf7ea;
+  box-shadow:
+    calc(var(--u) * 0.1) calc(var(--u) * 0.16) calc(var(--u) * 0.3)
+      rgb(var(--shadow-color) / 0.32);
+}
+
+/* A photo: warm sky over a dark hill, in two gradients. Small enough that
+   suggestion beats detail — nobody reads a 2%-wide postcard. */
+.fridge-note--photo {
+  left: 12%;
+  top: 6%;
+  width: 46%;
+  height: 15%;
+  transform: rotate(-4deg);
+  padding: 8%;
+  background:
+    linear-gradient(180deg, #8fb0cf 0%, #e8b98a 62%, #6d7f52 62%, #4d5c39 100%)
+      content-box,
+    #fdf7ea border-box;
+}
+
+/* A handwritten memo, with REAL text on it.
+
+   I drew this as three grey bars first, on the reasoning that glyphs at 60px
+   wide turn to mush. True — but mush that spells something is the point. A
+   bar is unambiguously decoration and the eye skips it; letters you can
+   almost read are a question, and a question is what makes someone lean in
+   and click. Legibility isn't the goal here, legible-ness is.
+
+   Sized in --u like every other measurement in the scene, so the writing
+   scales with the fridge instead of staying 8px while the kitchen grows. */
+.fridge-note--memo {
+  left: 13%;
+  top: 40%;
+  width: 56%;
+  height: 17%;
+  transform: rotate(2deg);
+
+  display: grid;
+  place-items: center;
+  padding: 6% 4%;
+}
+
+.fridge-note__text {
+  margin: 0;
+  text-align: center;
+  text-wrap: balance;
+
+  /* Whatever script face the OS has. There is no webfont in this project and
+     no external asset is allowed, so this degrades through the stack to
+     `cursive` — which every platform maps to something handwritten. */
+  font-family: "Segoe Script", "Bradley Hand", "Snell Roundhand", cursive;
+  font-size: calc(var(--u) * 0.82);
+  line-height: 1.25;
+  letter-spacing: 0.01em;
+
+  /* Ink, not black: a warm brown reads as ballpoint on cream paper. */
+  color: color-mix(in srgb, var(--shadow-ink) 78%, var(--sauce));
+}
+
+.fridge-magnet {
+  position: absolute;
+  width: 9%;
+  aspect-ratio: 1;
+  border-radius: 50%;
+  background: radial-gradient(
+    circle at 34% 30%,
+    color-mix(in srgb, var(--sauce) 60%, white) 0%,
+    var(--sauce) 55%,
+    var(--sauce-dark) 100%
+  );
+}
+
+.fridge-magnet.magnet-1 {
+  top: 7%;
+  left: 30%;
+}
+
+.fridge-magnet.magnet-2 {
+  top: 41%;
+  left: 38%;
+}
+
+
+/* ==========================================================================
+   Plants — Phase 5
+   ==========================================================================
+
+   One leaf rule, one pot rule, four plants. The variants below only move the
+   boxes; everything that makes a plant look like a plant lives in .leaf and
+   .plant__pot.
+   -------------------------------------------------------------------------- */
+
+.plant {
+  position: absolute;
+}
+
+/* Left shelves. Tops land at 10.17% and 30.51% of the canvas — 18% and 54% of
+   .shelves, which is 56.5% tall. */
+.plant--hi-left {
+  left: 16%;
+  width: 6%;
+  bottom: 89.83%;
+  height: 8.4%;
+}
+
+.plant--lo-left {
+  left: 26%;
+  width: 5.4%;
+  bottom: 69.49%;
+  height: 6.2%;
+}
+
+.plant--hi-right {
+  left: 69%;
+  width: 5.6%;
+  bottom: 89.83%;
+  height: 8%;
+}
+
+.plant--lo-right {
+  left: 69%;
+  width: 5.6%;
+  bottom: 69.49%;
+  height: 7.4%;
+}
+
+/* Foliage sits on the pot's shoulder, and leaves are free to overflow it —
+   that overflow IS the trailing habit. No clipping anywhere in this file. */
+.plant__foliage {
+  position: absolute;
+  left: 0;
+  right: 0;
+  bottom: 34%;
+  height: 66%;
+}
+
+/* --------------------------------------------------------------------------
+   Leaf.
+
+   The shape is one border-radius: broad and round at the tip, tapering to a
+   point at the stem. Written as four corner values with a slash, so the
+   horizontal and vertical radii differ — that asymmetry is what turns an
+   ellipse into something botanical.
+
+   transform-origin: bottom center is what lets rotation work as ARRANGEMENT:
+   every leaf pivots on the point where it joins the stem, so --rot reads as
+   "which way this leaf is pointing" and the whole plant can be composed by
+   angle alone. With the default centre origin, rotating a leaf also swings it
+   away from the plant.
+
+   The vein is a stripe in the background, not a pseudo-element. Thirty-two
+   leaves times one pseudo each is thirty-two boxes for a 1px line.
+   -------------------------------------------------------------------------- */
+
+.leaf {
+  position: absolute;
+  left: var(--x);
+  bottom: var(--y);
+  width: calc(var(--u) * 0.92);
+  height: calc(var(--u) * var(--len));
+
+  border-radius: 58% 42% 50% 50% / 72% 72% 28% 28%;
+  transform: translateX(-50%) rotate(var(--rot));
+  transform-origin: bottom center;
+
+  background:
+    /* centre vein, slightly off-centre so it doesn't read as a fold */
+    linear-gradient(
+      92deg,
+      transparent 44%,
+      rgb(255 255 255 / 0.2) 47% 51%,
+      transparent 55%
+    ),
+    linear-gradient(
+      158deg,
+      color-mix(in srgb, var(--herb) 58%, #b9d38a) 0%,
+      var(--herb) 52%,
+      color-mix(in srgb, var(--herb) 72%, black) 100%
+    );
+
+  /* Deeper tones go further back in the plant, exactly like the pasta and the
+     meatballs — depth in a cluster is a value ramp, not an outline. */
+  filter: brightness(calc(1 - var(--tone) * 0.13)) saturate(calc(1 + var(--tone) * 0.08));
+}
+
+/* --------------------------------------------------------------------------
+   Pot. Tapered box plus an elliptical rim that overhangs it — the same two
+   pieces as the utensil crock, and the rim is again what says "opening".
+   -------------------------------------------------------------------------- */
+
+.plant__pot {
+  position: absolute;
+  left: 12%;
+  right: 12%;
+  bottom: 0;
+  height: 38%;
+  clip-path: polygon(0% 0%, 100% 0%, 88% 100%, 12% 100%);
+}
+
+/* The rim lives on .plant, not on .plant__pot, because .plant__pot is clipped
+   and a clip-path clips pseudo-elements too — a rim drawn there and pushed
+   above the pot's top edge is silently cut away. Learned that one on the
+   crock. */
+.plant::after {
+  content: "";
+  position: absolute;
+  left: 9%;
+  right: 9%;
+  bottom: 33%;
+  height: 9%;
+  border-radius: 50%;
+  z-index: 1;
+}
+
+.plant__pot--cream {
+  background: linear-gradient(
+    100deg,
+    var(--ceramic-shade) 0%,
+    var(--ceramic) 32%,
+    color-mix(in srgb, var(--ceramic) 96%, white) 60%,
+    var(--ceramic-shade) 100%
+  );
+}
+
+.plant--hi-left::after,
+.plant--lo-left::after {
+  background: linear-gradient(
+    180deg,
+    color-mix(in srgb, var(--ceramic-shade) 52%, var(--shadow-ink)) 0%,
+    var(--ceramic-shade) 62%,
+    var(--ceramic) 100%
+  );
+}
+
+.plant__pot--terracotta {
+  background: linear-gradient(
+    100deg,
+    color-mix(in srgb, var(--floor-dark) 88%, black) 0%,
+    var(--floor-dark) 30%,
+    color-mix(in srgb, var(--floor) 92%, #f0b183) 62%,
+    var(--floor-dark) 100%
+  );
+}
+
+.plant--hi-right::after,
+.plant--lo-right::after {
+  background: linear-gradient(
+    180deg,
+    color-mix(in srgb, var(--floor-dark) 54%, var(--shadow-ink)) 0%,
+    var(--floor-dark) 60%,
+    var(--floor) 100%
+  );
+}
+
+/* Contact shadow on the shelf board. */
+.plant__pot::after {
+  content: "";
+  position: absolute;
+  left: -14%;
+  right: -14%;
+  bottom: calc(var(--u) * -0.5);
+  height: calc(var(--u) * 1.1);
+  border-radius: 50%;
+  background: radial-gradient(
+    ellipse 50% 50% at 50% 50%,
+    rgb(var(--shadow-color) / 0.45) 0%,
+    transparent 72%
+  );
+}
+
+
+/* ==========================================================================
+   Cookbooks, mugs, framed pieces — Phase 5
+   ========================================================================== */
+
+/* --------------------------------------------------------------------------
+   Cookbooks.
+
+   align-items: flex-end so books of different heights all stand ON the shelf
+   rather than being centred against each other — the shelf is the floor of
+   this row, and flexbox needs telling.
+
+   Each spine is one element. The leaning one rotates about its BOTTOM RIGHT
+   corner, which is the corner actually resting on the board; rotating about
+   the centre would lift the book off the shelf and sink its far corner
+   through it.
+   -------------------------------------------------------------------------- */
+
+.books {
+  position: absolute;
+  left: 76.4%;
+  width: 9.6%;
+  bottom: 89.83%;
+  height: 7.4%;
+
+  display: flex;
+  align-items: flex-end;
+  gap: 1.5%;
+}
+
+.book {
+  width: var(--w);
+  height: var(--h);
+  border-radius: calc(var(--u) * 0.1) calc(var(--u) * 0.1) 0 0;
+  transform: rotate(var(--rot));
+  transform-origin: bottom right;
+
+  /* Spine lighting: a bright edge where the cover turns toward me, and the
+     pale band of page-block showing at the top. */
+  box-shadow:
+    inset calc(var(--u) * 0.1) 0 0 rgb(255 255 255 / 0.22),
+    inset calc(var(--u) * -0.08) 0 0 rgb(var(--shadow-color) / 0.35),
+    inset 0 calc(var(--u) * 0.12) 0 rgb(255 252 240 / 0.55);
+}
+
+.book--a {
+  background: linear-gradient(90deg, #8d3b2a, #b8543a 45%, #7a3122);
+}
+
+.book--b {
+  background: linear-gradient(90deg, #3f5d43, #55795a 45%, #334c37);
+}
+
+.book--c {
+  background: linear-gradient(90deg, #9a6a2c, #c08a3f 45%, #83581f);
+}
+
+.book--d {
+  background: linear-gradient(90deg, #3d4a63, #566585 45%, #313c52);
+}
+
+/* Contact shadow under the whole row, cast onto the board. */
+.books::after {
+  content: "";
+  position: absolute;
+  left: -8%;
+  right: -8%;
+  bottom: calc(var(--u) * -0.45);
+  height: calc(var(--u) * 1);
+  background: radial-gradient(
+    ellipse 50% 50% at 50% 50%,
+    rgb(var(--shadow-color) / 0.42) 0%,
+    transparent 74%
+  );
+}
+
+/* --------------------------------------------------------------------------
+   Mugs.
+
+   Body is a cylinder: four-stop horizontal gradient, dark-light-mid-dark. The
+   rim is an ellipse overhanging the top, and the handle is a C from three
+   borders — the same two moves as the blender jar and its handle, at a
+   quarter the size. Reusing a construction across scales is most of what
+   keeps a scene coherent.
+   -------------------------------------------------------------------------- */
+
+.mug {
+  position: absolute;
+  bottom: 69.49%;
+}
+
+.mug--tall {
+  left: 17.4%;
+  width: 3.4%;
+  height: 3.4%;
+  --mug: #6f8a5e;
+}
+
+.mug--squat {
+  left: 21.8%;
+  width: 3.2%;
+  height: 2.9%;
+  --mug: var(--ceramic);
+}
+
+.mug__body {
+  position: absolute;
+  inset: 0;
+  border-radius: calc(var(--u) * 0.12) calc(var(--u) * 0.12) calc(var(--u) * 0.3)
+    calc(var(--u) * 0.3);
+  background: linear-gradient(
+    90deg,
+    color-mix(in srgb, var(--mug) 62%, var(--shadow-ink)) 0%,
+    var(--mug) 26%,
+    color-mix(in srgb, var(--mug) 70%, white) 46%,
+    var(--mug) 72%,
+    color-mix(in srgb, var(--mug) 66%, var(--shadow-ink)) 100%
+  );
+  box-shadow: 0 calc(var(--u) * 0.18) calc(var(--u) * 0.3) rgb(var(--shadow-color) / 0.4);
+}
+
+/* The rim, overhanging as always. */
+.mug__body::before {
+  content: "";
+  position: absolute;
+  left: -4%;
+  right: -4%;
+  top: calc(var(--u) * -0.2);
+  height: calc(var(--u) * 0.5);
+  border-radius: 50%;
+  background: linear-gradient(
+    180deg,
+    color-mix(in srgb, var(--mug) 54%, var(--shadow-ink)) 0%,
+    color-mix(in srgb, var(--mug) 84%, white) 100%
+  );
+}
+
+.mug__handle {
+  position: absolute;
+  right: calc(var(--u) * -0.7);
+  top: 22%;
+  width: calc(var(--u) * 0.9);
+  height: 46%;
+  border: calc(var(--u) * 0.24) solid var(--mug);
+  border-left-width: calc(var(--u) * 0.08);
+  border-radius: 0 60% 60% 0 / 0 50% 50% 0;
+}
+
+/* --------------------------------------------------------------------------
+   Framed pieces.
+
+   Both lean back very slightly against the wall — a picture resting on a
+   shelf is never dead vertical, and a 1-2deg tilt with a bottom origin is the
+   entire difference between "propped" and "hung".
+   -------------------------------------------------------------------------- */
+
+.frame {
+  position: absolute;
+
+  /* --u, NOT a percentage.
+
+     I wrote `padding: 9%` here and both frames rendered about three times the
+     width of the shelf they stand on. Percentage PADDING resolves against the
+     containing block's WIDTH — never against the element's own width — and
+     the containing block here is .objects, i.e. the entire canvas. So 9%
+     meant 9% of the whole scene per side. With border-box that padding then
+     became the minimum box width, and the frames ballooned across the window.
+
+     Percentage padding is almost never what you want on a small absolutely
+     positioned element. Scene units are. */
+  padding: calc(var(--u) * 0.3);
+  border-radius: calc(var(--u) * 0.1);
+  transform-origin: bottom center;
+
+  background: linear-gradient(
+    150deg,
+    var(--wood-light) 0%,
+    var(--wood) 45%,
+    var(--wood-dark) 100%
+  );
+
+  box-shadow:
+    calc(var(--u) * 0.18) calc(var(--u) * 0.32) calc(var(--u) * 0.55)
+      rgb(var(--shadow-color) / 0.42),
+    inset 0 0 0 1px rgb(var(--shadow-color) / 0.2);
+}
+
+.frame--sign {
+  left: 23.2%;
+  width: 8.6%;
+  bottom: 89.83%;
+  height: 6.4%;
+}
+
+.frame--landscape {
+  left: 77.2%;
+  width: 6.4%;
+  bottom: 79.66%;
+  height: 5.2%;
+  transform: rotate(1.6deg);
+}
+
+.frame__mat {
+  position: relative;
+  width: 100%;
+  height: 100%;
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  justify-content: center;
+  gap: calc(var(--u) * 0.2);
+  background: #fdf8ec;
+  box-shadow: inset 0 0 0 1px rgb(var(--shadow-color) / 0.14);
+}
+
+/* Real lettering, in the display serif the page title already uses.
+
+   This started as three bars of decreasing width — the SHAPE of a centred
+   inscription without asking a tiny box to render type. It read fine and
+   said nothing. Actual words at this size are barely legible, and that turns
+   out to be better: a viewer who can half-read a sign wants to get closer,
+   and getting closer is the whole behaviour this scene is trying to provoke.
+
+   The serif matters more than the size. At six or seven pixels the letter
+   SHAPES are gone and only the texture survives, and a serif's alternating
+   thick and thin strokes give a denser, more deliberate texture than a
+   sans — which is what reads as "an inscription" rather than "some text". */
+.frame__text {
+  margin: 0;
+  text-align: center;
+  font-family: var(--font-display);
+  font-size: calc(var(--u) * 0.62);
+  line-height: 1.32;
+  letter-spacing: 0.02em;
+  color: color-mix(in srgb, var(--wood-dark) 68%, var(--shadow-ink));
+}
+
+/* One red mark under the lettering. At this size a heart is a dot — but a
+   coloured dot in a field of neutral text still reads as an ornament. */
+.frame__heart {
+  width: calc(var(--u) * 0.32);
+  height: calc(var(--u) * 0.3);
+  border-radius: 50% 50% 50% 50% / 62% 62% 38% 38%;
+  background: var(--sauce);
+}
+
+/* Landscape: the same dusk the window shows, in four stops. */
+.frame__mat--art {
+  background: linear-gradient(
+    180deg,
+    var(--sky-top) 0%,
+    var(--sky-mid) 42%,
+    var(--sky-bottom) 58%,
+    var(--hills) 58%,
+    color-mix(in srgb, var(--trees) 88%, black) 100%
+  );
+}

@@ -77,6 +77,70 @@
   will-change: transform, opacity;
 }
 
+/* --------------------------------------------------------------------------
+   Foliage and curtain.
+
+   Both animate the CONTAINER rather than individual leaves or folds. A whole
+   plant leaning a degree and a half reads as one gust moving through it;
+   leaves rotating independently read as insects. It's also far cheaper — one
+   animated element instead of ten.
+
+   Everything here is well under 2deg. At this scale that's a few pixels of
+   travel, which is the difference between "the room is alive" and "something
+   is wobbling".
+   -------------------------------------------------------------------------- */
+
+.plant__foliage--sway {
+  transform-origin: bottom center;
+  animation: leaf-sway 9s var(--ease-soft) infinite;
+}
+
+/* Offset so the two swaying plants are never in step — synchronised motion is
+   the fastest way to make a scene look mechanical. */
+.plant--lo-right .plant__foliage--sway {
+  animation-duration: 12.5s;
+  animation-delay: -4s;
+}
+
+@keyframes leaf-sway {
+  0%,
+  100% {
+    transform: rotate(-0.9deg);
+  }
+
+  50% {
+    transform: rotate(1.1deg);
+  }
+}
+
+@keyframes curtain-breathe {
+  0%,
+  100% {
+    transform: rotate(-0.35deg) scaleY(1);
+  }
+
+  50% {
+    transform: rotate(0.4deg) scaleY(1.015);
+  }
+}
+
+/* The sun's halo. Scale and opacity only — a box-shadow pulse would make the
+   browser recompute the shadow every frame, while this is pure compositing.
+   Six percent of scale over nine seconds is not something you can watch
+   happen; it just stops the sky from looking like a still. */
+@keyframes sun-glow {
+  0%,
+  100% {
+    opacity: 0.86;
+    transform: translate(-50%, 50%) scale(1);
+  }
+
+  50% {
+    opacity: 1;
+    transform: translate(-50%, 50%) scale(1.06);
+  }
+}
+
 @keyframes steam-rise {
   0% {
     opacity: 0;

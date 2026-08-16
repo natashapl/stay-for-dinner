@@ -377,14 +377,14 @@
 .bowl--pasta {
   left: 18%;
   width: 20%;
-  top: 60.5%;
+  top: 60%;
   height: 15.5%;
 }
 
 .bowl--meatball {
-  left: 44%;
+  left: 42%;
   width: 20%;
-  top: 62%;
+  top: 61%;
   height: 14%;
 }
 
@@ -398,9 +398,9 @@
 
 .plate-stack {
   position: absolute;
-  left: 68%;
+  left: 66%;
   width: 17%;
-  top: 68%;
+  top: 67%;
   height: 8%;
 }
 

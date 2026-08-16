@@ -203,6 +203,80 @@
 }
 
 /* --------------------------------------------------------------------------
+   Sunbeam — Phase 6.
+
+   The one piece that connects the window to the dinner. Everything before
+   this lit the room from a source you had to infer; this is the source made
+   visible, and it's what turns "a warm kitchen" into "a kitchen at sunset".
+
+   Three things make a beam read as light in air rather than a painted shape:
+
+   1. It WIDENS as it descends. Light from a source smaller than the room
+      diverges. A parallel-sided shaft reads as a column, not a beam.
+
+   2. It fades along its length, not just at its edges. The far end has to
+      dissolve into nothing — a beam that stops has a bottom, and light
+      doesn't have a bottom.
+
+   3. `screen` blending. Multiply would darken; normal would sit on top as a
+      film. Screen can only brighten and carries its own colour into whatever
+      it touches, so the beam warms the tile, the wood and the ceramic
+      differently — which is exactly what real light does.
+
+   The blur is what makes it air rather than glass. One blurred element is
+   cheaper than trying to build soft edges from a dozen gradient stops, and
+   this element never animates, so it rasterises once.
+   -------------------------------------------------------------------------- */
+
+.sunbeam {
+  position: absolute;
+  left: 24%;
+  right: 24%;
+
+  /* Starts BELOW the valance, not at the top of the window.
+
+     At top: 9% the shaft began above the glass and its edges washed straight
+     across the curtain — light in front of the thing it is supposed to be
+     coming through. A beam has to start at the opening it passes, and here
+     the opening begins where the cloth ends. */
+  top: 22%;
+  bottom: 14%;
+  z-index: 17;
+  pointer-events: none;
+
+  /* Narrow at the window, wide at the counter. */
+  clip-path: polygon(31% 0%, 69% 0%, 104% 100%, -4% 100%);
+
+  background: linear-gradient(
+    178deg,
+    rgb(255 226 168 / calc(0.34 * var(--light-strength))) 0%,
+    rgb(255 208 140 / calc(0.22 * var(--light-strength))) 34%,
+    rgb(255 194 122 / calc(0.09 * var(--light-strength))) 66%,
+    transparent 100%
+  );
+
+  filter: blur(calc(var(--u) * 3.2));
+  mix-blend-mode: screen;
+}
+
+/* A second, tighter core inside the first. Real shafts have a bright centre
+   and a soft surround; one even wash reads as fog. */
+.sunbeam::after {
+  content: "";
+  position: absolute;
+  left: 34%;
+  right: 34%;
+  top: 0;
+  bottom: 26%;
+  clip-path: polygon(34% 0%, 66% 0%, 100% 100%, 0% 100%);
+  background: linear-gradient(
+    180deg,
+    rgb(255 240 200 / calc(0.34 * var(--light-strength))) 0%,
+    transparent 100%
+  );
+}
+
+/* --------------------------------------------------------------------------
    Isolation.
 
    Blend modes composite against everything painted below them in their
