@@ -1,3 +1,4 @@
+import { Analytics } from '@vercel/analytics/react'
 import Scene from './components/Scene.jsx'
 
 export default function App() {
@@ -35,6 +36,7 @@ export default function App() {
         </p>
         <p>No images, canvas or icon fonts - just elements and stylesheets.</p>
       </footer>
+      <Analytics />
     </div>
   )
 }
