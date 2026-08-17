@@ -41,24 +41,72 @@ automatically:
 
 ## Project structure
 
+Components are listed here in the order the scene is built, back to front —
+the same order they appear in `Kitchen.jsx` and the same order the depth stack
+in `scene.css` assigns z-indexes in.
+
 ```text
 src/
   components/
-    Scene.jsx        # wooden frame + the 4:3 canvas
-    Kitchen.jsx      # scene coordinate space, owns scene state classes
+    Scene.jsx          # wooden frame + the 4:3 canvas, owns interaction state
+    Kitchen.jsx        # scene coordinate space, owns scene state classes
+
+    Room.jsx           # wall, backsplash, floor
+    Window.jsx         # frame, panes, night toggle target
+    Sky.jsx            # sun, moon, hills, trees, house, stars
+    Curtain.jsx
+    Shelves.jsx        # open shelving on both walls
+    Cabinetry.jsx      # wall units + counter run + base cabinets
+    SinkArea.jsx       # basin, faucet, water
+    KitchenIsland.jsx  # foreground island and stools
+
+    Refrigerator.jsx   # fresh-food + freezer compartments and interiors
+    Stove.jsx
+    Toaster.jsx
+    Blender.jsx
+    DishRack.jsx
+    CounterProps.jsx   # cutting board, utensils, cookware
+    ShelfItems.jsx     # dishware and pantry items on the shelves
+    ShelfDecor.jsx     # cookbooks, frame, timer, towel
+    Plants.jsx
+
+    PastaBowl.jsx
+    MeatballBowl.jsx
+    PlateStack.jsx     # plate stack + the dinner plate being served
+    Steam.jsx          # shared by both bowls
+
+    RecipeDrawer.jsx   # native <dialog>, styled as a right-hand drawer
+
   styles/
-    variables.css    # design tokens (page chrome + scene palette)
-    reset.css        # reset + global reduced-motion guard
-    page.css         # page chrome around the frame
-    scene.css        # frame, canvas, vignette
-    responsive.css   # page-level adjustments only
+    variables.css      # design tokens (page chrome + scene palette)
+    reset.css          # reset + global reduced-motion guard
+    page.css           # page chrome around the frame
+    scene.css          # frame, canvas, and the whole z-index depth stack
+
+    kitchen.css        # room shell: wall, tile, floor
+    window.css
+    sky.css
+    cabinetry.css
+    sink.css
+    island.css
+    appliances.css
+    decor.css
+    food.css
+    animations.css
+
+    depth.css          # scene-wide shadow + light passes
+    interactions.css   # hover, focus, prompts, drawer, plating
+    responsive.css     # page-level adjustments only
+
   App.jsx
   main.jsx
 ```
 
-Stylesheets are imported in [src/main.jsx](src/main.jsx) in a deliberate order:
-tokens first so everything below can read them, `responsive.css` last so its
-overrides land at the end of the cascade.
+Stylesheets are imported in [src/main.jsx](src/main.jsx) in the deliberate order
+shown above: tokens first so everything below can read them, then the artwork
+back to front, then `depth.css` — its passes re-light everything above it —
+then interactions, and `responsive.css` last so its overrides land at the end of
+the cascade.
 
 ### How the scene scales
 
@@ -83,6 +131,10 @@ OS temp directory. If you hit the error anyway, pause Dropbox syncing, delete
 ## Build phases
 
 Development follows the phases in
-[IMPLEMENTATION-BRIEF.md](IMPLEMENTATION-BRIEF.md). Current status: **Phase 1
-complete** — project foundation, scene wrapper, design tokens, and page
-structure. Kitchen artwork begins in Phase 2.
+[IMPLEMENTATION-BRIEF.md](IMPLEMENTATION-BRIEF.md). Current status: **Phases 1–9
+complete**, with Phase 10 (kitchen interactions) implemented and in visual
+review. Phase 11, the accessibility and responsive review, has not started.
+
+The brief's "Current Implementation Checkpoint and Review Decisions" section
+holds the authoritative scope decisions, and takes precedence over any earlier
+interaction described in the same file.

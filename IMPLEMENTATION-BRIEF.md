@@ -980,6 +980,101 @@ Implement in roughly this priority:
 
 Complete as many as time allows.
 
+## Current Implementation Checkpoint and Review Decisions
+
+Last reconciled: August 16, 2026.
+
+Phases 1 through 9 are complete. Phase 10 has been implemented and is in visual
+review/refinement. Phase 11 has not started. The decisions below record the
+review changes made after the original brief was written. Where they conflict
+with an earlier proposed interaction, these current decisions take precedence.
+
+### Phase 6 and Scene Refinements
+
+* The room uses a scene-wide multiply shade to lower the ambient brightness
+  without making the kitchen gloomy. A separate screen-light pass and the warm
+  sunbeam remain above it, which keeps the window light readable and preserves
+  the soothing dusk atmosphere.
+* A small CSS kitchen timer was added to the open space to the right of the
+  plant on the third right-hand shelf.
+* Small door knobs were added to both upper wall units only. The base cabinets
+  intentionally remain without knobs to match the chosen composition.
+
+### Phase 7: Final Recipe Behavior
+
+* The recipe is presented in a native modal `dialog` styled as a drawer from
+  the right. The food prompt is "View recipe."
+* In addition to the visible Close button and Escape key, clicking anywhere on
+  the backdrop outside the drawer closes it.
+* Focus returns to the bowl that opened the drawer after it closes.
+* The drawer now contains the current Weeknight Pasta & Chicken Meatballs draft
+  rather than generic placeholder steps. Final source credit is still pending.
+
+### Phase 8: Final Plating Behavior
+
+* The plate stack is the explicit entry point and uses the prompt "Make a
+  plate." Activating it slides the top plate forward and moves keyboard focus
+  to the pasta bowl.
+* When plating is inactive, either food bowl opens the recipe. When plating is
+  active, the bowls serve food instead, so the two interactions do not compete.
+* The enforced sequence is pasta first, then meatballs. Contextual prompts
+  change to "Add pasta," "Pasta first," "Add meatballs," and the relevant
+  completed states.
+* Activating the plate again cancels or clears plating. Escape also cancels an
+  active plating session when the recipe drawer is not open.
+* Plating progress is announced through an `aria-live` region. The meatballs
+  on the dinner plate reuse the full bowl's gradient, highlight, sauce-shadow,
+  and herb-fleck visual language at a smaller scale.
+
+### Phase 9: Final Night and Landscape Behavior
+
+* The full window is covered by a real button so the dusk/night change works
+  with a mouse as well as Enter and Space. Its visible prompts are "Watch night
+  fall" and "Bring back dusk."
+* Typed CSS custom properties interpolate the sky, room, cabinetry, landscape,
+  lighting, stars, and reflections rather than snapping between palettes.
+* The current moon treatment is a positional rise: the fully opaque moon begins
+  below the cropped horizon and rises behind the hills after the sun starts to
+  set. It does not fade into place. Reduced-motion mode removes the delayed
+  transition.
+* Two larger CSS trees were added outside the window: one aligned with the left
+  side and a smaller one near the house on the right. Their canopies use the
+  same single-color, hard-edged silhouette technique as `.sky__trees`, not
+  differently colored leaf rings.
+* The outdoor depth order is explicit: hills, foreground trees, house, then the
+  low treeline. Dense canopy centers prevent the hills from showing through
+  between the leaf crowns.
+
+### Phase 10: Final Kitchen Interaction Scope
+
+* The faucet interaction is retained. A full faucet target toggles the handle,
+  a CSS water stream, and an animated basin ripple. It has mouse, keyboard,
+  visible prompt, `aria-label`, and `aria-pressed` support.
+* The toaster remains decorative. The proposed pop-up animation was removed
+  because toast appearing without a meaningful preparation step felt arbitrary.
+* The refrigerator memo also remains decorative. It keeps its handwritten text
+  and folded-paper detail without suggesting an additional click action.
+* The refrigerator fresh-food door and freezer door have separate controls and
+  may be open together. Their handles, magnets, photo, and memo remain attached
+  to the moving doors, and each complete compartment stays clickable in both
+  its open and closed states so closing it is obvious.
+* The fresh-food compartment is a complete small scene with an interior light,
+  shelves, containers, bottles, berries, leftovers, and produce. The freezer
+  contains distinct frozen-food packages and a tray rather than opening empty.
+* Both upper wall units open. Their complete footprints remain toggle targets,
+  including the exposed interior after a door opens.
+* Cabinet contents reuse the established ceramic plate, bowl, and mug styles.
+  The cabinet above the refrigerator uses red plate bands. The right cabinet's
+  lower shelf contains pantry items—honey, grains, paprika, turmeric, and
+  herbs—instead of duplicate dishware.
+* The upper-left wall unit is mutually exclusive with the refrigerator group:
+  opening it closes both the freezer and fresh-food doors, while opening either
+  refrigerator door closes the wall unit. The freezer and fresh-food doors
+  remain independent from each other, and the upper-right cabinet is also
+  independent.
+* No Easter egg has been added during Phase 10. It remains optional for final
+  polish rather than holding up accessibility and responsive review.
+
 # Phase 11: Accessibility and Responsive Review
 
 Test:

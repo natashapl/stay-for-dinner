@@ -1,5 +1,5 @@
 /* ==========================================================================
-   Phase 7–9 interactions — food, plating, night mode, and the recipe drawer.
+   Phase 7–10 interactions — food, atmosphere, objects, and the recipe drawer.
    ========================================================================== */
 
 /* --------------------------------------------------------------------------
@@ -30,9 +30,21 @@
   );
 }
 
+/* Phase 11: the one place in this project where px is the RIGHT unit.
+   Everything else is sized in --u so the kitchen scales as one drawing — but a
+   touch target isn't part of the drawing, it's a physical measurement of a
+   fingertip, and a fingertip doesn't get smaller when the frame does. Measured
+   on a 360px phone, the bowl came out 59x34 and the plate stack 59x31: legal
+   under the 24px minimum, but these are the two most important controls in the
+   scene and they were the shortest.
+
+   A flat -7px on the top and bottom is invisible on desktop (96px -> 110px)
+   and decisive on a phone (34px -> 48px), and because it's symmetrical the
+   target stays centred on the art. Only the vertical axis grows: the bowls sit
+   side by side, so widening them would have them stealing each other's taps. */
 .bowl__trigger {
   position: absolute;
-  inset: 0;
+  inset: -7px 0;
   z-index: 8;
   border-radius: 50% 50% 44% 44% / 34% 34% 66% 66%;
   cursor: pointer;
@@ -124,17 +136,23 @@
     inset 0 calc(var(--u) * -0.16) 0 rgb(255 255 255 / 0.4);
 }
 
+/* Same px floor as .bowl__trigger, on top of the --u framing this one already
+   had. It was the smallest control in the kitchen at 55x27, which is a poor
+   showing for the button that STARTS the plating sequence. */
 .plate-stack__trigger {
   position: absolute;
-  inset: calc(var(--u) * -1.2) calc(var(--u) * -0.7) calc(var(--u) * -1.8);
+  inset: calc(var(--u) * -1.2 - 9px) calc(var(--u) * -0.7)
+    calc(var(--u) * -1.8 - 9px);
   z-index: 8;
   border-radius: 50%;
   cursor: pointer;
   touch-action: manipulation;
 }
 
+/* Follows the plate as it slides forward — and keeps the px floor above, or
+   the target would shrink again the moment plating starts. */
 .plate-stack.is-ready .plate-stack__trigger {
-  bottom: calc(var(--u) * -3.2);
+  bottom: calc(var(--u) * -3.2 - 9px);
 }
 
 .plate-stack__trigger:focus-visible {
@@ -275,6 +293,66 @@
 .window__trigger:focus-visible .window__prompt {
   opacity: 1;
   transform: translate(-50%, 0);
+}
+
+/* --------------------------------------------------------------------------
+   Small kitchen-object controls.
+
+   The scene art lives inside pointer-transparent drawing canvases. Each real
+   button uses this class to opt back into hit-testing and gets the same label
+   treatment, so discovering the faucet teaches the visual language for the
+   refrigerator and cabinet too.
+   -------------------------------------------------------------------------- */
+
+.scene-control {
+  pointer-events: auto;
+  cursor: pointer;
+  touch-action: manipulation;
+}
+
+.scene-control:focus-visible {
+  outline-width: max(2px, calc(var(--u) * 0.24));
+  outline-offset: max(1px, calc(var(--u) * 0.18));
+}
+
+.scene-control__prompt {
+  position: absolute;
+  left: 50%;
+  bottom: calc(100% + var(--u) * 0.35);
+  z-index: 12;
+  padding: 0.24em 0.62em;
+  border: 1px solid rgb(255 232 192 / 0.28);
+  border-radius: 999px;
+  white-space: nowrap;
+
+  font-size: clamp(0.56rem, calc(var(--u) * 0.96), 0.76rem);
+  font-weight: 650;
+  line-height: 1.35;
+  letter-spacing: 0.015em;
+  color: #fff4df;
+  background: rgb(55 34 23 / 0.92);
+  box-shadow: 0 calc(var(--u) * 0.22) calc(var(--u) * 0.5)
+    rgb(var(--shadow-color) / 0.34);
+
+  opacity: 0;
+  transform: translate(-50%, calc(var(--u) * 0.4));
+  transition:
+    opacity 180ms var(--ease-soft),
+    transform 220ms var(--ease-settle);
+  pointer-events: none;
+}
+
+.scene-control:hover .scene-control__prompt,
+.scene-control:focus-visible .scene-control__prompt {
+  opacity: 1;
+  transform: translate(-50%, 0);
+}
+
+/* A cabinet begins at the top edge, so an above-object label would be clipped
+   out of the framed canvas. Its prompt sits inside the dark cabinet instead. */
+.cabinet__trigger .scene-control__prompt {
+  top: 43%;
+  bottom: auto;
 }
 
 /* Screen-reader announcements stay in the figure's reading order but occupy

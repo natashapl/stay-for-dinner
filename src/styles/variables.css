@@ -21,7 +21,11 @@
   --page-bg-glow: #3a2b21;
   --page-text: #f0e3d2;
   --page-text-muted: #b3a08d;
-  --page-text-faint: #8a7767;
+  /* Phase 11: this was #8a7767, which came out at about 3.2:1 over the warm
+     glow at the top of the page — under the 4.5:1 AA needs for the hint line
+     and the footer, both of which are small text. Lightened until it clears
+     4.5:1 against the glow as well as the flat background. */
+  --page-text-faint: #a89482;
   --page-rule: #43332a;
 
   --accent: #e8a95e;

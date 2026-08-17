@@ -17,6 +17,8 @@
 .window__sky {
   position: absolute;
   inset: 0;
+  z-index: 0;
+  isolation: isolate;
 
   /* Five stops, and the mauve at 30% is the one doing the work. A blue-to-
      orange ramp passes through grey at the midpoint, which reads as smog. Any
@@ -92,6 +94,45 @@
   animation: star-twinkle 6.5s var(--ease-soft) infinite;
 }
 
+/* The moon begins completely below the cropped window. After the sun starts
+   setting it travels upward behind the hills and treeline, so the landscape
+   reveals a fully opaque disc instead of an opacity fade. It settles in the
+   upper-right pane, clear of both the mullion and the sun's path. */
+.sky__moon {
+  position: absolute;
+  left: 74%;
+  bottom: 60%;
+  width: 12%;
+  aspect-ratio: 1;
+  border-radius: 50%;
+  pointer-events: none;
+
+  background:
+    radial-gradient(circle at 68% 31%, rgb(151 139 122 / 0.22) 0 7%, transparent 8%),
+    radial-gradient(circle at 31% 66%, rgb(151 139 122 / 0.18) 0 9%, transparent 10%),
+    radial-gradient(circle at 43% 34%, rgb(255 255 247 / 0.72) 0 13%, transparent 14%),
+    radial-gradient(circle at 42% 38%, #fffbed 0%, #f1e6ca 58%, #d5c6a9 100%);
+
+  box-shadow:
+    0 0 calc(var(--u) * 0.7) rgb(255 247 218 / 0.72),
+    0 0 calc(var(--u) * 2.1) rgb(220 218 205 / 0.3);
+
+  transform: translate(-50%, 720%) scale(0.86);
+  transition: transform 1900ms var(--ease-soft);
+  will-change: transform;
+}
+
+.kitchen.is-night .sky__moon {
+  transform: translate(-50%, 0) scale(1);
+  transition-delay: 700ms;
+}
+
+@media (prefers-reduced-motion: reduce) {
+  .kitchen.is-night .sky__moon {
+    transition-delay: 0ms;
+  }
+}
+
 /* The sun's height is pinned by two things it must not collide with: the far
    ridge below it and the horizontal mullion above. There is exactly one band
    of clear glass between them, and this is it — I lost the sun entirely once
@@ -105,7 +146,7 @@
   position: absolute;
   left: 50%;
   bottom: 34%;
-  width: 14%;
+  width: 18%;
   aspect-ratio: 1;
   transform: translate(-50%, 50%);
   border-radius: 50%;
@@ -242,6 +283,7 @@
   position: absolute;
   left: -18%;
   right: -18%;
+  z-index: 1;
   border-radius: 50% 50% 0 0 / 100% 100% 0 0;
 }
 
@@ -258,7 +300,6 @@
   bottom: 18%;
   height: 12%;
   background: color-mix(in srgb, var(--hills-far) 68%, var(--sky-bottom));
-  opacity: 0.85;
 }
 
 .sky__hills--far::after {
@@ -269,8 +310,8 @@
 }
 
 .sky__hills--near {
-  bottom: 11%;
-  height: 13%;
+  bottom: 5%;
+  height: 20%;
   background: color-mix(in srgb, var(--hills) 82%, #7d4a28);
 }
 
@@ -282,6 +323,169 @@
 }
 
 /* --------------------------------------------------------------------------
+   Two foreground trees.
+
+   The reference uses a strong tree at the left edge and a smaller tree beside
+   the house to frame the sunset. These sit in front of the hills but behind
+   the house and the low treeline, so their trunks disappear naturally into
+   the landscape instead of ending at a visible baseline.
+   -------------------------------------------------------------------------- */
+
+.sky__landscape-tree {
+  position: absolute;
+  z-index: 2;
+  pointer-events: none;
+  filter: drop-shadow(0 calc(var(--u) * 0.18) calc(var(--u) * 0.28) rgb(44 28 20 / 0.22));
+  transition: filter 1800ms var(--ease-soft);
+}
+
+.sky__landscape-tree--left {
+  left: -3%;
+  bottom: 14%;
+  width: 32%;
+  height: 45%;
+}
+
+.sky__landscape-tree--right {
+  right: -1%;
+  bottom: 14%;
+  width: 27%;
+  height: 34%;
+}
+
+/* The trunk looked transparent, and the colour was the whole reason. Its
+   middle stop used to be `--wood-dark` mixed into `--trees`, which lands on
+   roughly #a2703f — and `.sky__hills--near` is roughly #a96a3b. The trunk and
+   the hill behind it were the SAME VALUE, so the ridge appeared to pass
+   straight through the tree and it read as a layering bug. It never was one:
+   the trunk has always painted in front.
+
+   Lesson worth keeping: when something looks like it's in the wrong layer,
+   check whether it's simply the same value as what's behind it. Silhouettes
+   are read entirely by value, so two shapes at the same value merge no matter
+   what the z-index says.
+
+   It's now the canopy's colour with a touch more darkness, which is also more
+   honest — a trunk and its leaves are one silhouette at this distance. */
+.sky__tree-trunk {
+  position: absolute;
+  left: 26%;
+  right: 26%;
+  top: 14%;
+  bottom: 0;
+
+  /* A central leader with two limbs, and everything has real thickness now.
+     The old polygon drew branches about a pixel wide at this scale, which is
+     what made the tree look wiry. The stem also TAPERS — wider where it meets
+     the ground than where the canopy swallows it — because a parallel-sided
+     trunk reads as a post.
+
+     Most of the limb work hides behind the leaves, which is correct, but the
+     tips show through the notches in the canopy's lower edge and that's the
+     detail that says "tree" rather than "shrub on a stick". */
+  clip-path: polygon(
+    39% 100%,
+    44% 60%,
+    24% 30%,
+    18% 23%,
+    25% 17%,
+    46% 48%,
+    47% 10%,
+    53% 7%,
+    55% 42%,
+    75% 18%,
+    81% 25%,
+    73% 32%,
+    56% 58%,
+    61% 100%
+  );
+
+  background: linear-gradient(
+    90deg,
+    color-mix(in srgb, var(--trees) 42%, #201710) 0%,
+    color-mix(in srgb, var(--trees) 62%, #2c1f13) 46%,
+    color-mix(in srgb, var(--trees) 38%, #1a120c) 100%
+  );
+}
+
+.sky__landscape-tree--right .sky__tree-trunk {
+  transform: scaleX(-1) rotate(-2deg);
+}
+
+.sky__tree-canopy {
+  position: absolute;
+  inset: 0 0 34%;
+
+  /* Use the same single silhouette colour and hard-edged crown language as
+     the distant treeline. */
+  --tree: color-mix(in srgb, var(--trees) 58%, #2c1f13);
+
+  /* Why the first version came out as a block, because I want to remember it:
+     I backed the crowns with a filler ellipse of `58% 58% at 50% 59%` and gave
+     it a hard stop at 94%. Radial-gradient radii are percentages of the BOX,
+     so that solid ellipse reached from about -4% to 104% across and past the
+     bottom — it covered every edge except the four corners. The twelve crowns
+     I'd placed so carefully were all sitting inside it, drawing nothing, and
+     what rendered was a rectangle with slightly rounded corners.
+
+     The rule: the filler must be SMALLER than the ring of crowns and sit in
+     the middle, so it only bridges the gaps between them. The crowns are the
+     silhouette. Anything that reaches the box edges paints a box.
+
+     The arrangement is a dome — widest at just under half height, tapering
+     both up to the top crown and down onto the trunk. That downward taper is
+     what stops the canopy ending in a flat line, which was the other half of
+     the blocky read. */
+  background:
+    /* lower lobes: smaller and pulled inward, so the leaves gather onto the
+       trunk and the limb tips show through the notches between them */
+    radial-gradient(ellipse 12% 14% at 40% 82%, var(--tree) 0 96%, transparent 98%),
+    radial-gradient(ellipse 12% 14% at 60% 83%, var(--tree) 0 96%, transparent 98%),
+    radial-gradient(ellipse 14% 16% at 25% 68%, var(--tree) 0 96%, transparent 98%),
+    radial-gradient(ellipse 14% 16% at 75% 69%, var(--tree) 0 96%, transparent 98%),
+
+    /* the widest point of the crown */
+    radial-gradient(ellipse 16% 18% at 16% 47%, var(--tree) 0 96%, transparent 98%),
+    radial-gradient(ellipse 16% 18% at 84% 48%, var(--tree) 0 96%, transparent 98%),
+    radial-gradient(ellipse 18% 19% at 36% 44%, var(--tree) 0 96%, transparent 98%),
+    radial-gradient(ellipse 18% 19% at 64% 45%, var(--tree) 0 96%, transparent 98%),
+
+    /* shoulders and the top */
+    radial-gradient(ellipse 16% 16% at 30% 28%, var(--tree) 0 96%, transparent 98%),
+    radial-gradient(ellipse 16% 16% at 70% 29%, var(--tree) 0 96%, transparent 98%),
+    radial-gradient(ellipse 17% 17% at 50% 21%, var(--tree) 0 96%, transparent 98%),
+
+    /* the bridge — deliberately well inside the crowns above */
+    radial-gradient(ellipse 24% 24% at 50% 50%, var(--tree) 0 96%, transparent 98%);
+}
+
+/* Small tufts sitting ON the outline rather than inside it. Breaking the edge
+   in a few places is what separates a canopy from a cloud: the eye reads
+   "leaves" from an irregular boundary long before it reads any interior
+   detail, which is lost at this size anyway. */
+.sky__tree-canopy::after {
+  content: "";
+  position: absolute;
+  inset: 0;
+  background:
+    radial-gradient(ellipse 7% 8% at 38% 9%, var(--tree) 0 94%, transparent 97%),
+    radial-gradient(ellipse 6% 7% at 62% 11%, var(--tree) 0 94%, transparent 97%),
+    radial-gradient(ellipse 7% 8% at 11% 33%, var(--tree) 0 94%, transparent 97%),
+    radial-gradient(ellipse 6% 7% at 90% 36%, var(--tree) 0 94%, transparent 97%),
+    radial-gradient(ellipse 7% 8% at 14% 61%, var(--tree) 0 94%, transparent 97%),
+    radial-gradient(ellipse 6% 7% at 87% 63%, var(--tree) 0 94%, transparent 97%),
+    radial-gradient(ellipse 6% 7% at 50% 92%, var(--tree) 0 94%, transparent 97%);
+}
+
+.sky__landscape-tree--right .sky__tree-canopy {
+  transform: scaleX(-1);
+}
+
+.kitchen.is-night .sky__landscape-tree {
+  filter: drop-shadow(0 calc(var(--u) * 0.18) calc(var(--u) * 0.3) rgb(12 12 24 / 0.36));
+}
+
+/* --------------------------------------------------------------------------
    A small house on the ridge. Five points: peak, two eaves, two feet.
    Pure silhouette — at 8% of a window, a roofline IS the house.
    -------------------------------------------------------------------------- */
@@ -290,6 +494,7 @@
   position: absolute;
   left: 63%;
   bottom: 14%;
+  z-index: 3;
   width: 14%;
   height: 14%;
   clip-path: polygon(50% 0%, 100% 42%, 100% 100%, 0% 100%, 0% 42%);
@@ -336,6 +541,7 @@
   left: 0;
   right: 0;
   bottom: 0;
+  z-index: 4;
   height: 14%;
 
   --tree: color-mix(in srgb, var(--trees) 58%, #2c1f13);

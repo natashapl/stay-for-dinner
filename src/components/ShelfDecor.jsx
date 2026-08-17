@@ -54,7 +54,7 @@ export default function ShelfDecor() {
 
       {/* Framed lettering — the kitchen motto from the reference. The "text"
           is three bars, because real glyphs at 8% of a shelf turn to mush. */}
-      <div className="frame frame--sign">
+      <div className="frame frame--sign" aria-hidden="true">
         <div className="frame__mat">
           <p className="frame__text">
             the kitchen<br />

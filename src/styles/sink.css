@@ -168,4 +168,79 @@
   background: var(--tube);
   transform: rotate(-8deg);
   transform-origin: right center;
+  transition: transform 260ms var(--ease-settle);
+}
+
+.sink-area.is-running .faucet__handle {
+  transform: rotate(-34deg);
+}
+
+/* The stream grows from the spout with scaleY, not height. Transforming keeps
+   the animation on the compositor and, with the origin pinned to the top,
+   makes the water appear to emerge from the tap rather than rise from the
+   basin. */
+.faucet__water {
+  position: absolute;
+  right: calc(var(--stroke) * 0.22);
+  top: 57%;
+  width: calc(var(--u) * 0.38);
+  height: calc(var(--u) * 5.5);
+  border-radius: 999px;
+  z-index: 2;
+  pointer-events: none;
+
+  background: linear-gradient(
+    90deg,
+    rgb(185 225 236 / 0.22) 0%,
+    rgb(235 251 255 / 0.82) 42%,
+    rgb(143 207 226 / 0.42) 100%
+  );
+  box-shadow: 0 0 calc(var(--u) * 0.25) rgb(194 235 246 / 0.34);
+
+  opacity: 0;
+  transform: scaleY(0.08);
+  transform-origin: top center;
+  transition:
+    opacity 180ms var(--ease-soft),
+    transform 320ms var(--ease-settle);
+}
+
+.sink-area.is-running .faucet__water {
+  opacity: 0.9;
+  transform: scaleY(1);
+}
+
+/* One ellipse is enough for the splash. Expanding its scale instead of its
+   dimensions gives the basin a soft recurring ripple without layout work. */
+.sink__ripple {
+  position: absolute;
+  left: 66%;
+  top: 44%;
+  width: 20%;
+  height: 34%;
+  border: calc(var(--u) * 0.14) solid rgb(184 230 241 / 0.72);
+  border-radius: 50%;
+  pointer-events: none;
+  opacity: 0;
+}
+
+.sink-area.is-running .sink__ripple {
+  animation: sink-ripple 1.8s var(--ease-soft) infinite;
+}
+
+/* Phase 11: the faucet is the smallest control in the kitchen. The tap itself
+   is only 4.6% of the frame wide, so on a 360px phone this hit area came out
+   around 32x35px — legal, but the one target I'd actually miss with a thumb.
+   Widened on both sides and given a little more height.
+
+   It can grow this far because everything it now overlaps (the basin, the
+   dish rack, the toaster) is decorative, and the food layer sits above it in
+   the stack, so the bowls still win any overlap. I kept the left/right insets
+   uneven on purpose: the prompt is centred on the TRIGGER, so making them
+   symmetrical would have slid the label off the tap. */
+.faucet__trigger {
+  position: absolute;
+  inset: -14% -85% -10% -100%;
+  z-index: 6;
+  border-radius: 46% 46% 28% 28%;
 }

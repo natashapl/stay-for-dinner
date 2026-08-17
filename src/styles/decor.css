@@ -480,7 +480,8 @@
    Positioned against .fridge__body, so these percentages are relative to the
    fridge — the one place the flattening convention is deliberately broken,
    because a note stuck to a door should move WITH the door if the fridge ever
-   shifts. Phase 8 makes .fridge-note--memo interactive.
+   shifts. The memo remains a quiet decorative detail rather than another
+   competing interaction.
    -------------------------------------------------------------------------- */
 
 .fridge-note {
@@ -495,9 +496,9 @@
    suggestion beats detail — nobody reads a 2%-wide postcard. */
 .fridge-note--photo {
   left: 12%;
-  top: 6%;
+  top: 18%;
   width: 46%;
-  height: 15%;
+  height: 46%;
   transform: rotate(-4deg);
   padding: 8%;
   background:
@@ -506,26 +507,19 @@
     #fdf7ea border-box;
 }
 
-/* A handwritten memo, with REAL text on it.
-
-   I drew this as three grey bars first, on the reasoning that glyphs at 60px
-   wide turn to mush. True — but mush that spells something is the point. A
-   bar is unambiguously decoration and the eye skips it; letters you can
-   almost read are a question, and a question is what makes someone lean in
-   and click. Legibility isn't the goal here, legible-ness is.
-
-   Sized in --u like every other measurement in the scene, so the writing
-   scales with the fridge instead of staying 8px while the kitchen grows. */
+/* A handwritten memo with enough paper texture and ink contrast to read as a
+   real object, but no hover or click behavior. */
 .fridge-note--memo {
   left: 13%;
-  top: 40%;
+  top: 8.5%;
   width: 56%;
-  height: 17%;
+  height: 26%;
   transform: rotate(2deg);
-
+  z-index: 5;
   display: grid;
   place-items: center;
   padding: 6% 4%;
+  background: linear-gradient(145deg, #fffaf0, #f5e8cd);
 }
 
 .fridge-note__text {
@@ -533,16 +527,25 @@
   text-align: center;
   text-wrap: balance;
 
-  /* Whatever script face the OS has. There is no webfont in this project and
-     no external asset is allowed, so this degrades through the stack to
-     `cursive` — which every platform maps to something handwritten. */
   font-family: "Segoe Script", "Bradley Hand", "Snell Roundhand", cursive;
   font-size: calc(var(--u) * 0.82);
   line-height: 1.25;
   letter-spacing: 0.01em;
-
-  /* Ink, not black: a warm brown reads as ballpoint on cream paper. */
   color: color-mix(in srgb, var(--shadow-ink) 78%, var(--sauce));
+}
+
+/* A fixed fold keeps the paper tactile without suggesting it can be lifted. */
+.fridge-note--memo::after {
+  content: "";
+  position: absolute;
+  right: 0;
+  bottom: 0;
+  z-index: 3;
+  width: 24%;
+  aspect-ratio: 1;
+  clip-path: polygon(100% 0, 100% 100%, 0 100%);
+  background: linear-gradient(135deg, transparent 48%, #d8c8aa 50%);
+  transform-origin: bottom right;
 }
 
 .fridge-magnet {
@@ -559,12 +562,12 @@
 }
 
 .fridge-magnet.magnet-1 {
-  top: 7%;
+  top: 20%;
   left: 30%;
 }
 
 .fridge-magnet.magnet-2 {
-  top: 41%;
+  top: 10%;
   left: 38%;
 }
 

@@ -1,3 +1,5 @@
+import { useState } from 'react'
+
 import Room from './Room.jsx'
 import Window from './Window.jsx'
 import Cabinetry from './Cabinetry.jsx'
@@ -43,6 +45,37 @@ export default function Kitchen({
   onToggleNight,
   children,
 }) {
+  const [leftCompartments, setLeftCompartments] = useState({
+    cabinet: false,
+    freezer: false,
+    fridge: false,
+  })
+
+  const leftCabinetOpen = leftCompartments.cabinet
+  const freezerOpen = leftCompartments.freezer
+  const freshFoodOpen = leftCompartments.fridge
+
+  function toggleLeftCompartment(compartment) {
+    setLeftCompartments((current) => {
+      const opening = !current[compartment]
+
+      /* The two refrigerator doors may be open together, but neither should
+         overlap the upper cabinet. Opening that cabinet closes both doors;
+         opening either door closes the cabinet. */
+      if (compartment === 'cabinet') {
+        return opening
+          ? { cabinet: true, freezer: false, fridge: false }
+          : { ...current, cabinet: false }
+      }
+
+      return {
+        ...current,
+        cabinet: opening ? false : current.cabinet,
+        [compartment]: opening,
+      }
+    })
+  }
+
   const classes = [
     'kitchen',
     isNight ? 'is-night' : '',
@@ -58,7 +91,10 @@ export default function Kitchen({
       <Room />
       <Window isNight={isNight} onToggleNight={onToggleNight} />
       <Shelves />
-      <Cabinetry />
+      <Cabinetry
+        leftCabinetOpen={leftCabinetOpen}
+        onToggleLeftCabinet={() => toggleLeftCompartment('cabinet')}
+      />
       <SinkArea />
 
       {/* Room-level occlusion, painted behind the island and the food — see
@@ -71,7 +107,12 @@ export default function Kitchen({
         <ShelfItems />
         <ShelfDecor />
         <Plants />
-        <Refrigerator />
+        <Refrigerator
+          freshFoodOpen={freshFoodOpen}
+          freezerOpen={freezerOpen}
+          onToggleFreshFood={() => toggleLeftCompartment('fridge')}
+          onToggleFreezer={() => toggleLeftCompartment('freezer')}
+        />
         <CounterProps />
         <DishRack />
         <Toaster />

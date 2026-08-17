@@ -6,11 +6,12 @@
  * toaster read as a rounded metal box rather than a card with lines on it —
  * see the note in appliances.css.
  *
- * .toaster__slot is what Phase 10 pops toast out of.
+ * It stays decorative: the scene's interactions are reserved for actions
+ * that reveal something useful or create a believable change in the room.
  */
 export default function Toaster() {
   return (
-    <div className="toaster">
+    <div className="toaster" aria-hidden="true">
       <div className="toaster__body" />
 
       <div className="toaster__top">
