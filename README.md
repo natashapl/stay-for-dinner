@@ -131,10 +131,15 @@ OS temp directory. If you hit the error anyway, pause Dropbox syncing, delete
 ## Build phases
 
 Development follows the phases in
-[IMPLEMENTATION-BRIEF.md](IMPLEMENTATION-BRIEF.md). Current status: **Phases 1–9
-complete**, with Phase 10 (kitchen interactions) implemented and in visual
-review. Phase 11, the accessibility and responsive review, has not started.
+[IMPLEMENTATION-BRIEF.md](IMPLEMENTATION-BRIEF.md). Current status: **Phases 1–11
+complete**, with Phase 12 (final polish) underway — dead CSS removed, the
+refrigerator lighting reworked, and the production build measuring 100 on
+Lighthouse performance, accessibility, best practices and SEO.
 
 The brief's "Current Implementation Checkpoint and Review Decisions" section
 holds the authoritative scope decisions, and takes precedence over any earlier
 interaction described in the same file.
+
+## License
+
+[MIT](LICENSE) © 2026 Natasha Pierre-Louis
