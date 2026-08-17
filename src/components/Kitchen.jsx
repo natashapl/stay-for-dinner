@@ -79,6 +79,10 @@ export default function Kitchen({
   const classes = [
     'kitchen',
     isNight ? 'is-night' : '',
+    /* The open fridge throws light into the ROOM, not just into itself, so the
+       flag has to live up here where the scene-wide lighting passes can see
+       it — same reason night is a class on .kitchen rather than on the sky. */
+    freshFoodOpen ? 'is-fridge-open' : '',
     plateReady ? 'is-plating' : '',
     pastaServed ? 'has-plated-pasta' : '',
     meatballsServed ? 'has-plated-meatballs' : '',
@@ -150,6 +154,7 @@ export default function Kitchen({
           component. Shade first, then light — same order a painter works in. */}
       <div className="scene-shade" />
       <div className="scene-light" />
+      <div className="fridge-glow" />
       <div className="sunbeam" />
     </div>
   )

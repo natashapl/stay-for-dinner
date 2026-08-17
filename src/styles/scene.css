@@ -166,6 +166,7 @@
 .food          { z-index: 7; }  /* on the island, in front of everything */
 .scene-shade   { z-index: 15; } /* occlusion pass — multiply */
 .scene-light   { z-index: 16; } /* window light — screen */
+.fridge-glow   { z-index: 16; } /* open-fridge spill — screen, after the above */
 
 /* These are full-canvas drawing wrappers. Their empty regions are visually
    transparent, but `pointer-events: auto` would still make those regions win

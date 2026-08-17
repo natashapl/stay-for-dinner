@@ -220,12 +220,25 @@
   z-index: 1;
   overflow: hidden;
 
-  background: linear-gradient(
-    100deg,
-    color-mix(in srgb, var(--ceramic-shade) 67%, var(--shadow-ink)) 0%,
-    color-mix(in srgb, var(--ceramic) 82%, #ffe4a7) 42%,
-    color-mix(in srgb, var(--ceramic-shade) 68%, var(--wood)) 100%
-  );
+  /* The lamp sits top-right, but everything in here used to be shaded on the
+     100deg diagonal the ROOM is lit from — so the compartment read as painted
+     rather than lit, and the contents sank into it. This wash comes from where
+     the lamp actually is and falls off downward, which is what separates the
+     items from the back wall of the fridge. It strengthens at night for the
+     same reason the spill outside does. */
+  background:
+    radial-gradient(
+      ellipse 68% 40% at 78% 4%,
+      rgb(255 232 172 / calc(0.3 + 0.26 * var(--interior-light-strength))) 0%,
+      rgb(255 216 140 / calc(0.12 + 0.16 * var(--interior-light-strength))) 44%,
+      transparent 78%
+    ),
+    linear-gradient(
+      100deg,
+      color-mix(in srgb, var(--ceramic-shade) 67%, var(--shadow-ink)) 0%,
+      color-mix(in srgb, var(--ceramic) 82%, #ffe4a7) 42%,
+      color-mix(in srgb, var(--ceramic-shade) 68%, var(--wood)) 100%
+    );
   box-shadow:
     inset 0 0 calc(var(--u) * 1.2) rgb(var(--shadow-color) / 0.45),
     inset calc(var(--u) * 0.7) 0 calc(var(--u) * 1.3) rgb(255 212 130 / 0.32),
@@ -244,6 +257,15 @@
   box-shadow:
     0 0 calc(var(--u) * 0.75) rgb(255 218 143 / 0.86),
     0 0 calc(var(--u) * 1.7) rgb(255 198 100 / 0.34);
+  transition: box-shadow 1800ms var(--ease-soft);
+}
+
+/* The bulb doesn't change, but the dark around it does — so at night the same
+   lamp needs a wider halo to read as the only light source on this wall. */
+.kitchen.is-night .fridge__light {
+  box-shadow:
+    0 0 calc(var(--u) * 1.1) rgb(255 226 156 / 0.95),
+    0 0 calc(var(--u) * 3) rgb(255 200 104 / 0.5);
 }
 
 .fridge__shelf {

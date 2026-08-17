@@ -241,6 +241,59 @@
 }
 
 /* --------------------------------------------------------------------------
+   Open-fridge spill — Phase 12.
+
+   The fridge had a lamp inside it and an interior that lit up, but the light
+   stopped dead at the door: the compartment is `overflow: hidden`, so opening
+   it changed nothing about the room. That's the tell that an interior light is
+   painted rather than lit.
+
+   The fix can't live inside Refrigerator.jsx. `.objects` has a z-index, which
+   makes it a stacking context, and a stacking context is an isolation boundary
+   for blending — a `screen` layer parked inside the fridge would composite
+   only against its own siblings and never reach the wall or the floor. Room
+   light belongs in the room's lighting pass, which is this file.
+
+   Same two-part shape as any real light source: a bright wedge at the opening,
+   and the softer pool it throws past it.
+   -------------------------------------------------------------------------- */
+
+.fridge-glow {
+  position: absolute;
+  inset: 0;
+  z-index: 16;
+  pointer-events: none;
+  mix-blend-mode: screen;
+
+  background:
+    /* the mouth of the compartment */
+    radial-gradient(
+      ellipse 13% 17% at 13% 66%,
+      rgb(255 216 146 / 0.5) 0%,
+      rgb(255 198 120 / 0.2) 46%,
+      transparent 72%
+    ),
+    /* what it throws onto the floor and the counter run beside it */
+    radial-gradient(
+      ellipse 24% 27% at 17% 74%,
+      rgb(255 196 112 / 0.24) 0%,
+      transparent 74%
+    );
+
+  opacity: 0;
+  transition: opacity 620ms var(--ease-soft);
+}
+
+/* Reusing --interior-light-strength rather than inventing a night rule: it is
+   already a registered <number> that interpolates from 0 at dusk to 1 at
+   night, so the spill strengthens on its own as the room darkens. An open
+   fridge at midnight should be the brightest thing on that wall — that's the
+   whole reason this interaction is worth having after dark. */
+.kitchen.is-fridge-open .fridge-glow {
+  opacity: calc(0.55 + 0.45 * var(--interior-light-strength));
+}
+
+/* --------------------------------------------------------------------------
    Sunbeam — Phase 6.
 
    The one piece that connects the window to the dinner. Everything before
