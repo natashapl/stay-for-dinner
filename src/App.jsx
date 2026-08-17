@@ -18,7 +18,13 @@ export default function App() {
 
       <footer className="page__outro">
         <p>
-          Built for the{' '}
+          Built by <a
+            href="https://www.natashasfolio.com/"
+            target="_blank"
+            rel="noreferrer noopener"
+          >
+            Natasha Pierre-Louis
+          </a> for the{' '}
           <a
             href="https://dev.to/challenges/frontend-2026-07-29"
             target="_blank"
