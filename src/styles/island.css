@@ -1,5 +1,5 @@
 /* ==========================================================================
-   Kitchen island and stools — the foreground.
+   Kitchen island and stools - the foreground.
    ========================================================================== */
 
 .island {
@@ -18,7 +18,7 @@
      .island__base  the painted cabinet below
 
    The top plane is deliberately WIDER than the base. That overhang is the
-   single most useful cue here — a slab whose edges line up with its cabinet
+   single most useful cue here - a slab whose edges line up with its cabinet
    reads as a flat coloured rectangle, but let it hang over by a few percent
    and it immediately becomes a countertop with something underneath.
    -------------------------------------------------------------------------- */
@@ -32,7 +32,7 @@
 
   /* Lighter at the back, warmer at the front. A surface tilting away from the
      viewer catches more light at its far edge, and faking that with a
-     gradient is far cheaper than any 3D transform — and it stays crisp at
+     gradient is far cheaper than any 3D transform - and it stays crisp at
      every scale. */
   background: linear-gradient(
     180deg,
@@ -44,7 +44,7 @@
   background-image:
     /* Light falling ACROSS the slab, not just down it. The window is a point
        source roughly above centre, so the middle of the counter is bright and
-       both ends fall away — a long surface lit evenly end to end looks like a
+       both ends fall away - a long surface lit evenly end to end looks like a
        painted plank, and this is where the pasta will sit, so it should be
        the brightest place in the room. */
     radial-gradient(
@@ -59,14 +59,14 @@
        placed at 11% / 27% / 48% / 74%, so the gaps between them GROW toward
        the front: 11, 16, 21, 26. Evenly spaced lines would flatten the
        trapezoid back out, because a receding surface compresses toward its
-       far edge — the planks nearest the wall should look tighter together
+       far edge - the planks nearest the wall should look tighter together
        than the ones nearest me.
 
        A repeating-linear-gradient can only ever space evenly, so perspective
        spacing has to be written out by hand. Worth the extra stops: this is
        what makes the clip-path read as depth rather than as a cut corner.
 
-       (My earlier repeat was 9 × --u — a width-derived unit on a band only
+       (My earlier repeat was 9 × --u - a width-derived unit on a band only
        ~8% of the canvas TALL, so no seam ever landed inside it and the grain
        was invisible.) */
     linear-gradient(
@@ -97,13 +97,13 @@
      a trapezoid says that in one declaration.
 
      The triangles this cuts from the back corners expose the base cabinets
-     behind, which is exactly right — that's the counter receding away from
+     behind, which is exactly right - that's the counter receding away from
      me, and it's what turns the island from a painted band into an object
      standing in a room. */
   clip-path: polygon(0% 100%, 100% 100%, 96% 0%, 4% 0%);
 
   /* Occlusion shadow along the far edge. There's a real gap between the
-     island and the back counter, and that gap is in shadow — without this
+     island and the back counter, and that gap is in shadow - without this
      line the slab and the cabinets behind it fuse into one field of colour. */
   box-shadow: inset 0 calc(var(--u) * 0.55) calc(var(--u) * 0.7)
     calc(var(--u) * -0.35) rgb(var(--shadow-color) / 0.5);
@@ -117,7 +117,7 @@
   bottom: calc(100% - var(--island-base-y));
 
   /* Starts a clear step darker than where the top plane ends. When the two
-     shared a value the slab read as one tall plank — the eye needs a jump in
+     shared a value the slab read as one tall plank - the eye needs a jump in
      tone at the fold to separate a horizontal surface from a vertical one. */
   background: linear-gradient(
     180deg,
@@ -138,7 +138,7 @@
    Panelled base.
 
    Vertical beadboard, drawn as a repeating-linear-gradient rather than a row
-   of elements. Each groove is a dark line with a light line beside it — the
+   of elements. Each groove is a dark line with a light line beside it - the
    pair is what makes a flat gradient look like a milled channel, because
    that's what an edge does: one side falls into shadow, the other catches
    light.
@@ -159,7 +159,7 @@
   /* Deliberately darker than the identical cabinets on the back wall. The
      window is behind the island, so this face points AWAY from the only light
      in the room. Two surfaces that share a paint colour but not an
-     orientation should never share a value — matching them was flattening the
+     orientation should never share a value - matching them was flattening the
      foreground into the background. */
   background-color: color-mix(in srgb, var(--cabinet) 84%, #3a2416);
   background-image:
@@ -182,7 +182,7 @@
 }
 
 /* Contact shadow where the island meets the floor. Anchors the whole
-   foreground — without it the island appears to hover. */
+   foreground - without it the island appears to hover. */
 .island__base::after {
   content: "";
   position: absolute;
@@ -216,7 +216,7 @@
 }
 
 /* Seen from roughly seat height, a round stool top is a shallow ellipse, not
-   a circle — border-radius: 50% on a wide, short box does that in one
+   a circle - border-radius: 50% on a wide, short box does that in one
    declaration. The dark lower half is the seat's own edge thickness. */
 .stool__seat {
   position: absolute;
@@ -236,7 +236,7 @@
     );
 
   /* A solid, un-blurred offset shadow in the seat's own wood colour becomes
-     the seat's EDGE — the copy sits a few pixels lower and is read as the
+     the seat's EDGE - the copy sits a few pixels lower and is read as the
      thickness of the disc rather than as a shadow. Cheap way to give a flat
      ellipse a side, and it keeps the elliptical outline automatically. */
   box-shadow:
@@ -246,7 +246,7 @@
 }
 
 /* Legs splay outward. Rotating from the TOP is what makes them hinge at the
-   seat and open out at the floor — with the default centre origin they'd
+   seat and open out at the floor - with the default centre origin they'd
    scissor around their middles and detach from the seat. */
 .stool__leg {
   position: absolute;
@@ -271,7 +271,7 @@
 /* --------------------------------------------------------------------------
    The back pair.
 
-   Four cues, all small, all pulling the same way — depth on an object this
+   Four cues, all small, all pulling the same way - depth on an object this
    size comes from stacking several weak signals rather than one strong one:
 
      inset further      they're nearer the vanishing point, so a head-on view

@@ -1,5 +1,5 @@
 /* ==========================================================================
-   Room shell — wall, backsplash, floor.
+   Room shell - wall, backsplash, floor.
    --------------------------------------------------------------------------
    Convention used by every scene stylesheet:
 
@@ -26,7 +26,7 @@
   inset: 0;
 
   /* Two layers: a warm bloom roughly where the window is, over a vertical
-     wash. The bloom is doing the work a light source would — it's why the
+     wash. The bloom is doing the work a light source would - it's why the
      wall reads as lit from the middle rather than flatly painted. Phase 6
      replaces it with a real directional beam. */
   background:
@@ -44,21 +44,21 @@
 }
 
 /* --------------------------------------------------------------------------
-   Backsplash — running-bond subway tile, no per-tile elements.
+   Backsplash - running-bond subway tile, no per-tile elements.
 
    The horizontal grout lines live on this element's own background, because
    they run the full width and never need offsetting.
 
    The vertical seams are the interesting part. Real subway tile is laid in
    running bond: every other row is shifted half a tile. A single gradient
-   can't do that — it has one phase for the whole surface. So there are two
+   can't do that - it has one phase for the whole surface. So there are two
    pseudo-elements, each drawing the full grid of vertical seams, and each
    MASKED to alternating rows with a repeating-linear-gradient. ::before keeps
    the even rows, ::after keeps the odd rows and shifts its seams half a tile
    sideways.
 
    Masking to stripes to make two layers interleave is a trick worth
-   remembering — it works anywhere a pattern needs to alternate per row.
+   remembering - it works anywhere a pattern needs to alternate per row.
    -------------------------------------------------------------------------- */
 
 .room__backsplash {
@@ -82,7 +82,7 @@
       transparent 70%
     ),
     /* Falloff toward the counter. The tile was the brightest thing in the
-       whole scene, and it sits at the BACK — which dragged the eye away from
+       whole scene, and it sits at the BACK - which dragged the eye away from
        the island. Whatever is furthest from the viewer should rarely hold the
        highest value; the food needs to win that. */
     linear-gradient(
@@ -123,7 +123,7 @@
   );
 }
 
-/* Odd rows only, seams pushed half a tile across — this is the offset that
+/* Odd rows only, seams pushed half a tile across - this is the offset that
    turns a plain grid into running bond. */
 .room__backsplash::after {
   background-position-x: calc(var(--tile-w) / 2);
@@ -158,7 +158,7 @@
     linear-gradient(180deg, var(--floor-dark) 0%, var(--floor) 55%, var(--floor-dark) 100%);
 }
 
-/* Floorboards running left to right. Widely spaced lines only — the island
+/* Floorboards running left to right. Widely spaced lines only - the island
    covers nearly all of this, so anything more detailed would be work nobody
    ever sees.
 

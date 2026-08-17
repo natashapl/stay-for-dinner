@@ -6,7 +6,7 @@
  * of geometry worth keeping stable from here on.
  *
  * Stools are separate from the island because they sit in front of it in the
- * depth stack — they overlap the base rather than belonging to it.
+ * depth stack - they overlap the base rather than belonging to it.
  */
 
 const STOOLS = ['14%', '42.5%', '71%']
@@ -24,7 +24,7 @@ export default function KitchenIsland() {
         {STOOLS.map((left) => (
           /* Back pair first, so they paint behind the seat and the front legs.
              A four-legged stool seen head-on shows its back legs BETWEEN the
-             front ones, not outside them — that's the perspective cue. */
+             front ones, not outside them - that's the perspective cue. */
           <div key={left} className="stool" style={{ left }}>
             <div className="stool__leg stool__leg--back-left" />
             <div className="stool__leg stool__leg--back-right" />

@@ -1,5 +1,5 @@
 /* ==========================================================================
-   Food — pasta bowl, meatball bowl, plate stack.
+   Food - pasta bowl, meatball bowl, plate stack.
    The focal point of the whole scene, so this is where the value range should
    peak: the brightest highlights and the most saturated colour in the room.
    ========================================================================== */
@@ -15,7 +15,7 @@
    Three elements, and the order they paint in is the whole illusion:
 
      .bowl__vessel  the ceramic body
-     .bowl__inner   the opening — an ellipse with overflow:hidden holding food
+     .bowl__inner   the opening - an ellipse with overflow:hidden holding food
      .bowl__lip     the rim ring, painted LAST so it crosses in front
 
    That last one is what makes food sit INSIDE a bowl rather than on top of a
@@ -34,12 +34,12 @@
   /* Slash syntax: horizontal radii before the slash, vertical after. Every
      corner gets rx = 50% of the width, but the top corners get a shallow
      ry (30%) and the bottom a deep one (70%). That asymmetry is the bowl
-     profile — a shallow dome where the rim curves away from me, and a deep
+     profile - a shallow dome where the rim curves away from me, and a deep
      round belly beneath. A single 50% would have given me a sphere. */
   border-radius: 50% 50% 50% 50% / 30% 30% 70% 70%;
 
   background:
-    /* Sides turning away from the light — this is what rounds the vessel. */
+    /* Sides turning away from the light - this is what rounds the vessel. */
     linear-gradient(
       90deg,
       rgb(var(--shadow-color) / 0.24) 0%,
@@ -51,8 +51,8 @@
        deepening steadily toward the foot.
 
        This replaced a green decorative band that went through three
-       increasingly fiddly revisions — ring gradients, a flipped centre, a
-       horizontal mask — and never read right at this size. A band is a
+       increasingly fiddly revisions - ring gradients, a flipped centre, a
+       horizontal mask - and never read right at this size. A band is a
        horizontal ring seen in perspective, and getting one to sit believably
        on a curved body is a lot of geometry for something the eye reads in a
        tenth of a second. Plain tonal falloff says "round ceramic" just as
@@ -88,7 +88,7 @@
   overflow: hidden;
 
   /* Interior in shadow at the back, lifting toward the front. Same vertical
-     flip as the sink basin — it's what reads as a hollow. */
+     flip as the sink basin - it's what reads as a hollow. */
   background: linear-gradient(
     180deg,
     color-mix(in srgb, var(--ceramic-shade) 62%, var(--sauce-dark)) 0%,
@@ -120,7 +120,7 @@
   );
 }
 
-/* The rim. A ring, not a disc — transparent centre, thick ceramic border.
+/* The rim. A ring, not a disc - transparent centre, thick ceramic border.
    Painted after the food so the near rim crosses in front of it. */
 .bowl__lip {
   position: absolute;
@@ -140,7 +140,7 @@
 }
 
 /* --------------------------------------------------------------------------
-   Spaghetti — a nest of rings, in ONE element.
+   Spaghetti - a nest of rings, in ONE element.
 
    Adapted from a technique I found on a CodePen ramen bowl, and it's a much
    better fit than the 28 arc-shaped divs I had here first.
@@ -150,7 +150,7 @@
        transparent -> thin dark edge -> 2% of pasta -> thin dark edge -> transparent
 
    Stops that jump like that produce a RING, not a disc. Stack forty rings at
-   slightly different centres and radii and they interleave into a coil — the
+   slightly different centres and radii and they interleave into a coil - the
    eye reads overlapping loops as one long noodle wound round the bowl.
 
    Two details do the heavy lifting:
@@ -161,11 +161,11 @@
 
    2. `ellipse` rather than `circle`. This element is far wider than it is
       tall, so ellipse rings inherit that ratio and come out as flattened
-      loops — which is exactly what coiled pasta looks like from the angle
+      loops - which is exactly what coiled pasta looks like from the angle
       this kitchen is viewed at. `circle` would read as a top-down bowl.
 
-   Worth internalising as a general trick: any repeated organic mass — a nest,
-   a coil, foam, wood grain — is often cheaper and better as a stack of
+   Worth internalising as a general trick: any repeated organic mass - a nest,
+   a coil, foam, wood grain - is often cheaper and better as a stack of
    gradients on one element than as N positioned children.
    -------------------------------------------------------------------------- */
 
@@ -179,7 +179,7 @@
   /* This oversize is the one knob for how much of the bowl the pasta fills.
 
      Every ring radius is a PERCENTAGE of this element, so a bigger box means
-     bigger rings — grow the negative inset and the coil grows with it. The
+     bigger rings - grow the negative inset and the coil grows with it. The
      box also has to overhang the opening so the outermost loops run off the
      edge and the coil looks like it continues under the rim, instead of
      sitting in the sauce as a tidy medallion. .bowl__inner clips the rest. */
@@ -253,11 +253,11 @@
   border-radius: 50%;
 
   /* Off-centre highlight. Putting the light at 34%/26% rather than dead centre
-     is the difference between a sphere and a flat dot — a centred highlight
+     is the difference between a sphere and a flat dot - a centred highlight
      reads as a target. The dark edge at 100% is the terminator.
 
      The speckle layers on top are the browned, uneven crust. Three soft
-     radial blooms are enough — a meatball's surface is irregular, and a
+     radial blooms are enough - a meatball's surface is irregular, and a
      perfectly smooth sphere in this palette is indistinguishable from a
      cherry tomato no matter what colour it is. Shape reads as strongly as
      hue here. */
@@ -306,7 +306,7 @@
 }
 
 /* --------------------------------------------------------------------------
-   Parmesan — ONE element, not thirty.
+   Parmesan - ONE element, not thirty.
 
    Every fleck is a hard-stopped radial-gradient in a single background list.
    Grated cheese is the case where individual elements buy nothing: the shapes
@@ -339,7 +339,7 @@
    Basil.
 
    Two opposite corners rounded and two left sharp gives a leaf in one
-   declaration — the classic border-radius trick. The centre vein is a
+   declaration - the classic border-radius trick. The centre vein is a
    pseudo-element rotated to follow the leaf's long axis.
    -------------------------------------------------------------------------- */
 
@@ -396,7 +396,7 @@
    Plate stack.
 
    Each plate is a flat ellipse offset upward by its index. The stack reads
-   because every plate casts a hard little shadow onto the one below — remove
+   because every plate casts a hard little shadow onto the one below - remove
    those and it collapses into a single striped disc.
    -------------------------------------------------------------------------- */
 
@@ -420,7 +420,7 @@
   border-radius: 50%;
   background:
     /* Accent band, following the plate's curve for the same reason the bowl's
-       does — concentric with the rim, so it bends with the ellipse. Individual
+       does - concentric with the rim, so it bends with the ellipse. Individual
        stacks can override --plate-band; dinner plates stay herb green. */
     radial-gradient(
       ellipse 62% 62% at 50% 50%,

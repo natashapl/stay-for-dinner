@@ -3,7 +3,7 @@
  *
  * A short gingham valance across the top of the window, on a rod with rings.
  *
- * Rendered inside <Window> so it inherits the window's position — the one
+ * Rendered inside <Window> so it inherits the window's position - the one
  * place in the scene where nesting beats the flattened coordinate convention,
  * because a curtain that didn't move with its window would be a bug waiting
  * to happen.

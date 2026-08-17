@@ -4,7 +4,7 @@ An interactive CSS art kitchen scene, built for the DEV Frontend Challenge:
 Comfort Food Edition.
 
 A cozy kitchen at dusk, centered on a pasta and meatball dinner. Everything in
-the scene is made with HTML and CSS — no SVG, no canvas, no image assets, no
+the scene is made with HTML and CSS - no SVG, no canvas, no image assets, no
 icon fonts. JavaScript handles interaction state and accessibility only.
 
 ## Requirements
@@ -19,7 +19,7 @@ npm install
 npm run dev
 ```
 
-The dev server prints the local URL when it starts — usually
+The dev server prints the local URL when it starts - usually
 <http://localhost:5173/>. If that port is already in use, Vite automatically
 picks the next free one (5174, 5175, …), so check the terminal output rather
 than assuming 5173.
@@ -104,7 +104,7 @@ src/
 
 Stylesheets are imported in [src/main.jsx](src/main.jsx) in the deliberate order
 shown above: tokens first so everything below can read them, then the artwork
-back to front, then `depth.css` — its passes re-light everything above it —
+back to front, then `depth.css` - its passes re-light everything above it —
 then interactions, and `responsive.css` last so its overrides land at the end of
 the cascade.
 
@@ -132,7 +132,7 @@ OS temp directory. If you hit the error anyway, pause Dropbox syncing, delete
 
 Development follows the phases in
 [IMPLEMENTATION-BRIEF.md](IMPLEMENTATION-BRIEF.md). Current status: **Phases 1–11
-complete**, with Phase 12 (final polish) underway — dead CSS removed, the
+complete**, with Phase 12 (final polish) underway - dead CSS removed, the
 refrigerator lighting reworked, and the production build measuring 100 on
 Lighthouse performance, accessibility, best practices and SEO.
 

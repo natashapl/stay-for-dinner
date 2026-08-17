@@ -1,5 +1,5 @@
 /* ==========================================================================
-   Decor — cutting board, soap, utensil crock, shelf cookware, fridge notes.
+   Decor - cutting board, soap, utensil crock, shelf cookware, fridge notes.
    ========================================================================== */
 
 /* --------------------------------------------------------------------------
@@ -118,7 +118,7 @@
    Utensil crock.
 
    The utensils fan from a shared pivot at the crock's mouth. transform-origin
-   at the bottom again — a rank of parallel sticks reads as a fence, a fan
+   at the bottom again - a rank of parallel sticks reads as a fence, a fan
    reads as a handful.
    -------------------------------------------------------------------------- */
 
@@ -133,14 +133,14 @@
 /* The crock's mouth.
 
    It lives on .crock, not on .crock__pot, and that placement is the whole
-   fix. .crock__pot carries a clip-path — and a clip-path clips an element's
+   fix. .crock__pot carries a clip-path - and a clip-path clips an element's
    PSEUDO-ELEMENTS along with its content, so a mouth drawn as .crock__pot
    ::before and positioned above the pot's top edge was silently cut away.
    Nothing errors; the shape just never appears.
 
    z-index lifts it over .crock__utensils so the near rim crosses in FRONT of
    the utensil ends and swallows them. An object is inside a container when
-   the container's near edge occludes it — same rule as the bowl rims. */
+   the container's near edge occludes it - same rule as the bowl rims. */
 .crock::before {
   content: "";
   position: absolute;
@@ -171,7 +171,7 @@
 
 /* The handles. Four stops, not three: dark edge, bright stripe off-centre,
    mid, dark edge. That off-centre highlight is the cylinder trick used on the
-   faucet tube and the soap bottle — it's what makes a 3px bar read as a round
+   faucet tube and the soap bottle - it's what makes a 3px bar read as a round
    dowel instead of a line. */
 .utensil {
   position: absolute;
@@ -195,7 +195,7 @@
    Utensil heads.
 
    Every utensil gets a DIFFERENT one. Five identical sticks with the same
-   blob on top is a bundle of matches — a utensil crock is interesting because
+   blob on top is a bundle of matches - a utensil crock is interesting because
    it holds a jumble of unlike tools, and the silhouettes are the only thing
    saying so at this size. Nobody can identify a 20px spatula from its colour;
    they identify it from its outline.
@@ -257,7 +257,7 @@
   border-radius: 46% 46% 50% 50% / 40% 40% 60% 60%;
 }
 
-/* Flared blade — narrow at the handle, wide at the tip. The clip-path is the
+/* Flared blade - narrow at the handle, wide at the tip. The clip-path is the
    whole identity of a spatula. */
 .utensil--spatula::after {
   width: calc(var(--u) * 1.6);
@@ -316,7 +316,7 @@
 /* Stacked bowls.
 
    My first version drew each bowl as a bottom-rounded crescent, narrowing as
-   it went up. Three crescents in a column is a striped block — there was
+   it went up. Three crescents in a column is a striped block - there was
    nothing in it that said "bowl", because the one feature that identifies a
    bowl is its OPENING.
 
@@ -333,7 +333,7 @@
   bottom: calc(var(--i) * 27%);
   height: 46%;
 
-  /* Wide shallow dome on top, tapering below — the same slash-syntax profile
+  /* Wide shallow dome on top, tapering below - the same slash-syntax profile
      as the big serving bowls, at a tenth of the size. */
   border-radius: 50% 50% 44% 44% / 42% 42% 58% 58%;
 
@@ -366,7 +366,7 @@
     color-mix(in srgb, var(--ceramic) 94%, white) 100%
   );
 
-  /* Bright hairline on the near rim — the lit lip of the ceramic. Without it
+  /* Bright hairline on the near rim - the lit lip of the ceramic. Without it
      the mouth reads as a painted dark oval instead of an edge. */
   box-shadow: inset 0 calc(var(--u) * -0.11) 0 color-mix(in srgb, var(--ceramic) 60%, white);
 }
@@ -399,7 +399,7 @@
   box-shadow: 0 calc(var(--u) * 0.2) calc(var(--u) * 0.35) rgb(var(--shadow-color) / 0.4);
 }
 
-/* The lid overhangs the body on both sides — the same overhang cue the island
+/* The lid overhangs the body on both sides - the same overhang cue the island
    slab uses, at a twentieth of the size. */
 .dutch-oven__lid {
   position: absolute;
@@ -478,7 +478,7 @@
    Fridge notes.
 
    Positioned against .fridge__body, so these percentages are relative to the
-   fridge — the one place the flattening convention is deliberately broken,
+   fridge - the one place the flattening convention is deliberately broken,
    because a note stuck to a door should move WITH the door if the fridge ever
    shifts. The memo remains a quiet decorative detail rather than another
    competing interaction.
@@ -493,7 +493,7 @@
 }
 
 /* A photo: warm sky over a dark hill, in two gradients. Small enough that
-   suggestion beats detail — nobody reads a 2%-wide postcard. */
+   suggestion beats detail - nobody reads a 2%-wide postcard. */
 .fridge-note--photo {
   left: 12%;
   top: 18%;
@@ -573,7 +573,7 @@
 
 
 /* ==========================================================================
-   Plants — Phase 5
+   Plants - Phase 5
    ==========================================================================
 
    One leaf rule, one pot rule, four plants. The variants below only move the
@@ -585,7 +585,7 @@
   position: absolute;
 }
 
-/* Left shelves. Tops land at 10.17% and 30.51% of the canvas — 18% and 54% of
+/* Left shelves. Tops land at 10.17% and 30.51% of the canvas - 18% and 54% of
    .shelves, which is 56.5% tall. */
 .plant--hi-left {
   left: 16%;
@@ -630,7 +630,7 @@
 
    The shape is one border-radius: broad and round at the tip, tapering to a
    point at the stem. Written as four corner values with a slash, so the
-   horizontal and vertical radii differ — that asymmetry is what turns an
+   horizontal and vertical radii differ - that asymmetry is what turns an
    ellipse into something botanical.
 
    transform-origin: bottom center is what lets rotation work as ARRANGEMENT:
@@ -670,12 +670,12 @@
     );
 
   /* Deeper tones go further back in the plant, exactly like the pasta and the
-     meatballs — depth in a cluster is a value ramp, not an outline. */
+     meatballs - depth in a cluster is a value ramp, not an outline. */
   filter: brightness(calc(1 - var(--tone) * 0.13)) saturate(calc(1 + var(--tone) * 0.08));
 }
 
 /* --------------------------------------------------------------------------
-   Pot. Tapered box plus an elliptical rim that overhangs it — the same two
+   Pot. Tapered box plus an elliptical rim that overhangs it - the same two
    pieces as the utensil crock, and the rim is again what says "opening".
    -------------------------------------------------------------------------- */
 
@@ -689,7 +689,7 @@
 }
 
 /* The rim lives on .plant, not on .plant__pot, because .plant__pot is clipped
-   and a clip-path clips pseudo-elements too — a rim drawn there and pushed
+   and a clip-path clips pseudo-elements too - a rim drawn there and pushed
    above the pot's top edge is silently cut away. Learned that one on the
    crock. */
 .plant::after {
@@ -761,14 +761,14 @@
 
 
 /* ==========================================================================
-   Cookbooks, mugs, framed pieces — Phase 5
+   Cookbooks, mugs, framed pieces - Phase 5
    ========================================================================== */
 
 /* --------------------------------------------------------------------------
    Cookbooks.
 
    align-items: flex-end so books of different heights all stand ON the shelf
-   rather than being centred against each other — the shelf is the floor of
+   rather than being centred against each other - the shelf is the floor of
    this row, and flexbox needs telling.
 
    Each spine is one element. The leaning one rotates about its BOTTOM RIGHT
@@ -841,7 +841,7 @@
 
    Body is a cylinder: four-stop horizontal gradient, dark-light-mid-dark. The
    rim is an ellipse overhanging the top, and the handle is a C from three
-   borders — the same two moves as the blender jar and its handle, at a
+   borders - the same two moves as the blender jar and its handle, at a
    quarter the size. Reusing a construction across scales is most of what
    keeps a scene coherent.
    -------------------------------------------------------------------------- */
@@ -1047,7 +1047,7 @@
 /* --------------------------------------------------------------------------
    Framed pieces.
 
-   Both lean back very slightly against the wall — a picture resting on a
+   Both lean back very slightly against the wall - a picture resting on a
    shelf is never dead vertical, and a 1-2deg tilt with a bottom origin is the
    entire difference between "propped" and "hung".
    -------------------------------------------------------------------------- */
@@ -1059,7 +1059,7 @@
 
      I wrote `padding: 9%` here and both frames rendered about three times the
      width of the shelf they stand on. Percentage PADDING resolves against the
-     containing block's WIDTH — never against the element's own width — and
+     containing block's WIDTH - never against the element's own width - and
      the containing block here is .objects, i.e. the entire canvas. So 9%
      meant 9% of the whole scene per side. With border-box that padding then
      became the minimum box width, and the frames ballooned across the window.
@@ -1113,7 +1113,7 @@
 
 /* Real lettering, in the display serif the page title already uses.
 
-   This started as three bars of decreasing width — the SHAPE of a centred
+   This started as three bars of decreasing width - the SHAPE of a centred
    inscription without asking a tiny box to render type. It read fine and
    said nothing. Actual words at this size are barely legible, and that turns
    out to be better: a viewer who can half-read a sign wants to get closer,
@@ -1122,7 +1122,7 @@
    The serif matters more than the size. At six or seven pixels the letter
    SHAPES are gone and only the texture survives, and a serif's alternating
    thick and thin strokes give a denser, more deliberate texture than a
-   sans — which is what reads as "an inscription" rather than "some text". */
+   sans - which is what reads as "an inscription" rather than "some text". */
 .frame__text {
   margin: 0;
   text-align: center;
@@ -1133,7 +1133,7 @@
   color: color-mix(in srgb, var(--wood-dark) 68%, var(--shadow-ink));
 }
 
-/* One red mark under the lettering. At this size a heart is a dot — but a
+/* One red mark under the lettering. At this size a heart is a dot - but a
    coloured dot in a field of neutral text still reads as an ornament. */
 .frame__heart {
   width: calc(var(--u) * 0.32);

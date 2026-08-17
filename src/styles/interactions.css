@@ -1,5 +1,5 @@
 /* ==========================================================================
-   Phase 7–10 interactions — food, atmosphere, objects, and the recipe drawer.
+   Phase 7–10 interactions - food, atmosphere, objects, and the recipe drawer.
    ========================================================================== */
 
 /* --------------------------------------------------------------------------
@@ -31,7 +31,7 @@
 }
 
 /* Phase 11: the one place in this project where px is the RIGHT unit.
-   Everything else is sized in --u so the kitchen scales as one drawing — but a
+   Everything else is sized in --u so the kitchen scales as one drawing - but a
    touch target isn't part of the drawing, it's a physical measurement of a
    fingertip, and a fingertip doesn't get smaller when the frame does. Measured
    on a 360px phone, the bowl came out 59x34 and the plate stack 59x31: legal
@@ -149,7 +149,7 @@
   touch-action: manipulation;
 }
 
-/* Follows the plate as it slides forward — and keeps the px floor above, or
+/* Follows the plate as it slides forward - and keeps the px floor above, or
    the target would shrink again the moment plating starts. */
 .plate-stack.is-ready .plate-stack__trigger {
   bottom: calc(var(--u) * -3.2 - 9px);

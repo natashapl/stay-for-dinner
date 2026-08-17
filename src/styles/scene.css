@@ -1,18 +1,18 @@
 /* ==========================================================================
-   The frame — a dark wooden opening cut through the page.
+   The frame - a dark wooden opening cut through the page.
    ========================================================================== */
 
 /* Frame and canvas are deliberately two elements.
 
    My first attempt drew the frame as an inset box-shadow on the canvas
-   itself — it was invisible, because .kitchen is a 100%x100% child and
+   itself - it was invisible, because .kitchen is a 100%x100% child and
    children paint over their parent's inset shadows. A padded wrapper is the
    honest fix: the padding IS the frame, so nothing can cover it. */
 
 .scene-frame {
   position: relative;
 
-  /* Frame width, in one declaration and with zero height involvement — the
+  /* Frame width, in one declaration and with zero height involvement - the
      window's height can change however it likes and this number won't move.
 
      It reads as three rules at once, and the browser picks whichever is
@@ -91,13 +91,13 @@
 
   /* Establishes the coordinate system for everything inside.
      `container-type: size` (not inline-size) is required because the artwork
-     will want cqh as well as cqw — and it's safe here since the height is
+     will want cqh as well as cqw - and it's safe here since the height is
      already pinned by aspect-ratio rather than by content. */
   container: scene / size;
 }
 
 /* ==========================================================================
-   The kitchen canvas — the illustration's own coordinate space.
+   The kitchen canvas - the illustration's own coordinate space.
    ========================================================================== */
 
 .kitchen {
@@ -160,13 +160,13 @@
 .back-counter  { z-index: 3; }  /* counter run + base cabinets */
 .sink-area     { z-index: 4; }
 .objects       { z-index: 4; }  /* appliances + props on the back counter */
-.scene-shade--room { z-index: 4; } /* room occlusion — behind the foreground */
-.island        { z-index: 5; }  /* foreground — food will sit on this */
+.scene-shade--room { z-index: 4; } /* room occlusion - behind the foreground */
+.island        { z-index: 5; }  /* foreground - food will sit on this */
 .stools        { z-index: 6; }
 .food          { z-index: 7; }  /* on the island, in front of everything */
-.scene-shade   { z-index: 15; } /* occlusion pass — multiply */
-.scene-light   { z-index: 16; } /* window light — screen */
-.fridge-glow   { z-index: 16; } /* open-fridge spill — screen, after the above */
+.scene-shade   { z-index: 15; } /* occlusion pass - multiply */
+.scene-light   { z-index: 16; } /* window light - screen */
+.fridge-glow   { z-index: 16; } /* open-fridge spill - screen, after the above */
 
 /* These are full-canvas drawing wrappers. Their empty regions are visually
    transparent, but `pointer-events: auto` would still make those regions win
@@ -190,7 +190,7 @@
 }
 
 /* Vignette. Illustrations almost always want the corners pulled down a
-   little — it keeps the eye in the middle of the frame where the food is
+   little - it keeps the eye in the middle of the frame where the food is
    going to be. It has to outrank every scene layer, so it sits well above
    the stack above. */
 .kitchen::after {

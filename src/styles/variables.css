@@ -3,10 +3,10 @@
    --------------------------------------------------------------------------
    Two deliberate tiers here:
 
-   1. :root  — page chrome. Title, intro copy, the muted surround. These never
+   1. :root  - page chrome. Title, intro copy, the muted surround. These never
       change, because the page frame shouldn't react when the kitchen does.
 
-   2. .kitchen — everything inside the frame. All scene colour lives here
+   2. .kitchen - everything inside the frame. All scene colour lives here
       instead of :root so that Phase 9 can flip the entire illustration to
       night by re-declaring the same names on .kitchen.is-night. Nothing
       downstream has to know night mode exists; it just reads var(--wall).
@@ -22,7 +22,7 @@
   --page-text: #f0e3d2;
   --page-text-muted: #b3a08d;
   /* Phase 11: this was #8a7767, which came out at about 3.2:1 over the warm
-     glow at the top of the page — under the 4.5:1 AA needs for the hint line
+     glow at the top of the page - under the 4.5:1 AA needs for the hint line
      and the footer, both of which are small text. Lightened until it clears
      4.5:1 against the glow as well as the flat background. */
   --page-text-faint: #a89482;
@@ -223,7 +223,7 @@
 }
 
 /* ==========================================================================
-   Scene tokens — dusk (default state)
+   Scene tokens - dusk (default state)
    Sampled off the reference painting so the palette stays coherent once the
    real artwork lands.
    ========================================================================== */
@@ -234,7 +234,7 @@
 
      .scene is a size container, so 1cqw = 1% of the frame's width no matter
      how big the frame is. Sizing every object in multiples of --u means the
-     whole kitchen scales as one illustration — a 4u-tall bowl rim stays 4u
+     whole kitchen scales as one illustration - a 4u-tall bowl rim stays 4u
      on a phone. If I sized anything in px, that object would drift out of
      proportion the moment the frame resized.
 
@@ -252,7 +252,7 @@
      Reading down the room: wall -> counter -> base cabinets -> floor, with
      the island sitting in front of the lot. */
   --counter-y: 56.5%;        /* back edge of the counter, against the tile */
-  --counter-surface-h: 4%;   /* the visible top PLANE — where objects stand */
+  --counter-surface-h: 4%;   /* the visible top PLANE - where objects stand */
   --counter-edge-h: 1.5%;    /* front lip, i.e. the slab's thickness */
   --counter-h: 5.5%;         /* surface + edge */
   --base-cab-y: 62%;         /* counter-y + counter-h */
@@ -263,12 +263,12 @@
      (toaster, blender, dish rack, cookware).
 
      A box reads as 2D whenever only one of its faces is visible. Showing two
-     — a front and a top — is the minimum for volume; three, with a side, is
+     - a front and a top - is the minimum for volume; three, with a side, is
      better. The faces must differ in VALUE, not just in outline:
 
-       top    lightest — it faces up toward the window
+       top    lightest - it faces up toward the window
        front  the base colour
-       side   darkest  — it turns away from the light
+       side   darkest  - it turns away from the light
 
      Two rules keep the room coherent:
 
@@ -292,7 +292,7 @@
         nobody can say why.)
 
         Shade that flank a step darker than the front. Strictly the window
-        lights it, since the window is central too — but a face that turns
+        lights it, since the window is central too - but a face that turns
         away from the viewer reading darker is what the eye expects, and the
         turn is what sells the volume. */
   --face-top-lift: 16%;    /* how far the top face mixes toward white */
@@ -300,11 +300,11 @@
 
   /* How far the island is inset from the frame, left and right. Shared,
      because the shadow pass in depth.css has to know exactly how wide the
-     island is — a gradient there fills the whole canvas unless it's told
+     island is - a gradient there fills the whole canvas unless it's told
      otherwise, and a hardcoded copy of this number is how the shade ends up
      extending past the object it belongs to. */
   --island-inset: 5%;       /* the slab */
-  --island-base-inset: 8%;  /* the base — narrower, which IS the overhang */
+  --island-base-inset: 8%;  /* the base - narrower, which IS the overhang */
 
   --island-top-y: 68.5%;   /* front edge of the island's top plane */
   --island-edge-y: 76.5%;  /* butcher-block thickness starts */
@@ -346,14 +346,14 @@
   --ceramic: #f7f2e8;
   --ceramic-shade: #ddd4c4;
 
-  /* Food — parked here now so Phase 3 inherits the same palette */
+  /* Food - parked here now so Phase 3 inherits the same palette */
   --sauce: #bf4a2c;
   --sauce-dark: #94341d;
   --pasta: #e9b96b;
   --herb: #4f7a3a;
 
   /* Meatballs are their own colour, not a shade of the sauce. Browned meat is
-     desaturated and yellow-shifted next to tomato — reusing --sauce made them
+     desaturated and yellow-shifted next to tomato - reusing --sauce made them
      read as tomatoes sitting in tomato sauce, with nothing but a highlight to
      tell the two apart. They also need to sit DARKER than the sauce so the
      pile separates from what it's sitting in. */
@@ -370,7 +370,7 @@
   /* Two forms of the same shadow, and both are needed.
 
      --shadow-color is a bare TRIPLET so it can be written rgb(var(...) / a)
-     with an arbitrary alpha — that is the whole reason it has no rgb() around
+     with an arbitrary alpha - that is the whole reason it has no rgb() around
      it. But that also means it is not a <color>, so it CANNOT be fed to
      color-mix(). Doing so is invalid, and the browser's response is to drop
      the entire declaration silently: a background-image goes to none, a
@@ -388,7 +388,7 @@
 }
 
 /* --------------------------------------------------------------------------
-   Scene tokens — night
+   Scene tokens - night
    Geometry stays put; this state only changes the palette and the strengths
    of the daylight, indoor glow, vignette, halo and stars.
    -------------------------------------------------------------------------- */

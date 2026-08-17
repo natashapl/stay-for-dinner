@@ -1,5 +1,5 @@
 /* ==========================================================================
-   Sky — what's outside the window. Phase 6.
+   Sky - what's outside the window. Phase 6.
    --------------------------------------------------------------------------
    The whole point of this file is DISTANCE. Everything here is behind glass
    and far away, so the rules are the opposite of the ones the kitchen uses:
@@ -10,7 +10,7 @@
        viewer and all of it
 
    Get that backwards and the landscape competes with the room. The kitchen
-   must stay the sharpest, darkest, most contrasted thing on screen — the view
+   must stay the sharpest, darkest, most contrasted thing on screen - the view
    is a warm glow to look toward, not a picture to look at.
    ========================================================================== */
 
@@ -22,7 +22,7 @@
 
   /* Five stops, and the mauve at 30% is the one doing the work. A blue-to-
      orange ramp passes through grey at the midpoint, which reads as smog. Any
-     sunset gradient needs a violet in the transition — that's the colour the
+     sunset gradient needs a violet in the transition - that's the colour the
      sky actually goes where the blue half meets the warm half. */
   background: linear-gradient(
     180deg,
@@ -39,7 +39,7 @@
    Sun and its glow.
 
    Two elements: a small hard disc, and a big soft halo. They are separate
-   because only the halo animates — pulsing a box-shadow would relayout the
+   because only the halo animates - pulsing a box-shadow would relayout the
    shadow on every frame, while scaling and fading a gradient is compositor
    work. Cheap enough to leave running forever.
    -------------------------------------------------------------------------- */
@@ -135,7 +135,7 @@
 
 /* The sun's height is pinned by two things it must not collide with: the far
    ridge below it and the horizontal mullion above. There is exactly one band
-   of clear glass between them, and this is it — I lost the sun entirely once
+   of clear glass between them, and this is it - I lost the sun entirely once
    by lowering it 6% into the hills, and had it half-hidden behind the mullion
    before that.
 
@@ -184,7 +184,7 @@
    Lit from BELOW. That single inversion is what makes a cloud read as sunset
    rather than midday: the sun is under them, so their undersides are hot
    peach and their tops are the cool mauve of the sky above. A cloud shaded
-   the normal way — light on top — instantly says noon.
+   the normal way - light on top - instantly says noon.
 
    Each cloud is one element plus a ::after lobe, blurred. Two overlapping
    ellipses with soft edges is all a distant cloud needs; anything more
@@ -271,7 +271,7 @@
 /* --------------------------------------------------------------------------
    Hills.
 
-   A dome is `border-radius: 50% 50% 0 0 / 100% 100% 0 0` — full horizontal
+   A dome is `border-radius: 50% 50% 0 0 / 100% 100% 0 0` - full horizontal
    radius, full vertical radius, flat bottom. The ::after is a second dome
    offset sideways and set lower, which is all a ridgeline is.
 
@@ -295,7 +295,7 @@
 }
 
 /* Far ridge: barely darker than the sky it sits against. This is the aerial
-   perspective rule doing its job — at distance, value converges on the sky. */
+   perspective rule doing its job - at distance, value converges on the sky. */
 .sky__hills--far {
   bottom: 18%;
   height: 12%;
@@ -355,7 +355,7 @@
 
 /* The trunk looked transparent, and the colour was the whole reason. Its
    middle stop used to be `--wood-dark` mixed into `--trees`, which lands on
-   roughly #a2703f — and `.sky__hills--near` is roughly #a96a3b. The trunk and
+   roughly #a2703f - and `.sky__hills--near` is roughly #a96a3b. The trunk and
    the hill behind it were the SAME VALUE, so the ridge appeared to pass
    straight through the tree and it read as a layering bug. It never was one:
    the trunk has always painted in front.
@@ -366,7 +366,7 @@
    what the z-index says.
 
    It's now the canopy's colour with a touch more darkness, which is also more
-   honest — a trunk and its leaves are one silhouette at this distance. */
+   honest - a trunk and its leaves are one silhouette at this distance. */
 .sky__tree-trunk {
   position: absolute;
   left: 26%;
@@ -376,8 +376,8 @@
 
   /* A central leader with two limbs, and everything has real thickness now.
      The old polygon drew branches about a pixel wide at this scale, which is
-     what made the tree look wiry. The stem also TAPERS — wider where it meets
-     the ground than where the canopy swallows it — because a parallel-sided
+     what made the tree look wiry. The stem also TAPERS - wider where it meets
+     the ground than where the canopy swallows it - because a parallel-sided
      trunk reads as a post.
 
      Most of the limb work hides behind the leaves, which is correct, but the
@@ -424,7 +424,7 @@
      I backed the crowns with a filler ellipse of `58% 58% at 50% 59%` and gave
      it a hard stop at 94%. Radial-gradient radii are percentages of the BOX,
      so that solid ellipse reached from about -4% to 104% across and past the
-     bottom — it covered every edge except the four corners. The twelve crowns
+     bottom - it covered every edge except the four corners. The twelve crowns
      I'd placed so carefully were all sitting inside it, drawing nothing, and
      what rendered was a rectangle with slightly rounded corners.
 
@@ -432,7 +432,7 @@
      the middle, so it only bridges the gaps between them. The crowns are the
      silhouette. Anything that reaches the box edges paints a box.
 
-     The arrangement is a dome — widest at just under half height, tapering
+     The arrangement is a dome - widest at just under half height, tapering
      both up to the top crown and down onto the trunk. That downward taper is
      what stops the canopy ending in a flat line, which was the other half of
      the blocky read. */
@@ -455,7 +455,7 @@
     radial-gradient(ellipse 16% 16% at 70% 29%, var(--tree) 0 96%, transparent 98%),
     radial-gradient(ellipse 17% 17% at 50% 21%, var(--tree) 0 96%, transparent 98%),
 
-    /* the bridge — deliberately well inside the crowns above */
+    /* the bridge - deliberately well inside the crowns above */
     radial-gradient(ellipse 24% 24% at 50% 50%, var(--tree) 0 96%, transparent 98%);
 }
 
@@ -487,7 +487,7 @@
 
 /* --------------------------------------------------------------------------
    A small house on the ridge. Five points: peak, two eaves, two feet.
-   Pure silhouette — at 8% of a window, a roofline IS the house.
+   Pure silhouette - at 8% of a window, a roofline IS the house.
    -------------------------------------------------------------------------- */
 
 .sky__house {
@@ -549,7 +549,7 @@
   /* Fourteen small crowns, not eight big ones.
 
      My first pass used ellipses 7-10% wide and up to 62% tall, and they read
-     as boulders — a distant treeline is made of MANY small bumps, and the
+     as boulders - a distant treeline is made of MANY small bumps, and the
      number of repeats is what communicates distance far more than the colour
      does. Halving each crown and doubling the count changed nothing about the
      palette and fixed the read completely.
@@ -576,7 +576,7 @@
 }
 
 /* Haze pooling along the treeline. Warm, low-opacity, and it sits ON the
-   trees — the last thing between the viewer and the furthest object. This is
+   trees - the last thing between the viewer and the furthest object. This is
    what stops the landscape from having a crisp bottom edge. */
 .sky__trees::after {
   content: "";

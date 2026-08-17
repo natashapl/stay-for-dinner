@@ -10,7 +10,7 @@
  * rotations give you a starburst, which reads as a firework, not a plant.
  *
  * Angles are measured from straight up, so a leaf past ±90deg hangs BELOW its
- * origin — that's all a trailing pothos is.
+ * origin - that's all a trailing pothos is.
  */
 
 function Plant({ variant, pot, leaves, sway = false }) {

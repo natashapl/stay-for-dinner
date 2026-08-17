@@ -8,7 +8,7 @@
  * assembled appliance. Real objects have joins.
  *
  * The jar is EMPTY and stays that way. Nobody leaves the blender full once
- * dinner is cooked, so there is no blender interaction in the brief — this is
+ * dinner is cooked, so there is no blender interaction in the brief - this is
  * a clean appliance sitting on a tidy counter, and that's the whole point.
  *
  * An empty vessel puts all the work on the glass itself; see the note in

@@ -70,7 +70,7 @@ export default function Refrigerator({
         <div className="fridge__door fridge__door--fresh">
           <div className="fridge__handle fridge__handle--fresh" />
 
-          {/* Painted lettering, not content — a reader announcing "Eat well
+          {/* Painted lettering, not content - a reader announcing "Eat well
               Live well" out of nowhere in the middle of the kitchen is noise. */}
           <div className="fridge-note fridge-note--memo" aria-hidden="true">
             <p className="fridge-note__text">

@@ -14,7 +14,7 @@ const BOOKS = [
   { w: 17, h: 98, r: 0, hue: 'c' },
   { w: 12, h: 88, r: 0, hue: 'd' },
   { w: 14, h: 96, r: 0, hue: 'b' },
-  /* the leaner — its rotation is what the whole row is for */
+  /* the leaner - its rotation is what the whole row is for */
   { w: 13, h: 92, r: 0, hue: 'a' },
 ]
 
@@ -52,7 +52,7 @@ export default function ShelfDecor() {
         </div>
       </div>
 
-      {/* Framed lettering — the kitchen motto from the reference. The "text"
+      {/* Framed lettering - the kitchen motto from the reference. The "text"
           is three bars, because real glyphs at 8% of a shelf turn to mush. */}
       <div className="frame frame--sign" aria-hidden="true">
         <div className="frame__mat">

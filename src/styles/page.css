@@ -1,5 +1,5 @@
 /* ==========================================================================
-   Page chrome — everything outside the frame.
+   Page chrome - everything outside the frame.
    Deliberately quiet. It exists to hand the viewer over to the illustration.
    ========================================================================== */
 
@@ -39,7 +39,7 @@ body {
   gap: clamp(1.5rem, 1rem + 2vw, 2.75rem);
 
   /* Vertical padding only. The side gutters live on the text blocks below
-     instead, so that .page stays exactly as wide as the page itself — which
+     instead, so that .page stays exactly as wide as the page itself - which
      is what makes the frame's percentages honest. When this padding was here,
      a "60%" frame measured 56.7% of the window, because it was really 60% of
      an already-inset column. */
@@ -50,7 +50,7 @@ body {
    .scene-frame's percentages resolve against the width the eye actually sees.
    It also has to be explicitly 100%: .page centres its children with
    align-items, which makes every child shrink-to-fit, and a shrink-to-fit
-   parent would give those percentages nothing to resolve against — the frame
+   parent would give those percentages nothing to resolve against - the frame
    would collapse to zero width. */
 .page__stage {
   width: 100%;

@@ -1,5 +1,5 @@
 /* ==========================================================================
-   Cabinetry — counter run, base cabinets, upper cabinets, open shelves.
+   Cabinetry - counter run, base cabinets, upper cabinets, open shelves.
    ========================================================================== */
 
 /* --------------------------------------------------------------------------
@@ -9,7 +9,7 @@
    pseudo-element inset from the door's edges, and the illusion of depth comes
    from two inset shadows in opposite directions: dark at the top where the
    panel drops away from the light, pale at the bottom where the lower edge
-   catches it. That pairing is the whole trick — reverse the two and the panel
+   catches it. That pairing is the whole trick - reverse the two and the panel
    pops outward instead of sinking in.
    -------------------------------------------------------------------------- */
 
@@ -47,7 +47,7 @@
 }
 
 /* Flex ratios, so the run reads as real joinery rather than a strip of equal
-   rectangles. Purely proportional — nothing here is a fixed width. */
+   rectangles. Purely proportional - nothing here is a fixed width. */
 .door--wide {
   flex-grow: 1.55;
 }
@@ -68,7 +68,7 @@
 /* --------------------------------------------------------------------------
    The counter slab.
 
-   This used to be a single 2.4%-tall band — effectively a line, with no
+   This used to be a single 2.4%-tall band - effectively a line, with no
    surface for anything to stand on. Appliances placed on it would have looked
    stuck to a wall rather than sitting on a worktop.
 
@@ -80,12 +80,12 @@
    change of plane, and it works without a single transform.
    -------------------------------------------------------------------------- */
 
-/* inset: 0 — the flattening convention from kitchen.css, and I broke it here
+/* inset: 0 - the flattening convention from kitchen.css, and I broke it here
    the first time. With .counter sized to the slab, the children's percentage
    heights resolved against the SLAB (5.5% of the canvas) rather than the
    canvas, so a 4% surface came out 0.22% tall and what looked like a pale
    worktop was actually the wall showing through the gap. Nested percentages
-   fail quietly like this — the layout doesn't error, it just lies. */
+   fail quietly like this - the layout doesn't error, it just lies. */
 .counter {
   position: absolute;
   inset: 0;
@@ -110,7 +110,7 @@
       rgb(var(--shadow-color) / 0.1) 22%,
       transparent 45%
     ),
-    /* 2. The pool of window light lying ON the surface — stretched wide and
+    /* 2. The pool of window light lying ON the surface - stretched wide and
           flat, because that's the shape a pool takes on a receding plane.
           Kept weak: at full strength it bleached the oak to cream and the
           counter stopped reading as wood at all. A highlight should sit on
@@ -131,7 +131,7 @@
     );
 }
 
-/* The slab's thickness. Distinctly darker than the surface — a vertical face
+/* The slab's thickness. Distinctly darker than the surface - a vertical face
    catches far less of an overhead source than a horizontal one, and that
    difference IS the depth. */
 .counter__edge {
@@ -148,7 +148,7 @@
   );
 
   /* The fold line. A bright hairline exactly where the two planes meet reads
-     as the lit front lip of the worktop — same trick as .island__edge. */
+     as the lit front lip of the worktop - same trick as .island__edge. */
   box-shadow:
     inset 0 1px 0 color-mix(in srgb, var(--wood-light) 88%, white),
     0 calc(var(--u) * 0.5) calc(var(--u) * 1) rgb(var(--shadow-color) / 0.3);
@@ -561,7 +561,7 @@
 }
 
 /* The shadow each unit throws down the wall beneath it. Absolutely positioned
-   so it isn't treated as a flex item alongside the doors — ::after in a flex
+   so it isn't treated as a flex item alongside the doors - ::after in a flex
    container becomes a child box otherwise, and would sit inside the cabinet
    as a third door.
 
@@ -573,7 +573,7 @@
   position: absolute;
   top: 100%;
 
-  /* Exactly the cabinet's width — no overhang.
+  /* Exactly the cabinet's width - no overhang.
 
      I widened this box first, so the sideways falloff could finish in empty
      wall. That fixed the vertical cuts and immediately created a worse
@@ -587,8 +587,8 @@
   right: 0;
   height: calc(var(--u) * 5);
 
-  /* Radial, so it decays in every direction at once — down the wall AND out
-     toward the ends — rather than only downward. Same lesson as the island's
+  /* Radial, so it decays in every direction at once - down the wall AND out
+     toward the ends - rather than only downward. Same lesson as the island's
      cast shadow: a shadow that has to stop somewhere wants to be radial,
      because a linear one stops at its box and leaves an edge.
 
@@ -640,7 +640,7 @@
     var(--wood-dark) 100%
   );
 
-  /* The drop shadow is what sells "open shelf on a wall" — without it the
+  /* The drop shadow is what sells "open shelf on a wall" - without it the
      board looks inlaid into the plaster. */
   box-shadow: 0 calc(var(--u) * 0.45) calc(var(--u) * 0.9)
     rgb(var(--shadow-color) / 0.3);

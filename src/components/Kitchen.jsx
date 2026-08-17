@@ -26,8 +26,8 @@ import ShelfDecor from './ShelfDecor.jsx'
  * appliance positions itself against this element, never against the
  * viewport.
  *
- * Children are ordered back to front — the same order the depth stack in
- * scene.css assigns z-indexes in — so reading this list is reading the room
+ * Children are ordered back to front - the same order the depth stack in
+ * scene.css assigns z-indexes in - so reading this list is reading the room
  * from the wall forwards.
  *
  * It also owns the scene state classes (is-night, plating, etc.) so the CSS
@@ -81,7 +81,7 @@ export default function Kitchen({
     isNight ? 'is-night' : '',
     /* The open fridge throws light into the ROOM, not just into itself, so the
        flag has to live up here where the scene-wide lighting passes can see
-       it — same reason night is a class on .kitchen rather than on the sky. */
+       it - same reason night is a class on .kitchen rather than on the sky. */
     freshFoodOpen ? 'is-fridge-open' : '',
     plateReady ? 'is-plating' : '',
     pastaServed ? 'has-plated-pasta' : '',
@@ -101,7 +101,7 @@ export default function Kitchen({
       />
       <SinkArea />
 
-      {/* Room-level occlusion, painted behind the island and the food — see
+      {/* Room-level occlusion, painted behind the island and the food - see
           the depth-split note in depth.css. */}
       <div className="scene-shade--room" />
 
@@ -151,7 +151,7 @@ export default function Kitchen({
 
       {/* Lighting passes. These sit above every object and re-light the whole
           room at once, which is why they're here rather than inside any one
-          component. Shade first, then light — same order a painter works in. */}
+          component. Shade first, then light - same order a painter works in. */}
       <div className="scene-shade" />
       <div className="scene-light" />
       <div className="fridge-glow" />

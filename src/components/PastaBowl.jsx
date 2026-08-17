@@ -6,7 +6,7 @@ import Steam from './Steam.jsx'
  * Rigatoni in a wide ceramic bowl.
  *
  * The noodles are hand-authored rather than randomised. Math.random() would
- * reshuffle the pasta on every render — and worse, it removes my ability to
+ * reshuffle the pasta on every render - and worse, it removes my ability to
  * compose. A heap of pasta isn't uniform: it needs a dense middle, a couple of
  * pieces breaking the rim line, and no two neighbours at the same angle. Those
  * are decisions, not noise.
@@ -26,7 +26,7 @@ export default function PastaBowl({ triggerRef, platingMode, served, onActivate 
     ? served
       ? 'Pasta is already on the dinner plate'
       : 'Add pasta to the dinner plate'
-    : 'Pasta bowl — open the dinner recipe'
+    : 'Pasta bowl - open the dinner recipe'
 
   return (
     <div className={`bowl bowl--pasta${served ? ' is-served' : ''}`}>
@@ -36,10 +36,10 @@ export default function PastaBowl({ triggerRef, platingMode, served, onActivate 
         <div className="bowl__sauce" />
 
         {/* The entire nest of spaghetti is this one empty div. Every strand is
-            a ring-shaped radial-gradient in its background — see food.css. */}
+            a ring-shaped radial-gradient in its background - see food.css. */}
         <div className="noodle-nest" />
 
-        {/* Parmesan is one element, not thirty — see food.css */}
+        {/* Parmesan is one element, not thirty - see food.css */}
         <div className="parmesan" />
 
         {BASIL.map((b, i) => (

@@ -12,12 +12,12 @@
    what makes it read as inset rather than as a box parked in front. */
 /* The rim: a thin band of steel sitting flush in the counter slab. Keeping it
    inside the counter's own thickness is what makes it read as dropped in
-   rather than parked on top — earlier I had the whole sink hanging below the
+   rather than parked on top - earlier I had the whole sink hanging below the
    counter line and it looked like a tray someone had left out. */
 /* Now that the counter has a real top plane, the sink can be cut INTO that
    plane instead of hanging off a line. It's inset from the back edge so a
    strip of worktop shows behind it, which is what actually reads as "dropped
-   into a surface" — a basin flush against the backsplash just looks stuck on.
+   into a surface" - a basin flush against the backsplash just looks stuck on.
    It stops short of the front edge for the same reason. */
 .sink {
   position: absolute;
@@ -64,7 +64,7 @@
 
    That worked, but it could only ever be a symmetrical ∩: the two legs of one
    bordered box always hang down the same distance, so it read as a croquet
-   hoop rather than a tap. A real pull-down faucet is asymmetric — a tall
+   hoop rather than a tap. A real pull-down faucet is asymmetric - a tall
    straight riser, a hook over the top, and a SHORT spout on the way back
    down.
 
@@ -129,7 +129,7 @@
   background: var(--tube);
 }
 
-/* Where the riser meets the counter — a small escutcheon, wider than the
+/* Where the riser meets the counter - a small escutcheon, wider than the
    tube, so the faucet looks bolted through the worktop instead of resting
    on it. */
 .faucet__riser::after {
@@ -230,7 +230,7 @@
 
 /* Phase 11: the faucet is the smallest control in the kitchen. The tap itself
    is only 4.6% of the frame wide, so on a 360px phone this hit area came out
-   around 32x35px — legal, but the one target I'd actually miss with a thumb.
+   around 32x35px - legal, but the one target I'd actually miss with a thumb.
    Widened on both sides and given a little more height.
 
    It can grow this far because everything it now overlaps (the basin, the

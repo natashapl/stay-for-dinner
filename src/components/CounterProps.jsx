@@ -5,7 +5,7 @@
  * backsplash, soap dispenser by the sink, and a crock of wooden utensils.
  *
  * Grouped into one component deliberately. None of these has state, none is
- * interactive, and none is large enough to justify its own file — a component
+ * interactive, and none is large enough to justify its own file - a component
  * per decorative shape would be more files to open than shapes to look at.
  */
 
@@ -13,7 +13,7 @@
    splay like real utensils rather than standing in a rank.
  *
  * Each one gets a DIFFERENT head. Five identical sticks with the same blob on
- * top is a bundle of matches — the whole point of a utensil crock is that it
+ * top is a bundle of matches - the whole point of a utensil crock is that it
  * holds a jumble of different tools, and the silhouettes are what say so.
  * They're also ordered short-tall-short so the fan has a profile.
  */

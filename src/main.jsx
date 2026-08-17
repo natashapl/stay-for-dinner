@@ -21,7 +21,7 @@ import './styles/decor.css'
 import './styles/food.css'
 import './styles/animations.css'
 
-/* Lighting passes last — they re-light everything above. */
+/* Lighting passes last - they re-light everything above. */
 import './styles/depth.css'
 
 /* Real controls sit above the finished illustration. */

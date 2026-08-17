@@ -1,5 +1,5 @@
 /* ==========================================================================
-   Appliances — refrigerator, toaster, blender, stove, dish rack.
+   Appliances - refrigerator, toaster, blender, stove, dish rack.
    --------------------------------------------------------------------------
    Everything here follows the three-face rule documented in variables.css:
    a top face, a front face, and ONE visible side face turned toward the
@@ -12,7 +12,7 @@
 }
 
 /* --------------------------------------------------------------------------
-   Contact shadows — the single biggest thing separating these from stickers.
+   Contact shadows - the single biggest thing separating these from stickers.
 
    Every appliance had a `box-shadow: 0 Yu Zu` under it, which traces the
    element's BOX: a rectangle of shade hugging a rectangle of object. Read as
@@ -21,7 +21,7 @@
    What a solid on a horizontal surface actually casts is an ELLIPSE, wider
    than the object, darkest where the two touch and falling off fast. It also
    has to sit ON the counter rather than behind the object, hence z-index: -1
-   — which lands it in the negative layer of .objects (a stacking context via
+   - which lands it in the negative layer of .objects (a stacking context via
    its own z-index), so it paints above the counter but below every appliance.
 
    One rule does all six. They differ only in how far the ellipse spreads,
@@ -41,7 +41,7 @@
 
   /* Sized in --u, NOT as a percentage of the object.
 
-     I wrote `height: 14%` first, which is 14% of each APPLIANCE — and these
+     I wrote `height: 14%` first, which is 14% of each APPLIANCE - and these
      range from a 2.6%-wide soap bottle to a 13%-wide dish rack, so the
      shadows came out between 4 and 12 pixels and none of them registered.
      A shadow's softness is a property of the light in the room, not of the
@@ -221,7 +221,7 @@
   overflow: hidden;
 
   /* The lamp sits top-right, but everything in here used to be shaded on the
-     100deg diagonal the ROOM is lit from — so the compartment read as painted
+     100deg diagonal the ROOM is lit from - so the compartment read as painted
      rather than lit, and the contents sank into it. This wash comes from where
      the lamp actually is and falls off downward, which is what separates the
      items from the back wall of the fridge. It strengthens at night for the
@@ -260,7 +260,7 @@
   transition: box-shadow 1800ms var(--ease-soft);
 }
 
-/* The bulb doesn't change, but the dark around it does — so at night the same
+/* The bulb doesn't change, but the dark around it does - so at night the same
    lamp needs a wider halo to read as the only light source on this wall. */
 .kitchen.is-night .fridge__light {
   box-shadow:
@@ -623,7 +623,7 @@
 
    My first attempt clipped a trapezoid top INSIDE the body's rectangle. That
    can only ever look like a face painted on a card, because the silhouette
-   never changes — the outline stays a rectangle no matter what is drawn
+   never changes - the outline stays a rectangle no matter what is drawn
    inside it. Letting an ellipse overhang the top edge changes the OUTLINE,
    and outline is what the eye uses to judge form before it reads any shading
    at all. This is the single biggest lesson in the file.
@@ -657,7 +657,7 @@
     calc(var(--u) * 0.55);
   border: 1px solid var(--shell);
 
-  /* Across, not down — cylinder shading. */
+  /* Across, not down - cylinder shading. */
   background: linear-gradient(
     90deg,
     color-mix(in srgb, var(--ceramic-shade) 54%, var(--shadow-ink)) 0%,
@@ -698,7 +698,7 @@
 }
 
 /* Slots are holes in a HORIZONTAL plane, so they are flattened ellipses. A
-   rectangle would be a slot in a vertical wall — which is exactly what mine
+   rectangle would be a slot in a vertical wall - which is exactly what mine
    looked like before. */
 .toaster__slot {
   width: 35%;
@@ -770,7 +770,7 @@
 }
 
 /* The jar. A clip-path trapezoid WIDER at the top is the entire read of
-   "blender jar" — the same shape with parallel sides is just a glass. */
+   "blender jar" - the same shape with parallel sides is just a glass. */
 .blender__jar {
   position: absolute;
   left: 0;
@@ -788,14 +788,14 @@
 
      So this glass is TINTED rather than clear. A smoky grey wash at ~0.24
      alpha drops the jar a clear value step below the tile behind it, which is
-     what makes it read at a glance. Real glass has body — it is never the
-     colour of what's behind it — and a thick moulded jar least of all.
+     what makes it read at a glance. Real glass has body - it is never the
+     colour of what's behind it - and a thick moulded jar least of all.
 
      On top of that tint, the edge treatment does the shaping:
        dark refraction line, bright specular, tint, bright specular, dark line
      Bright alone on a cream wall vanishes; it's the dark/bright PAIR that
      registers as an edge. Those stripes follow the clip-path's taper for
-     free, which draws the jar without a border — a border would be clipped
+     free, which draws the jar without a border - a border would be clipped
      off anyway.
 
      Second layer: measurement marks, held to the left third with a
@@ -831,7 +831,7 @@
 }
 
 /* The lid: an ellipse, wider than the jar's mouth. Same rule as the toaster's
-   top — the horizontal surface of a roundish object reads as an ellipse
+   top - the horizontal surface of a roundish object reads as an ellipse
    overhanging the silhouette, never as a bar sitting on it. */
 .blender__lid {
   position: absolute;
@@ -850,8 +850,8 @@
 }
 
 /* A real C-shaped handle: three borders of a box whose middle is transparent.
-   Asymmetric border widths — thin where it meets the jar, thick where a hand
-   would grip — stop it reading as a bracket. */
+   Asymmetric border widths - thin where it meets the jar, thick where a hand
+   would grip - stop it reading as a bracket. */
 .blender__handle {
   position: absolute;
   right: -3%;
@@ -892,7 +892,7 @@
   bottom: 0;
   height: 32%;
 
-  /* Narrower at the top than the bottom — the opposite taper to the jar,
+  /* Narrower at the top than the bottom - the opposite taper to the jar,
      which is what makes the two read as separate parts rather than one cone. */
   clip-path: polygon(11% 0%, 89% 0%, 100% 100%, 0% 100%);
 
@@ -909,7 +909,7 @@
 }
 
 /* The base's top face. The collar covers its middle, so only the outer band
-   survives — but that band is what keeps the base from reading as a flat black
+   survives - but that band is what keeps the base from reading as a flat black
    trapezoid. A solid needs SOME horizontal surface visible or it has no
    thickness at all. */
 .blender__base::before {
@@ -981,7 +981,7 @@
   box-shadow: calc(var(--u) * 0.18) 0 calc(var(--u) * 0.35) rgb(var(--shadow-color) / 0.4);
 }
 
-/* The rack. Slats are a repeating gradient — identical, evenly spaced, never
+/* The rack. Slats are a repeating gradient - identical, evenly spaced, never
    addressed individually, which is exactly when a gradient beats elements. */
 .dish-rack__frame {
   position: absolute;
@@ -1006,7 +1006,7 @@
     );
 
   box-shadow:
-    /* lit top edge — the rack's own horizontal surface */
+    /* lit top edge - the rack's own horizontal surface */
     inset 0 calc(var(--u) * 0.16) 0 color-mix(in srgb, var(--wood-light) 80%, white),
     /* the flank, turned toward the centre of the scene */
     inset calc(var(--u) * 0.3) 0 calc(var(--u) * 0.4) rgb(var(--shadow-color) / 0.3),
@@ -1018,8 +1018,8 @@
 
    Rebuilt around a scale decision rather than a styling one.
 
-   The first version was a WHOLE range — cooktop, four knobs, oven door,
-   window, handle — compressed into the 9% of frame that isn't covered by the
+   The first version was a WHOLE range - cooktop, four knobs, oven door,
+   window, handle - compressed into the 9% of frame that isn't covered by the
    island. Every part was there, and every part was tiny, so it read as a
    doll's-house stove standing in a gap rather than as a real appliance.
 
@@ -1034,7 +1034,7 @@
    the space available; a cropped one implies a room continuing past the
    frame, which is exactly the impression a cosy kitchen wants.
 
-   Right of centre, so the visible flank is on the LEFT — and here that flank
+   Right of centre, so the visible flank is on the LEFT - and here that flank
    is most of what you see, so it does the depth work.
    -------------------------------------------------------------------------- */
 
@@ -1049,7 +1049,7 @@
 }
 
 /* The flank. A clear step darker than the front, and wide enough to read as
-   a returning face rather than a pinstripe — it's the plane that tells you
+   a returning face rather than a pinstripe - it's the plane that tells you
    the stove is a box standing forward of the cabinets. */
 .stove__side {
   position: absolute;
@@ -1119,7 +1119,7 @@
    maybe 3% of the canvas is what makes the cooktop read as a surface with
    depth rather than a strip with circles on it.
 
-   The right-hand pair is off-frame. They're still rendered — the stove is a
+   The right-hand pair is off-frame. They're still rendered - the stove is a
    whole object being cropped, and if the frame ever widens they're correct. */
 .stove__burner {
   position: absolute;
@@ -1166,7 +1166,7 @@
 }
 
 /* --------------------------------------------------------------------------
-   Control panel. Five knobs at true spacing — two land on screen, the rest
+   Control panel. Five knobs at true spacing - two land on screen, the rest
    run off the edge with the rest of the stove.
    -------------------------------------------------------------------------- */
 
@@ -1183,7 +1183,7 @@
 
   /* Its own recessed band. Bare stainless here took the warm light pass full
      in the face and came out the same tan as the worktop behind it, so the
-     stove lost its edge — value separation survives the lighting, hue
+     stove lost its edge - value separation survives the lighting, hue
      doesn't. */
   background: linear-gradient(
     180deg,
@@ -1238,7 +1238,7 @@
     inset 0 calc(var(--u) * -0.2) calc(var(--u) * 0.3) rgb(0 0 0 / 0.35);
 }
 
-/* The oven window. Centred on the door, so most of it is off-frame — you see
+/* The oven window. Centred on the door, so most of it is off-frame - you see
    its near edge and it continues past the crop, which is exactly the read I
    want. Dark because you are looking into an unlit box. */
 .stove__window {
@@ -1256,7 +1256,7 @@
    Without it this is the largest flat black area in the scene and reads as a
    hole cut in the stove rather than a pane. Dark glass is still glass: it
    returns a slanted highlight of whatever is lighting the room. One
-   off-vertical streak is enough — the angle is what says "reflection", since
+   off-vertical streak is enough - the angle is what says "reflection", since
    nothing else in this kitchen runs diagonally. */
 .stove__window::after {
   content: "";
@@ -1314,7 +1314,7 @@
    Two sets of semi-transparent stripes crossed at right angles. Where they
    overlap the alpha compounds, so three tones come out of two gradients:
    white where neither falls, light where one does, dark where both do. That
-   compounding IS gingham — drawing it as a checkerboard of solid squares
+   compounding IS gingham - drawing it as a checkerboard of solid squares
    needs a third gradient and still looks wrong.
    -------------------------------------------------------------------------- */
 

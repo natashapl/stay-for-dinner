@@ -15,7 +15,7 @@ html {
 
   /* Always reserve the scrollbar's space, even when there's nothing to
      scroll. Without this, shortening the window makes the content overflow,
-     the scrollbar appears, and the viewport loses ~15px of width — which any
+     the scrollbar appears, and the viewport loses ~15px of width - which any
      percentage-sized element answers by visibly twitching narrower. The frame
      is sized in %, so it would jump for a reason that has nothing to do with
      the layout. Reserving the gutter keeps the usable width constant. */
@@ -58,7 +58,7 @@ button {
 
 /* Global motion guard. Every phase after this one adds animation, so the
    opt-out lives here once rather than being re-remembered in each file.
-   I don't set animation:none — a few things (steam) look broken mid-frame if
+   I don't set animation:none - a few things (steam) look broken mid-frame if
    they simply stop, so I collapse them to a single instant frame instead. */
 @media (prefers-reduced-motion: reduce) {
   *,

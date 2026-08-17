@@ -3,7 +3,7 @@ import Steam from './Steam.jsx'
 /**
  * MeatballBowl
  *
- * Same vessel as the pasta bowl — one .bowl recipe, different contents.
+ * Same vessel as the pasta bowl - one .bowl recipe, different contents.
  *
  * Order matters here in a way it doesn't for the noodles: the meatballs are
  * listed back to front, so later ones paint over earlier ones and the pile
@@ -37,7 +37,7 @@ const HERBS = [
 
 export default function MeatballBowl({ platingMode, pastaServed, served, onActivate }) {
   let prompt = "View recipe"
-  let label = 'Meatball bowl — open the dinner recipe'
+  let label = 'Meatball bowl - open the dinner recipe'
 
   if (platingMode) {
     prompt = served ? 'Meatballs added' : pastaServed ? 'Add meatballs' : 'Pasta first'

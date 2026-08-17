@@ -1,5 +1,5 @@
 /* ==========================================================================
-   Window — the back wall's anchor.
+   Window - the back wall's anchor.
    Phase 2 is joinery only. The sky is a placeholder gradient until Phase 6.
    ========================================================================== */
 
@@ -13,7 +13,7 @@
   /* The casing is this element's padding. Padding as a frame means the glass
      can be a single child at 100%/100% and the mullions inside it stay
      measured against the glass, not against the casing. Same reasoning as the
-     scene frame — a border would have complicated every child's maths. */
+     scene frame - a border would have complicated every child's maths. */
   padding: calc(var(--u) * 1.1);
   border-radius: calc(var(--u) * 0.3);
 
@@ -95,8 +95,8 @@
   position: absolute;
 
   /* Both bars must outrank .window__sky. ::before is treated as the glass's
-     FIRST child, so without this the sky element — which comes later in the
-     DOM — paints straight over the vertical mullion while leaving the
+     FIRST child, so without this the sky element - which comes later in the
+     DOM - paints straight over the vertical mullion while leaving the
      horizontal one (::after, a later child) visible. That asymmetry is the
      giveaway whenever half a pseudo-element pair goes missing. */
   z-index: 1;
@@ -120,7 +120,7 @@
   transform: translateX(-50%);
 }
 
-/* horizontal — sat above centre, which reads as a taller lower sash and
+/* horizontal - sat above centre, which reads as a taller lower sash and
    matches the reference's proportions */
 .window__glass::after {
   left: 0;
@@ -130,7 +130,7 @@
 }
 
 /* --------------------------------------------------------------------------
-   Sill — a small ledge that sticks out past the casing on both sides.
+   Sill - a small ledge that sticks out past the casing on both sides.
    -------------------------------------------------------------------------- */
 
 .window__sill {
@@ -153,7 +153,7 @@
 }
 
 /* ==========================================================================
-   Curtain — a short gingham valance across the top of the window.
+   Curtain - a short gingham valance across the top of the window.
    ========================================================================== */
 
 .curtain {

@@ -15,7 +15,7 @@ export default function App() {
         <Scene />
       </main>
 
-      <p className="page__hint">Click, tap or tab through the kitchen to explore</p>
+      <p className="page__hint">Hover, click, tap or tab through the kitchen to explore</p>
 
       <footer className="page__outro">
         <p>

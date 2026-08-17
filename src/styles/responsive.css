@@ -39,7 +39,7 @@
   }
 }
 
-/* Short landscape — a phone turned sideways, or a very shallow window.
+/* Short landscape - a phone turned sideways, or a very shallow window.
    Only the page padding tightens here. Nothing in this file touches the
    frame's width: viewport height must never influence how wide the frame is,
    because watching it resize horizontally while dragging the bottom edge of
@@ -52,7 +52,7 @@
 }
 
 /* Fallback for browsers without container query units. Keeping the kitchen
-   usable rather than pixel-identical is enough here — --u falls back to a
+   usable rather than pixel-identical is enough here - --u falls back to a
    viewport-derived approximation of 1% of a 4:3 frame. */
 @supports not (width: 1cqw) {
   .kitchen {

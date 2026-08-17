@@ -4,7 +4,7 @@
  * Everything seen through the window: dusk gradient, sun, clouds, hills,
  * treeline, one small house.
  *
- * Rendered inside .window__glass, which is overflow:hidden — so nothing here
+ * Rendered inside .window__glass, which is overflow:hidden - so nothing here
  * needs to know how big the window is. Elements can overhang freely and the
  * glass crops them, which is what lets the hills run past both edges instead
  * of stopping neatly inside the frame.
@@ -35,8 +35,6 @@ export default function Sky() {
 
       <div className="sky__hills sky__hills--far" />
       <div className="sky__hills sky__hills--near" />
-
-
 
       <div className="sky__house" />
       <div className="sky__trees" />

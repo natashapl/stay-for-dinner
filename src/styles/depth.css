@@ -1,5 +1,5 @@
 /* ==========================================================================
-   Lighting passes — the depth pass.
+   Lighting passes - the depth pass.
    --------------------------------------------------------------------------
    Everything in this file is one idea: shadow and light are applied to the
    WHOLE room at once, on top of the finished objects, instead of being baked
@@ -14,7 +14,7 @@
 
    `mix-blend-mode: multiply` instead MULTIPLIES the layer into what's beneath
    it. Shadow in a warm brown keeps the sage green and pushes it toward olive,
-   keeps the terracotta and pushes it toward oxblood — each surface darkens
+   keeps the terracotta and pushes it toward oxblood - each surface darkens
    through its OWN hue. That single change is most of the difference between
    flat and lit.
 
@@ -29,7 +29,7 @@
    ========================================================================== */
 
 /* --------------------------------------------------------------------------
-   Shadow pass — ambient occlusion.
+   Shadow pass - ambient occlusion.
 
    Contact shadows, corners, and the undersides of things. All in a warm
    brown, never grey or black: real bounced light in a room this warm is
@@ -37,19 +37,19 @@
    -------------------------------------------------------------------------- */
 
 /* --------------------------------------------------------------------------
-   Room-level occlusion — BEHIND the foreground.
+   Room-level occlusion - BEHIND the foreground.
 
    This is a second shadow pass, and the split is the important idea.
 
    Shadows belonging to the back wall must not fall on objects standing in
    front of it. The cavity under the back counter runs wall to wall at 62%,
-   which is exactly where the bowls sit — and with the whole pass at z-index
+   which is exactly where the bowls sit - and with the whole pass at z-index
    15 it painted straight across the pasta and the meatballs, darkening food
    that is nowhere near that cabinet.
 
    So the pass is split by DEPTH rather than by kind. Anything that describes
    the back of the room lives here, below the island and the food. Anything
-   genuinely global — corners, ceiling, the floor at my feet — stays in
+   genuinely global - corners, ceiling, the floor at my feet - stays in
    .scene-shade on top.
 
    The rule this encodes: a shadow's z-index has to match the depth of the
@@ -66,12 +66,12 @@
   background:
     /* THE most important band in the file: the cavity under the counter
        overhang. In a real kitchen the underside of a worktop is the darkest
-       thing in the room — it sees no window and no sky, only bounced floor
+       thing in the room - it sees no window and no sky, only bounced floor
        light. My scene had no value this dark anywhere, which is why it read
        as evenly-lit cardboard no matter how many gradients I added.
        Deep darks next to bright edges are what create the sense of depth.
 
-       The band has to START at the underside — base-cab-y, not counter-y.
+       The band has to START at the underside - base-cab-y, not counter-y.
        I had it ramping from the counter's back edge, which meant it darkened
        the worktop itself and turned the wood a muddy grey. A cavity shadow
        belongs strictly BELOW the thing casting it. */
@@ -124,7 +124,7 @@
       rgb(126 78 42 / 0.07) 58%,
       rgb(82 44 24 / 0.13) 100%
     ),
-    /* Cavity under the island slab — an ELLIPSE, not a band.
+    /* Cavity under the island slab - an ELLIPSE, not a band.
 
        This layer is the one exception in the file: every other gradient here
        runs wall to wall, but the island doesn't, so its shadow has to stop
@@ -133,7 +133,7 @@
        I tried that twice before getting it right, and the two failures are
        the lesson:
 
-       1. A plain linear-gradient has no width of its own — it fills whatever
+       1. A plain linear-gradient has no width of its own - it fills whatever
           box it's painted into. So the band stretched the full canvas and the
           island's shadow floated out over the floor and back cabinets.
 
@@ -141,7 +141,7 @@
           background-size clips with a RECTANGLE, so the shadow ended in two
           hard vertical edges at the island's ends.
 
-       The shape was wrong, not the size. A shadow doesn't stop — it falls
+       The shape was wrong, not the size. A shadow doesn't stop - it falls
        off. A radial-gradient decays in every direction at once, so it needs
        no clipping and has no edge to hide: the x-radius does the bounding and
        the falloff does the softening, in one value.
@@ -157,7 +157,7 @@
       rgb(76 46 28 / 0.3) 42%,
       transparent 100%
     ),
-    /* Side walls. The room doesn't end at the frame — implying returns on
+    /* Side walls. The room doesn't end at the frame - implying returns on
        both sides stops the scene reading as a flat backdrop. Carried much
        further in than a normal vignette so the bright backsplash actually
        falls off toward the corners. */
@@ -177,13 +177,13 @@
     ),
     /* Ceiling. Light falls off upward away from the window. */
     linear-gradient(180deg, rgb(104 68 42 / 0.62) 0%, rgb(150 112 82 / 0.2) 9%, transparent 18%),
-    /* The floor in front of the island, which the island itself shades — the
+    /* The floor in front of the island, which the island itself shades - the
        light source is behind it, so its shadow is thrown toward me. */
     linear-gradient(0deg, rgb(72 40 22 / 0.68) 0%, rgb(110 68 42 / 0.26) 10%, transparent 20%);
 }
 
 /* --------------------------------------------------------------------------
-   Light pass — the window.
+   Light pass - the window.
 
    One warm source, roughly where the glass is, falling off with distance. The
    second gradient is the pool it throws down onto the counter and the island
@@ -200,7 +200,7 @@
   /* Kept deliberately weak and tight.
 
      My first pass at this was far too strong and too wide, and it made the
-     scene WORSE — screen can only ever brighten, so a big soft screen layer
+     scene WORSE - screen can only ever brighten, so a big soft screen layer
      lifts the shadows along with everything else and crushes the value range
      flat. Light should be a small bright accent against dark, not a wash.
      Almost all of the depth is being done by the multiply layer above. */
@@ -226,7 +226,7 @@
       rgb(255 172 92 / calc(0.09 * var(--light-strength))) 50%,
       transparent 76%
     ),
-    /* spill across the counter and island — wide and shallow, because a
+    /* spill across the counter and island - wide and shallow, because a
        horizontal surface catches a stretched pool of light, not a circle */
     radial-gradient(
       42% 4.5% at 50% 57.5%,
@@ -241,7 +241,7 @@
 }
 
 /* --------------------------------------------------------------------------
-   Open-fridge spill — Phase 12.
+   Open-fridge spill - Phase 12.
 
    The fridge had a lamp inside it and an interior that lit up, but the light
    stopped dead at the door: the compartment is `overflow: hidden`, so opening
@@ -250,7 +250,7 @@
 
    The fix can't live inside Refrigerator.jsx. `.objects` has a z-index, which
    makes it a stacking context, and a stacking context is an isolation boundary
-   for blending — a `screen` layer parked inside the fridge would composite
+   for blending - a `screen` layer parked inside the fridge would composite
    only against its own siblings and never reach the wall or the floor. Room
    light belongs in the room's lighting pass, which is this file.
 
@@ -287,14 +287,14 @@
 /* Reusing --interior-light-strength rather than inventing a night rule: it is
    already a registered <number> that interpolates from 0 at dusk to 1 at
    night, so the spill strengthens on its own as the room darkens. An open
-   fridge at midnight should be the brightest thing on that wall — that's the
+   fridge at midnight should be the brightest thing on that wall - that's the
    whole reason this interaction is worth having after dark. */
 .kitchen.is-fridge-open .fridge-glow {
   opacity: calc(0.55 + 0.45 * var(--interior-light-strength));
 }
 
 /* --------------------------------------------------------------------------
-   Sunbeam — Phase 6.
+   Sunbeam - Phase 6.
 
    The one piece that connects the window to the dinner. Everything before
    this lit the room from a source you had to infer; this is the source made
@@ -306,13 +306,13 @@
       diverges. A parallel-sided shaft reads as a column, not a beam.
 
    2. It fades along its length, not just at its edges. The far end has to
-      dissolve into nothing — a beam that stops has a bottom, and light
+      dissolve into nothing - a beam that stops has a bottom, and light
       doesn't have a bottom.
 
    3. `screen` blending. Multiply would darken; normal would sit on top as a
       film. Screen can only brighten and carries its own colour into whatever
       it touches, so the beam warms the tile, the wood and the ceramic
-      differently — which is exactly what real light does.
+      differently - which is exactly what real light does.
 
    The blur is what makes it air rather than glass. One blurred element is
    cheaper than trying to build soft edges from a dozen gradient stops, and
@@ -327,7 +327,7 @@
   /* Starts BELOW the valance, not at the top of the window.
 
      At top: 9% the shaft began above the glass and its edges washed straight
-     across the curtain — light in front of the thing it is supposed to be
+     across the curtain - light in front of the thing it is supposed to be
      coming through. A beam has to start at the opening it passes, and here
      the opening begins where the cloth ends. */
   top: 14%;
@@ -381,5 +381,5 @@
   isolation: isolate;
 }
 
-/* Reduced motion doesn't apply to any of this — none of it animates. It will
+/* Reduced motion doesn't apply to any of this - none of it animates. It will
    though, in Phase 9, when --light-strength changes for night. */

@@ -28,7 +28,7 @@
   /* Anchored to the bowl's TOP edge, not partway down its body.
 
      My first attempt put the wisps at 62% of the bowl's height, which is
-     BEHIND the ceramic — and since steam sits at z-index -1 so it appears to
+     BEHIND the ceramic - and since steam sits at z-index -1 so it appears to
      come out of the bowl rather than off the front of it, the vessel simply
      covered the whole animation. Anything painted behind an object has to
      start where that object ends. */
@@ -50,7 +50,7 @@
 
   /* Very slightly COOL white, against a warm cream backsplash.
 
-     Pure white steam on a cream wall is nearly invisible — the two differ in
+     Pure white steam on a cream wall is nearly invisible - the two differ in
      brightness by almost nothing, and brightness is all a neutral white can
      offer. Cooling the vapour a few points makes it separate by HUE instead,
      which reads at much lower contrast and keeps the animation subtle rather
@@ -66,7 +66,7 @@
      internal detail to look like vapour. */
   filter: blur(calc(var(--u) * 0.62));
 
-  /* Resting state is invisible — see the note at the top of this file. */
+  /* Resting state is invisible - see the note at the top of this file. */
   opacity: 0;
 
   animation: steam-rise calc(5.5s + var(--i) * 1.15s) ease-out infinite;
@@ -82,7 +82,7 @@
 
    Both animate the CONTAINER rather than individual leaves or folds. A whole
    plant leaning a degree and a half reads as one gust moving through it;
-   leaves rotating independently read as insects. It's also far cheaper — one
+   leaves rotating independently read as insects. It's also far cheaper - one
    animated element instead of ten.
 
    Everything here is well under 2deg. At this scale that's a few pixels of
@@ -95,7 +95,7 @@
   animation: leaf-sway 9s var(--ease-soft) infinite;
 }
 
-/* Offset so the two swaying plants are never in step — synchronised motion is
+/* Offset so the two swaying plants are never in step - synchronised motion is
    the fastest way to make a scene look mechanical. */
 .plant--lo-right .plant__foliage--sway {
   animation-duration: 12.5s;
@@ -124,7 +124,7 @@
   }
 }
 
-/* The sun's halo. Scale and opacity only — a box-shadow pulse would make the
+/* The sun's halo. Scale and opacity only - a box-shadow pulse would make the
    browser recompute the shadow every frame, while this is pure compositing.
    Six percent of scale over nine seconds is not something you can watch
    happen; it just stops the sky from looking like a still. */

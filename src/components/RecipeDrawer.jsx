@@ -48,7 +48,7 @@ export default function RecipeDrawer({ dialogRef, onClose }) {
         </div>
 
         {/* The recipe scrolls, and the only focusable control (Close) sits in
-            the topbar outside this box — so with nothing focusable inside it,
+            the topbar outside this box - so with nothing focusable inside it,
             a keyboard-only reader had no way to scroll the recipe at all.
             Making the scroll container itself focusable is the standard fix;
             role + label stop it announcing as an unnamed group. */}

@@ -5,7 +5,7 @@
  * right edge so the frame crops it. Only its left ~37% is on screen.
  *
  * The first version squeezed an entire stove into the visible 9% and read as
- * a doll's-house appliance. Nothing here is scaled down — the burners, knobs
+ * a doll's-house appliance. Nothing here is scaled down - the burners, knobs
  * and door are at true proportion, and the parts past the frame simply aren't
  * seen. See the note in appliances.css: crop it, don't shrink it.
  *
