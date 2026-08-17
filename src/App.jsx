@@ -19,7 +19,7 @@ export default function App() {
 
       <footer className="page__outro">
         <p>
-          Built by <a
+          Built by{' '}<a
             href="https://www.natashasfolio.com/"
             target="_blank"
             rel="noreferrer noopener"
@@ -36,7 +36,9 @@ export default function App() {
         </p>
         <p>No images, canvas or icon fonts - just elements and stylesheets.</p>
       </footer>
+
       <Analytics />
     </div>
   )
 }
+
