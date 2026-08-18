@@ -27,7 +27,7 @@ export default function App() {
             Natasha Pierre-Louis
           </a> for the{' '}
           <a
-            href="https://dev.to/challenges/frontend-2026-07-29"
+            href="https://dev.to/natashapl/stay-for-dinner-2hao"
             target="_blank"
             rel="noreferrer noopener"
           >
